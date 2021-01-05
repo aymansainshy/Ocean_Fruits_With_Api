@@ -18,7 +18,7 @@
   "pleaseEnterYourName": "يرجى إدخال اسمك",
   "passwordDontMatch" : "كلمة السر لا تتطابق",
   "enterYourPhoneNumber" :"الرجاء ادخال رقم هاتفك",
-  "PhoneNumberValid" : "رقم الهاتف لا يجب ان يقل عن 8 ارقام",
+  "PhoneNumberValid" : "رقم الهاتف لا يجب ان يقل عن 10 ارقام",
   "validPhone" : "الرجاء ادخال رقم هاتف صحيح",
   "home": " الرئيسية",
   "profile": "بروفايل",

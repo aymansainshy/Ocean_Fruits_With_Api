@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/build_form_field.dart';
 import '../lang/language_provider.dart';
-import '../screens/tap_screen.dart';
 import '../utils/app_constant.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -46,6 +46,10 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
     'phoneNumber': '',
   };
 
+  final TextEditingController _phoneNumberController = TextEditingController();
+  String initialCountry = 'SD';
+  PhoneNumber number = PhoneNumber(isoCode: 'SD');
+
   @override
   void initState() {
     _animationController = AnimationController(
@@ -86,6 +90,15 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
     super.initState();
   }
 
+  // void getPhoneNumber(String phoneNumber) async {
+  //   PhoneNumber number =
+  //       await PhoneNumber.getRegionInfoFromPhoneNumber(phoneNumber, 'SD');
+
+  //   setState(() {
+  //     this.number = number;
+  //   });
+  // }
+
   @override
   void dispose() {
     _emailFocusNode.dispose();
@@ -95,6 +108,7 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
     _confirmPasswordFocusNode.dispose();
     _animationController.dispose();
     _animationController2.dispose();
+    _phoneNumberController?.dispose();
     super.dispose();
   }
 
@@ -295,72 +309,76 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
             ),
             SlideTransition(
               position: _slidAnimation,
-              child: BuilFormField(
-                fieldName: translate("phone", context),
-                contentPadding: 8.0,
-                textInputAction: TextInputAction.done,
-                keyboardType: TextInputType.phone,
-                prefixIcon: Padding(
-                  padding: language == "ar"
-                      ? EdgeInsets.only(right: 5)
-                      : EdgeInsets.only(left: 5),
-                  child: Container(
-                    width: widget.screenUtil.setWidth(180),
-                    // color: Colors.red,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          // color: Colors.blue,
-                          height: widget.screenUtil.setHeight(40),
-                          width: widget.screenUtil.setWidth(50),
-                          child: Image.asset(
-                            "assets/images/sudan-flag-small.png",
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        // Spacer(),
-                        FittedBox(
-                          child: Text(
-                            "+249",
-                            style: TextStyle(
-                              fontSize: 10,
-                            ),
-                          ),
-                        ),
-
-                        Container(
-                          height: widget.screenUtil.setHeight(100),
-                          width: 0.55645555,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(width: 5),
-                      ],
+              child: InternationalPhoneNumberInput(
+                selectorConfig: SelectorConfig(
+                  selectorType: PhoneInputSelectorType.DIALOG,
+                ),
+                focusNode: _phoneFocusNode,
+                ignoreBlank: false,
+                autoValidateMode: AutovalidateMode.disabled,
+                selectorTextStyle: TextStyle(color: Colors.grey.shade700),
+                initialValue: number,
+                textFieldController: _phoneNumberController,
+                formatInput: false,
+                inputDecoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                  contentPadding: EdgeInsets.all(8.0),
+                  hintText: translate("phone", context),
+                  fillColor: AppColors.primaryColor,
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 1.5,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 0.5,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: AppColors.primaryColor,
+                      width: 0.5,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: AppColors.primaryColor,
+                      width: 0.5,
                     ),
                   ),
                 ),
-                focusNode: _phoneFocusNode,
-                onFieldSubmitted: (_) {
-                  _saveForm();
-                },
                 validator: (value) {
                   if (value.isEmpty) {
                     return translate("enterYourPhoneNumber", context);
                   }
 
-                  if (value.toString().length < 8) {
+                  if (value.toString().length < 10) {
                     return translate("PhoneNumberValid", context);
                   }
 
-                  if (!value.toString().startsWith('+') &&
-                      !value.toString().startsWith('0')) {
-                    return translate("validPhone", context);
-                  }
+                  // if (!value.toString().startsWith('+') &&
+                  //     !value.toString().startsWith('0')) {
+                  //   return translate("validPhone", context);
+                  // }
 
                   return null;
                 },
+                onInputChanged: (PhoneNumber number) {
+                  print(number.phoneNumber);
+                },
+                onInputValidated: (bool value) {
+                  print(value);
+                },
                 onSaved: (value) {
-                  signUpData['phoneNumber'] = value;
+                  signUpData['phoneNumber'] = number.phoneNumber;
+                  print("Valuuuuuuuueeeeee... " + value.toString());
                 },
               ),
             ),
@@ -390,8 +408,8 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                     ),
                   ),
                   onPressed: () {
-                    // _saveForm();
-                    Navigator.of(context).pushNamed(TapScreen.routeName);
+                    _saveForm();
+                    // Navigator.of(context).pushNamed(TapScreen.routeName);
                   },
                 ),
               ),

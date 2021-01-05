@@ -20,7 +20,7 @@
   "enterYourFullAddress"  : "Please enter your address",
   "passwordDontMatch" : "Passwords do not match!",
   "enterYourPhoneNumber" :"Please enter your phone number",
-  "PhoneNumberValid" : "Phone number must be at lest 8",
+  "PhoneNumberValid" : "Phone number must be at lest 10",
   "validPhone" : "Please enter valid phone number",
   "home": "Home",
   "profile": "Profile",
