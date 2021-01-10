@@ -52,6 +52,7 @@
   "Tomorrow": "Tomorrow ",
   "To":"To",
   "youDontHaveFav" : "YOU DON'T HAVE WishList ITEMS",
+  "sorryWeDontHave": "SORRY WE DON'T HAVE ITEMS FOR THIS CATEGORY , BUT WE WILL ADD SOON",
 
 
   "Message": "This is English",
@@ -68,7 +69,6 @@
   "UNDO": "UNDO",
   "seeAll": "Show All ",
   "skip": "Skip",
-  "sorryWeDontHave": "SORRY WE DON'T HAVE ITEMS FOR THIS CATEGORY , BUT WE WILL ADD SOON",
   "myFavorites" : "My Favorites",
   "addToCart": "Add To Cart",
   "reviewAndRatings" : "Review & Ratings",

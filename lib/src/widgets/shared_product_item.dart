@@ -87,15 +87,25 @@ class _SharedProductItemState extends State<SharedProductItem> {
                 padding: language == "ar"
                     ? EdgeInsets.only(right: 8)
                     : EdgeInsets.only(left: 8),
-                child: Text(
-                  "${product.title}",
-                  style: TextStyle(
-                    fontSize: _isLandScape
-                        ? screenUtil.setSp(30)
-                        : screenUtil.setSp(50),
-                    color: Colors.black,
-                  ),
-                ),
+                child: language == "ar"
+                    ? Text(
+                        "${product.arTitle}",
+                        style: TextStyle(
+                          fontSize: _isLandScape
+                              ? screenUtil.setSp(30)
+                              : screenUtil.setSp(50),
+                          color: Colors.black,
+                        ),
+                      )
+                    : Text(
+                        "${product.enTitle}",
+                        style: TextStyle(
+                          fontSize: _isLandScape
+                              ? screenUtil.setSp(30)
+                              : screenUtil.setSp(50),
+                          color: Colors.black,
+                        ),
+                      ),
               ),
               SizedBox(height: 1),
               Padding(
@@ -232,7 +242,9 @@ class _SharedProductItemState extends State<SharedProductItem> {
                         cart.addItem(
                           productId: product.id,
                           productPrice: product.price,
-                          productTitle: product.title,
+                          productTitle: language == "ar"
+                              ? product.arTitle
+                              : product.enTitle,
                           productImage: product.imageUrl,
                         );
                       },

@@ -87,16 +87,27 @@ class _ProductItemState extends State<ProductItem> {
                 padding: language == "ar"
                     ? EdgeInsets.only(right: 6)
                     : EdgeInsets.only(left: 6),
-                child: Text(
-                  "${product.title}",
-                  maxLines: 1,
-                  style: TextStyle(
-                    fontSize: isLandScape
-                        ? screenUtil.setSp(30)
-                        : screenUtil.setSp(34),
-                    color: Colors.black,
-                  ),
-                ),
+                child: language == "ar"
+                    ? Text(
+                        "${product.arTitle}",
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: isLandScape
+                              ? screenUtil.setSp(30)
+                              : screenUtil.setSp(34),
+                          color: Colors.black,
+                        ),
+                      )
+                    : Text(
+                        "${product.enTitle}",
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: isLandScape
+                              ? screenUtil.setSp(30)
+                              : screenUtil.setSp(34),
+                          color: Colors.black,
+                        ),
+                      ),
               ),
               SizedBox(height: 1),
               Padding(
@@ -219,7 +230,9 @@ class _ProductItemState extends State<ProductItem> {
                         cart.addItem(
                           productId: product.id,
                           productPrice: product.price,
-                          productTitle: product.title,
+                          productTitle: language == "ar"
+                              ? product.arTitle
+                              : product.enTitle,
                           productImage: product.imageUrl,
                         );
                       },

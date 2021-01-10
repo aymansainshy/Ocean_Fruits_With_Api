@@ -183,7 +183,8 @@ class Products with ChangeNotifier {
             price: double.parse(product["product"]["price"]),
             discount: double.parse(product["product"]["discount"]),
             isFruit: product["product"]["type"] == 1 ? true : false,
-            title: product["product"]["name"],
+            arTitle: product["product"]["name_ar"],
+            enTitle: product["product"]["name_en"],
             unit: product["product"]["unit_id"],
             isFavorits: true,
           ),
@@ -196,7 +197,7 @@ class Products with ChangeNotifier {
     }
   }
 
-  Future<Response> fetchProducts() async {
+  Future<void> fetchProducts() async {
     const url = 'https://veget.ocean-sudan.com/api/';
     try {
       final response = await dio.get(
@@ -216,7 +217,7 @@ class Products with ChangeNotifier {
       final adAndDeliveryFeeResponse = responseData["Config"] as List<dynamic>;
 
       // if (userId != null) {
-      //   await fetchFavoritesProducts(1.toString());
+      // await fetchFavoritesProducts(1.toString());
       // }
 
       List<Product> _productsListData = [];
@@ -228,7 +229,8 @@ class Products with ChangeNotifier {
             price: double.parse(product["price"]),
             discount: double.parse(product["discount"]),
             isFruit: product["type"] == 1 ? true : false,
-            title: product["name"],
+            arTitle: product["name_ar"],
+            enTitle: product["name_en"],
             unit: product["unit_id"],
             isFavorits: isFavContainProductId(product["id"].toString()),
           ),
