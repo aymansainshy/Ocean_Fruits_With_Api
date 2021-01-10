@@ -89,6 +89,7 @@ class _ProductItemState extends State<ProductItem> {
                     : EdgeInsets.only(left: 6),
                 child: Text(
                   "${product.title}",
+                  maxLines: 1,
                   style: TextStyle(
                     fontSize: isLandScape
                         ? screenUtil.setSp(30)

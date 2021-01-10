@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/shared_product_item.dart';
 import '../providers/products_provider.dart';
@@ -24,9 +25,12 @@ class FruitsScreen extends StatefulWidget {
 class _FruitsScreenState extends State<FruitsScreen> {
   @override
   Widget build(BuildContext context) {
-    final products = Provider.of<Products>(context, listen: false);
+    ScreenUtil.init(context);
+    ScreenUtil screenUtil = ScreenUtil();
     var _isLandScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
+
+    final products = Provider.of<Products>(context, listen: false);
 
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
@@ -91,29 +95,59 @@ class _FruitsScreenState extends State<FruitsScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: _isLandScape ? 5 : 15),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 1,
-            crossAxisSpacing: _isLandScape ? 1 : 5,
-            mainAxisSpacing: _isLandScape ? 1 : 5,
-          ),
-          itemCount: products.fruitesProducts.length,
-          itemBuilder: (context, index) => ChangeNotifierProvider.value(
-            value: products.fruitesProducts[index],
-            child: Container(
-              padding: EdgeInsets.only(
-                top: 10,
-                left: 5,
-                right: 5,
+      body: products.fruitesProducts.isEmpty
+          ? Center(
+              child: Container(
+                padding: const EdgeInsets.all(15.0),
+                height: screenUtil.setHeight(500),
+                width: screenUtil.setWidth(700),
+                margin: EdgeInsets.all(15.0),
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    translate('sorryWeDontHave', context),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: _isLandScape
+                          ? screenUtil.setSp(30)
+                          : screenUtil.setSp(40),
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Cairo",
+                      wordSpacing: 1,
+                    ),
+                  ),
+                ),
               ),
-              child: SharedProductItem(),
+            )
+          : Padding(
+              padding: EdgeInsets.symmetric(horizontal: _isLandScape ? 5 : 15),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1,
+                  crossAxisSpacing: _isLandScape ? 1 : 5,
+                  mainAxisSpacing: _isLandScape ? 1 : 5,
+                ),
+                itemCount: products.fruitesProducts.length,
+                itemBuilder: (context, index) => ChangeNotifierProvider.value(
+                  value: products.fruitesProducts[index],
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      top: 10,
+                      left: 5,
+                      right: 5,
+                    ),
+                    child: SharedProductItem(),
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }
