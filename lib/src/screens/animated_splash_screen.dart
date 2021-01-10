@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ocean_fruits/src/providers/products_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/app_constant.dart';
 

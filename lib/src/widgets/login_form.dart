@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/build_form_field.dart';
+import '../screens/tap_screen.dart';
 import '../utils/app_constant.dart';
 
 class LoginForm extends StatefulWidget {
@@ -259,8 +260,8 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                     ),
                   ),
                   onPressed: () {
-                    _saveForm();
-                    // Navigator.of(context).pushNamed(TapScreen.routeName);
+                    // _saveForm();
+                    Navigator.of(context).pushNamed(TapScreen.routeName);
                   },
                 ),
               ),

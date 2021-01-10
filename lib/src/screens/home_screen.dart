@@ -13,18 +13,18 @@ import '../providers/cart_provider.dart';
 import '../utils/app_constant.dart';
 import '../widgets/build_cart_stack.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> tapScaffoldKey;
   const HomeScreen({
     Key key,
     this.tapScaffoldKey,
   }) : super(key: key);
 
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
+//   @override
+//   _HomeScreenState createState() => _HomeScreenState();
+// }
 
-class _HomeScreenState extends State<HomeScreen> {
+// class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: language == "ar"
                   ? EdgeInsets.only(right: 15)
                   : EdgeInsets.all(0.0),
-              onPressed: () => widget.tapScaffoldKey.currentState.openDrawer(),
+              onPressed: () => tapScaffoldKey.currentState.openDrawer(),
               icon: Container(
                 // color: Colors.teal,
                 height: 30,
@@ -97,104 +97,133 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          Container(
-            height: 80,
-            color: AppColors.primaryColor,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Column(
-                        children: [
-                          Container(
-                            width: mediaQuery.width,
-                            height: isLandScape
-                                ? screenUtil.setHeight(700)
-                                : screenUtil.setHeight(480),
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
+      body: FutureBuilder(
+        future: Provider.of<Products>(context, listen: false).fetchProducts(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(
+                backgroundColor: AppColors.greenColor,
+                strokeWidth: 2.5,
+              ),
+            );
+          } else {
+            if (snapshot.error != null) {
+              return Center(
+                child: Text(snapshot.error.toString()),
+              );
+            } else {
+              return Stack(
+                children: [
+                  Container(
+                    height: 80,
+                    color: AppColors.primaryColor,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: [
+                        CustomScrollView(
+                          slivers: [
+                            SliverToBoxAdapter(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: mediaQuery.width,
+                                    height: isLandScape
+                                        ? screenUtil.setHeight(700)
+                                        : screenUtil.setHeight(480),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                    ),
+                                    child: products.adsImage != null
+                                        ? Image.network(
+                                            products.adsImage,
+                                            fit: BoxFit.fill,
+                                          )
+                                        : Image.asset(
+                                            "assets/images/offer.png",
+                                            fit: BoxFit.fill,
+                                          ),
+                                  ),
+                                  Container(
+                                    height: 10,
+                                  ),
+                                ],
                               ),
                             ),
-                            child: Image.asset(
-                              "assets/images/offer.png",
-                              fit: BoxFit.fill,
+                            SliverAppBar(
+                              automaticallyImplyLeading: false,
+                              pinned: true,
+                              elevation: 0.0,
+                              backgroundColor: Colors.transparent,
+                              flexibleSpace: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  _buildRaisedBattom(
+                                      translate("fruits", context), mediaQuery,
+                                      () {
+                                    Navigator.of(context).pushNamed(
+                                      FruitsScreen.routeName,
+                                    );
+                                  }, screenUtil, isLandScape),
+                                  SizedBox(width: 10),
+                                  _buildRaisedBattom(
+                                      translate("vegetabel", context),
+                                      mediaQuery, () {
+                                    Navigator.of(context).pushNamed(
+                                      VegetableScreen.routeName,
+                                    );
+                                  }, screenUtil, isLandScape),
+                                ],
+                              ),
                             ),
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SliverAppBar(
-                      automaticallyImplyLeading: false,
-                      pinned: true,
-                      elevation: 0.0,
-                      backgroundColor: Colors.transparent,
-                      flexibleSpace: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _buildRaisedBattom(
-                              translate("fruits", context), mediaQuery, () {
-                            Navigator.of(context).pushNamed(
-                              FruitsScreen.routeName,
-                            );
-                          }, screenUtil, isLandScape),
-                          SizedBox(width: 10),
-                          _buildRaisedBattom(
-                              translate("vegetabel", context), mediaQuery, () {
-                            Navigator.of(context).pushNamed(
-                              VegetableScreen.routeName,
-                            );
-                          }, screenUtil, isLandScape),
-                        ],
-                      ),
-                    ),
-                    SliverGrid(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) => ChangeNotifierProvider.value(
-                          value: products.recommendeProducts[index],
-                          child: Container(
-                            padding: EdgeInsets.only(
-                              top: 10,
-                              left: 5,
-                              right: 5,
+                            SliverGrid(
+                              delegate: SliverChildBuilderDelegate(
+                                (context, index) =>
+                                    ChangeNotifierProvider.value(
+                                  value: products.recommendeProducts[index],
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                      top: 10,
+                                      left: 5,
+                                      right: 5,
+                                    ),
+                                    child: ProductItem(),
+                                  ),
+                                ),
+                                childCount: products.recommendeProducts.length,
+                              ),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                childAspectRatio: 0.97,
+                                crossAxisSpacing: 2,
+                                mainAxisSpacing: 4,
+                              ),
                             ),
-                            child: ProductItem(),
-                          ),
+                            SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                (context, indext) => Container(
+                                  height: 10,
+                                ),
+                                childCount: 1,
+                              ),
+                            ),
+                          ],
                         ),
-                        childCount: products.recommendeProducts.length,
-                      ),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 0.97,
-                        crossAxisSpacing: 2,
-                        mainAxisSpacing: 4,
-                      ),
+                      ],
                     ),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, indext) => Container(
-                          height: 10,
-                        ),
-                        childCount: 1,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+                  ),
+                ],
+              );
+            }
+          }
+        },
       ),
     );
   }

@@ -36,7 +36,8 @@ dependencies:
   intl_phone_number_input: ^0.6.0
   connectivity: ^2.0.2
   url_launcher: ^5.7.10
-  flutter_spinkit: "^4.1.2"
+  flutter_spinkit: ^4.1.2
+  dio: ^3.0.10
 
 dev_dependencies:
   flutter_test:
