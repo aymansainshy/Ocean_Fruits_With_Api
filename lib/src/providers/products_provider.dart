@@ -133,6 +133,69 @@ class Products with ChangeNotifier {
     return _recommendedProducts.where((product) => !product.isFruit).toList();
   }
 
+  List<Product> _favProduct = [];
+  List<Product> get favProduct {
+    return [..._favProduct];
+  }
+
+  bool isFavContainProductId(String id) {
+    if (_favProduct.isEmpty || _favProduct == null) {
+      return false;
+    }
+    List<String> _favProductId = _favProduct.map((_fav) {
+      return _fav.id;
+    }).toList();
+
+    if (_favProductId.contains(id)) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> fetchFavoritesProducts(String userId) async {
+    Dio dio = Dio();
+    var url = 'https://veget.ocean-sudan.com/api/user/favort';
+    try {
+      final response = await dio.get(
+        url,
+        queryParameters: {
+          'user_id': userId ?? 1,
+        },
+        options: Options(
+          sendTimeout: 2000,
+          receiveTimeout: 1000,
+          headers: {
+            'content-type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+
+      final responseData = response.data as List<dynamic>;
+
+      List<Product> _productData = [];
+      responseData.forEach(
+        (product) => _productData.add(
+          Product(
+            id: product["product"]["id"].toString(),
+            imageUrl:
+                "https://veget.ocean-sudan.com" + product["product"]["image"],
+            price: double.parse(product["product"]["price"]),
+            discount: double.parse(product["product"]["discount"]),
+            isFruit: product["product"]["type"] == 1 ? true : false,
+            title: product["product"]["name"],
+            unit: product["product"]["unit_id"],
+            isFavorits: true,
+          ),
+        ),
+      );
+      _favProduct = _productData;
+      notifyListeners();
+    } catch (e) {
+      throw e;
+    }
+  }
+
   Future<Response> fetchProducts() async {
     const url = 'https://veget.ocean-sudan.com/api/';
     try {
@@ -153,7 +216,7 @@ class Products with ChangeNotifier {
       final adAndDeliveryFeeResponse = responseData["Config"] as List<dynamic>;
 
       // if (userId != null) {
-      //   await fetchFavoritesMeal(userId);
+      //   await fetchFavoritesProducts(1.toString());
       // }
 
       List<Product> _productsListData = [];
@@ -167,6 +230,7 @@ class Products with ChangeNotifier {
             isFruit: product["type"] == 1 ? true : false,
             title: product["name"],
             unit: product["unit_id"],
+            isFavorits: isFavContainProductId(product["id"].toString()),
           ),
         ),
       );
