@@ -244,11 +244,6 @@ class Products with ChangeNotifier {
         _deliverFee = double.parse(e["deliver_fee"]);
       });
       notifyListeners();
-
-      print("Product List .... " + _recommendedProducts.toString());
-      print("Image ADS .... " + _adImage.toString());
-      print("dilevery FEE .... " + _deliverFee.toString());
-      return response;
     } catch (e) {
       print("Error Massege ...." + e.toString());
       throw e;

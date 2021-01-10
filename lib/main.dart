@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import './src/screens/animated_splash_screen.dart';
 import './src/providers/products_provider.dart';
 import './src/providers/cart_provider.dart';
+import './src/providers/auth_provider.dart';
 import './src/providers/orders_provider.dart';
 import './src/lang/language_provider.dart';
 import './src/lang/app_locelazation.dart';
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(
           value: LanguageProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: AuthProvider(),
         ),
         ChangeNotifierProvider.value(
           value: Products(),
