@@ -23,7 +23,6 @@ class FavoritesScreen extends StatefulWidget {
 class _FavoritesScreenState extends State<FavoritesScreen> {
   @override
   Widget build(BuildContext context) {
-    final products = Provider.of<Products>(context, listen: false);
     ScreenUtil.init(context);
     ScreenUtil screenUtil = ScreenUtil();
 
@@ -218,10 +217,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                     crossAxisSpacing: _isLandScape ? 1 : 5,
                                     mainAxisSpacing: _isLandScape ? 1 : 5,
                                   ),
-                                  itemCount: products.favProduct.length,
+                                  itemCount: product.favProduct.length,
                                   itemBuilder: (context, index) =>
                                       ChangeNotifierProvider.value(
-                                    value: products.favProduct[index],
+                                    value: product.favProduct[index],
                                     child: Container(
                                       padding: EdgeInsets.only(
                                         top: 10,
