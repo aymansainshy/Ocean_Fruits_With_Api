@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../utils/app_constant.dart';
-import '../lang/language_provider.dart';
 import '../screens/edit_profile_screen.dart';
+import '../providers/auth_provider.dart';
+import '../lang/language_provider.dart';
+import '../utils/app_constant.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const routeName = "profile-name";
@@ -25,6 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         MediaQuery.of(context).orientation == Orientation.landscape;
     ScreenUtil screenUtil = ScreenUtil();
 
+    final userData = Provider.of<AuthProvider>(context, listen: false);
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
     final language = langugeProvider.appLocal.languageCode;
@@ -81,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: [
                     Text(
-                      "Ayman Sainshy ",
+                      "${userData.userName}",
                       style: TextStyle(
                         fontSize: isLandScape
                             ? screenUtil.setSp(40)
@@ -91,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     Text(
-                      "ayman95@gmail.com ",
+                      "${userData.userEmail}",
                       style: TextStyle(
                         fontSize: isLandScape
                             ? screenUtil.setSp(30)
@@ -181,25 +183,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               isLandScape: isLandScape,
                               screenUtil: screenUtil,
                               text1: translate("userName", context),
-                              text2: "Ayman Sainshy",
+                              text2: "${userData.userName}",
                             ),
                             BuildProfileCardText(
                               isLandScape: isLandScape,
                               screenUtil: screenUtil,
                               text1: translate("email", context),
-                              text2: "ayman95@gmail.com ",
+                              text2: "${userData.userEmail}",
                             ),
                             BuildProfileCardText(
                               isLandScape: isLandScape,
                               screenUtil: screenUtil,
                               text1: translate("address", context),
-                              text2: "New York city , Manhattan St. 65",
+                              text2: "${userData.userAddress}",
                             ),
                             BuildProfileCardText(
                               isLandScape: isLandScape,
                               screenUtil: screenUtil,
                               text1: translate("phone", context),
-                              text2: "+12477755677",
+                              text2: "${userData.userPhone}",
                             ),
                             BuildProfileCardText(
                               isLandScape: isLandScape,

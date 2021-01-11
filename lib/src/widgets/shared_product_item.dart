@@ -106,6 +106,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                 child: language == "ar"
                     ? Text(
                         "${product.arTitle}",
+                        maxLines: 1,
                         style: TextStyle(
                           fontSize: _isLandScape
                               ? screenUtil.setSp(30)
@@ -115,6 +116,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                       )
                     : Text(
                         "${product.enTitle}",
+                        maxLines: 1,
                         style: TextStyle(
                           fontSize: _isLandScape
                               ? screenUtil.setSp(30)
