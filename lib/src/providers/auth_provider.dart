@@ -20,7 +20,8 @@ class AuthProvider with ChangeNotifier {
   bool get isAuth {
     print('Rebuilding ............');
     print("Tookeeeeeeeeeeeeeeeen is " + _userToken.toString());
-    return _userToken != null;
+    return userId != null;
+    // return _userToken != null;
   }
 
   String get password {
@@ -54,8 +55,8 @@ class AuthProvider with ChangeNotifier {
       userAddress = responseData["address"];
       userEmail = responseData["email"];
       userPhone = responseData["phone"].toString();
-      _userToken = responseData["remember_token"];
-      _userPassword = responseData["password"];
+      // _userToken = responseData["remember_token"];
+      // _userPassword = responseData["password"];
       // imageUrl = responseData["image_url"] == null
       //     ? ""
       //     : 'https://veget.ocean-sudan.com/api/' +
@@ -70,8 +71,8 @@ class AuthProvider with ChangeNotifier {
         "userAddress": responseData["address"],
         "userEmail": responseData["email"],
         "userPhone": responseData["phone"].toString(),
-        "userToken": responseData["remember_token"],
-        "userPassword": responseData["password"],
+        // "userToken": responseData["remember_token"],
+        // "userPassword": responseData["password"],
         // "imageUrl": responseData["image_url"] == null
         //     ? ""
         //     : 'https://veget.ocean-sudan.com/api/' +
@@ -102,7 +103,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> login(String email, String password) async {
-    final url = 'https://backend.bdcafrica.site/api/user/login';
+    final url = 'https://veget.ocean-sudan.com/api/user/login';
     var data = {
       "email": email,
       "password": password,
@@ -123,14 +124,14 @@ class AuthProvider with ChangeNotifier {
     userAddress = _userData["userAddress"];
     userEmail = _userData["userEmail"];
     userPhone = _userData["userPhone"];
-    _userPassword = _userData["userPassword"];
-    imageUrl = _userData["imageUrl"];
-    _userToken = _userData["userToken"];
+    // _userPassword = _userData["userPassword"];
+    // imageUrl = _userData["imageUrl"];
+    // _userToken = _userData["userToken"];
     notifyListeners();
     return true;
   }
 
-  void logOut() async {
+  Future<void> logOut() async {
     _userToken = null;
     userId = null;
     notifyListeners();

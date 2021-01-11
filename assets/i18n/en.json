@@ -21,7 +21,7 @@
   "passwordDontMatch" : "Passwords do not match!",
   "enterYourPhoneNumber" :"Please enter your phone number",
   "PhoneNumberValid" : "Phone number must be at lest 10",
-  "PhoneNumberValid2" : "Phone number must less than 11 or equal 10",
+  "PhoneNumberValid2" : "Please enter a valid phone number",
   "validPhone" : "Please enter valid phone number",
   "home": "Home",
   "profile": "Profile",

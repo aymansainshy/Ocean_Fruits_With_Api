@@ -39,6 +39,7 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
   var isVisible = false;
   var isPasswordHide = true;
   var isLoading = false;
+  var isPhoneValide = false;
 
   var signUpData = {
     'name': '',
@@ -183,6 +184,9 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
 
   RegExp _isEmailValid = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+
+  RegExp _isPhoneValid =
+      RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$');
   @override
   Widget build(BuildContext context) {
     _animationController.forward();
@@ -400,29 +404,29 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                     return translate("PhoneNumberValid", context);
                   }
 
-                  if (value.toString().length > 10) {
+                  if (!isPhoneValide) {
                     return translate("PhoneNumberValid2", context);
                   }
 
-                  // if (!value.toString().startsWith('+') &&
-                  //     !value.toString().startsWith('0')) {
-                  //   return translate("validPhone", context);
-                  // }
+                  if (!_isPhoneValid.hasMatch(value)) {
+                    return translate("PhoneNumberValid2", context);
+                  }
 
                   return null;
                 },
                 onInputChanged: (PhoneNumber number) {
-                  // signUpData['phoneNumber'] = number.phoneNumber;
                   print(number.phoneNumber);
                 },
                 onInputValidated: (bool value) {
-                  // if (value) {
-                  //   signUpData['phoneNumber'] = number.phoneNumber;
-                  // }
+                  setState(() {
+                    isPhoneValide = value;
+                  });
                   print(value);
                 },
                 onSaved: (value) {
-                  signUpData['phoneNumber'] = value.toString();
+                  if (isPhoneValide) {
+                    signUpData['phoneNumber'] = value.toString();
+                  }
                 },
               ),
             ),

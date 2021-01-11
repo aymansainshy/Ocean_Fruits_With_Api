@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/build_form_field.dart';
+import '../providers/auth_provider.dart';
+import '../models/http_exception.dart';
 import '../screens/tap_screen.dart';
 import '../utils/app_constant.dart';
 
@@ -83,22 +86,22 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  // void _showArrorDialog(String message) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (ctx) => AlertDialog(
-  //       title: Text("An error accured "),
-  //       content: Text(message),
-  //       actions: [
-  //         FlatButton(
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //             child: Text("Ok"))
-  //       ],
-  //     ),
-  //   );
-  // }
+  void _showArrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text("An error accured "),
+        content: Text(message),
+        actions: [
+          FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Ok"))
+        ],
+      ),
+    );
+  }
 
   void _saveForm() async {
     final isValid = _formKey.currentState.validate();
@@ -108,6 +111,40 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
     _formKey.currentState.save();
     print(logInData['email']);
     print(logInData['password']);
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      await Provider.of<AuthProvider>(context, listen: false).login(
+        logInData['email'],
+        logInData['password'],
+      );
+      setState(() {
+        isLoading = false;
+      });
+      // if (widget.isSignUp) {
+      //   Navigator.of(context).pushReplacementNamed('/');
+      // } else {
+      //   Navigator.of(context).pop();
+      //   Navigator.of(context).pop();
+      //   Navigator.of(context).pushReplacementNamed('/');
+      // }
+    } on HttpException catch (e) {
+      var errorMessage = translate("anErrorPleaseTryLater", context);
+      if (e.toString() == '0') {
+        errorMessage = translate("thisPasswordInCorrect", context);
+      } else if (e.toString() == '1') {
+        errorMessage = translate("thisEmailInCorrect", context);
+      }
+      _showArrorDialog(errorMessage);
+    } catch (e) {
+      final errorMessage = translate("anErrorPleaseTryLater", context);
+      _showArrorDialog(errorMessage);
+    }
+    setState(() {
+      isLoading = false;
+    });
+    // _formKey.currentState.reset();
   }
 
   RegExp _isEmailValid = RegExp(
@@ -250,18 +287,25 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                   ),
                   color: AppColors.primaryColor,
                   textColor: Colors.white,
-                  child: Text(
-                    translate("login", context),
-                    style: TextStyle(
-                      fontSize: widget.isLandScape
-                          ? widget.screenUtil.setSp(25)
-                          : widget.screenUtil.setSp(45),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: AppColors.greenColor,
+                            strokeWidth: 2.5,
+                          ),
+                        )
+                      : Text(
+                          translate("login", context),
+                          style: TextStyle(
+                            fontSize: widget.isLandScape
+                                ? widget.screenUtil.setSp(25)
+                                : widget.screenUtil.setSp(45),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                   onPressed: () {
-                    // _saveForm();
-                    Navigator.of(context).pushNamed(TapScreen.routeName);
+                    _saveForm();
+                    // Navigator.of(context).pushNamed(TapScreen.routeName);
                   },
                 ),
               ),

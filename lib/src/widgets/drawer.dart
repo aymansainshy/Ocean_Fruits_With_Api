@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/build_drawer_list.dart';
+import '../providers/auth_provider.dart';
 import '../screens/language_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/order_screen.dart';
-import '../screens/login_screen.dart';
 import '../screens/tap_screen.dart';
 import '../utils/app_constant.dart';
 
@@ -16,6 +17,7 @@ class AppDrawer extends StatelessWidget {
     ScreenUtil screenUtil = ScreenUtil();
     var isLandScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
+    final authData = Provider.of<AuthProvider>(context, listen: false);
 
     return Drawer(
       child: Scaffold(
@@ -146,17 +148,31 @@ class AppDrawer extends StatelessWidget {
             SizedBox(
               height: screenUtil.setHeight(5),
             ),
-            BuildDrawerList(
-              leading: Icon(
-                Icons.exit_to_app,
-                color: Colors.white,
+            if (authData.isAuth)
+              BuildDrawerList(
+                leading: Icon(
+                  Icons.exit_to_app,
+                  color: Colors.white,
+                ),
+                title: translate("logOut", context),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacementNamed('/');
+                  authData.logOut();
+                },
               ),
-              title: translate("logOut", context),
-              onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(LoginScreen.routeName);
-              },
-            ),
+            if (!authData.isAuth)
+              BuildDrawerList(
+                leading: Icon(
+                  Icons.exit_to_app,
+                  color: Colors.white,
+                ),
+                title: translate("login", context),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacementNamed('/');
+                },
+              ),
           ],
         ),
       ),
