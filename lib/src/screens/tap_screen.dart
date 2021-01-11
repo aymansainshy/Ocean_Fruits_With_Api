@@ -19,22 +19,13 @@ class _TapScreenState extends State<TapScreen> {
   final GlobalKey<ScaffoldState> _tapScaffoldKey =
       new GlobalKey<ScaffoldState>();
 
-  List<Map<String, Object>> _pages;
+  List<Widget> _pages;
   @override
   void initState() {
     _pages = [
-      {
-        'page': HomeScreen(tapScaffoldKey: _tapScaffoldKey),
-        'title': '"Ocean Fruits"',
-      },
-      {
-        'page': CartScreen(tapScaffoldKey: _tapScaffoldKey),
-        'title': 'Cart ',
-      },
-      {
-        'page': FavoritesScreen(tapScaffoldKey: _tapScaffoldKey),
-        'title': 'Favorites',
-      },
+      HomeScreen(tapScaffoldKey: _tapScaffoldKey),
+      CartScreen(tapScaffoldKey: _tapScaffoldKey),
+      FavoritesScreen(tapScaffoldKey: _tapScaffoldKey),
     ];
     super.initState();
   }
@@ -49,7 +40,11 @@ class _TapScreenState extends State<TapScreen> {
     return Scaffold(
       key: _tapScaffoldKey,
       drawer: AppDrawer(),
-      body: _pages[_selectedItemIndex]["page"],
+      body: IndexedStack(
+        index: _selectedItemIndex,
+        children: _pages,
+      ),
+      //  _pages[_selectedItemIndex]["page"],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           boxShadow: [
