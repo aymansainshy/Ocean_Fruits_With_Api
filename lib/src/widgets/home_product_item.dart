@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/custom_alert_not_autherazed.dart';
 import '../providers/cart_provider.dart';
+import '../providers/auth_provider.dart';
 import '../lang/language_provider.dart';
-import '../utils/app_constant.dart';
 import '../models/product_model.dart';
+import '../utils/app_constant.dart';
 
 class ProductItem extends StatefulWidget {
   const ProductItem({
@@ -25,6 +27,7 @@ class _ProductItemState extends State<ProductItem> {
         MediaQuery.of(context).orientation == Orientation.landscape;
     Product product = Provider.of<Product>(context, listen: false);
     Carts cart = Provider.of<Carts>(context);
+    final userData = Provider.of<AuthProvider>(context, listen: false);
 
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
@@ -70,7 +73,20 @@ class _ProductItemState extends State<ProductItem> {
                     : screenUtil.setWidth(80),
                 child: InkWell(
                   onTap: () {
-                    product.toggleFavorites();
+                    if (!userData.isAuth) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => CustomAlertNotAutherazed(
+                          color: Colors.yellow[800],
+                          topText: translate("notAuthorized", context),
+                          bottomText: translate("please", context),
+                          iconData: Icons.priority_high,
+                        ),
+                      );
+                      return;
+                    }
+
+                    product.toggleFavorites(userData.userId);
                     setState(() {});
                   },
                   child: Image.asset(

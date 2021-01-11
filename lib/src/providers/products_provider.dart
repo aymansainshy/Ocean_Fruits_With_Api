@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import '../models/product_model.dart';
 
 class Products with ChangeNotifier {
+  final String userId;
   Dio dio = Dio();
   double _deliverFee;
   String _adImage;
@@ -109,6 +110,8 @@ class Products with ChangeNotifier {
     // ),
   ];
 
+  Products(this.userId);
+
   List<Product> get recommendeProducts {
     return [..._recommendedProducts];
   }
@@ -121,9 +124,9 @@ class Products with ChangeNotifier {
     return _adImage;
   }
 
-  List<Product> get favoritesProducts {
-    return _recommendedProducts.where((product) => product.isFavorits).toList();
-  }
+  // List<Product> get favoritesProducts {
+  //   return _recommendedProducts.where((product) => product.isFavorits).toList();
+  // }
 
   List<Product> get fruitesProducts {
     return _recommendedProducts.where((product) => product.isFruit).toList();
@@ -182,7 +185,9 @@ class Products with ChangeNotifier {
                 "https://veget.ocean-sudan.com" + product["product"]["image"],
             price: double.parse(product["product"]["price"]),
             discount: double.parse(product["product"]["discount"]),
-            isFruit: product["product"]["type"] == 1 ? true : false,
+            isFruit: (product["product"]["type"] as String).contains("1")
+                ? true
+                : false,
             arTitle: product["product"]["name_ar"],
             enTitle: product["product"]["name_en"],
             unit: product["product"]["unit_id"],
@@ -216,9 +221,9 @@ class Products with ChangeNotifier {
       final productResponse = responseData["products"] as List<dynamic>;
       final adAndDeliveryFeeResponse = responseData["Config"] as List<dynamic>;
 
-      // if (userId != null) {
-      // await fetchFavoritesProducts(1.toString());
-      // }
+      if (userId != null) {
+        await fetchFavoritesProducts(userId);
+      }
 
       List<Product> _productsListData = [];
       productResponse.forEach(
@@ -228,7 +233,7 @@ class Products with ChangeNotifier {
             imageUrl: "https://veget.ocean-sudan.com" + product["image"],
             price: double.parse(product["price"]),
             discount: double.parse(product["discount"]),
-            isFruit: product["type"] == 1 ? true : false,
+            isFruit: (product["type"] as String).contains("1") ? true : false,
             arTitle: product["name_ar"],
             enTitle: product["name_en"],
             unit: product["unit_id"],

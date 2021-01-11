@@ -28,9 +28,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: AuthProvider(),
         ),
-        ChangeNotifierProvider.value(
-          value: Products(),
+
+        ///[ProxyProvider]  the 'UserProvider' widget depends on  [Auth] & [ProductProvider]
+        ChangeNotifierProxyProvider<AuthProvider, Products>(
+          update: (context, auth, __) => Products(auth.userId),
+          create: (_) => null,
         ),
+
         ChangeNotifierProvider.value(
           value: Carts(),
         ),
