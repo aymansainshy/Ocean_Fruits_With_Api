@@ -157,7 +157,7 @@ class Products with ChangeNotifier {
 
   Future<void> fetchFavoritesProducts(String userId) async {
     Dio dio = Dio();
-    var url = 'https://veget.ocean-sudan.com/api/user/favort';
+    var url = 'http://veget.ocean-sudan.com/api/user/favort';
     try {
       final response = await dio.get(
         url,
@@ -181,8 +181,8 @@ class Products with ChangeNotifier {
         (product) => _productData.add(
           Product(
             id: product["product"]["id"].toString(),
-            imageUrl:
-                "https://veget.ocean-sudan.com" + product["product"]["image"],
+            imageUrl: "http://veget.ocean-sudan.com/api" +
+                product["product"]["image"],
             price: double.parse(product["product"]["price"]),
             discount: double.parse(product["product"]["discount"]),
             isFruit: (product["product"]["type"] as String).contains("1")
@@ -203,7 +203,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchProducts() async {
-    const url = 'https://veget.ocean-sudan.com/api/';
+    const url = 'http://veget.ocean-sudan.com/api/';
     try {
       final response = await dio.get(
         url,
@@ -230,7 +230,7 @@ class Products with ChangeNotifier {
         (product) => _productsListData.add(
           Product(
             id: product["id"].toString(),
-            imageUrl: "https://veget.ocean-sudan.com" + product["image"],
+            imageUrl: "http://veget.ocean-sudan.com/api" + product["image"],
             price: double.parse(product["price"]),
             discount: double.parse(product["discount"]),
             isFruit: (product["type"] as String).contains("1") ? true : false,
@@ -245,7 +245,7 @@ class Products with ChangeNotifier {
       _recommendedProducts = _productsListData;
 
       adAndDeliveryFeeResponse.forEach((e) {
-        _adImage = "https://veget.ocean-sudan.com/" + e["ad_image"];
+        _adImage = "http://veget.ocean-sudan.com/" + e["ad_image"];
         _deliverFee = double.parse(e["deliver_fee"]);
       });
       notifyListeners();

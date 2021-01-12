@@ -19,7 +19,7 @@ class AuthProvider with ChangeNotifier {
 
   bool get isAuth {
     print('Rebuilding ............');
-    print("Tookeeeeeeeeeeeeeeeen is " + _userToken.toString());
+    print("Tookeeeeeeeeeeeeeeeen is " + userId.toString());
     return userId != null;
     // return _userToken != null;
   }
