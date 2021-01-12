@@ -27,9 +27,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin {
   var isLoading = false;
+  bool _keepAlive = false;
+
   @override
   void initState() {
     super.initState();
+    _doAsyncStuff();
     print('_HomeScreenState initState');
     setState(() {
       isLoading = true;
@@ -41,8 +44,20 @@ class _HomeScreenState extends State<HomeScreen>
     });
   }
 
+  Future<void> _doAsyncStuff() async {
+    _keepAlive = true;
+    updateKeepAlive();
+    // Keeping alive...
+
+    await Future.delayed(Duration(minutes: 10));
+
+    _keepAlive = false;
+    updateKeepAlive();
+    // Can be disposed whenever now.
+  }
+
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => _keepAlive;
 
   @override
   Widget build(BuildContext context) {
