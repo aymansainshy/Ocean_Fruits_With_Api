@@ -164,6 +164,7 @@ class _CartScreenState extends State<CartScreen> {
                         productId: cart.items.keys.toList()[i],
                         productImage:
                             cart.items.values.toList()[i].productImage,
+                        productUnit: cart.items.values.toList()[i].unitTitle,
                         productPrice:
                             cart.items.values.toList()[i].productPrice,
                         productTitle:

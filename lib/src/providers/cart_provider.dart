@@ -35,10 +35,11 @@ class Carts with ChangeNotifier {
 
   void addItem({
     String productId,
+    String productUnit,
     double productPrice,
     String productTitle,
     String productImage,
-    double productDiscount = 3.8,
+    double productDiscount,
   }) {
     if (_items.containsKey(productId)) {
       return;
@@ -50,6 +51,7 @@ class Carts with ChangeNotifier {
           productImage: productImage,
           productPrice: productPrice,
           productTitle: productTitle,
+          unitTitle: productUnit,
           productDiscount: productDiscount,
           quantity: 1,
         ),
@@ -66,6 +68,7 @@ class Carts with ChangeNotifier {
       productId,
       (existingProductItem) => Cart(
         productId: existingProductItem.productId,
+        unitTitle: existingProductItem.unitTitle,
         productTitle: existingProductItem.productTitle,
         quantity: existingProductItem.quantity + 1,
         productPrice: existingProductItem.productPrice,
@@ -84,6 +87,7 @@ class Carts with ChangeNotifier {
       productId,
       (existingProductItem) => Cart(
         productId: existingProductItem.productId,
+        unitTitle: existingProductItem.unitTitle,
         productTitle: existingProductItem.productTitle,
         quantity: existingProductItem.quantity - 1,
         productPrice: existingProductItem.productPrice,

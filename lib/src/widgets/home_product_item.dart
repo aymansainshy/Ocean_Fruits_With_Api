@@ -158,7 +158,7 @@ class _ProductItemState extends State<ProductItem> {
                     ? EdgeInsets.only(right: 6)
                     : EdgeInsets.only(left: 6),
                 child: Text(
-                  "1 kg",
+                  "1 ${product.unit}",
                   style: TextStyle(
                     fontSize: screenUtil.setSp(25),
                     color: Colors.grey,
@@ -245,6 +245,8 @@ class _ProductItemState extends State<ProductItem> {
                       onTap: () {
                         cart.addItem(
                           productId: product.id,
+                          productDiscount: product.discount,
+                          productUnit: product.unit,
                           productPrice: product.price,
                           productTitle: language == "ar"
                               ? product.arTitle

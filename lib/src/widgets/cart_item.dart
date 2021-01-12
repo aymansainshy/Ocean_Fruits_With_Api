@@ -8,6 +8,7 @@ import '../utils/app_constant.dart';
 class CartItem extends StatefulWidget {
   final String productId;
   final String productTitle;
+  final String productUnit;
   final int quantity;
   final double productPrice;
   final String productImage;
@@ -19,6 +20,7 @@ class CartItem extends StatefulWidget {
     this.isLandScape,
     this.screenUtil,
     @required this.productId,
+    @required this.productUnit,
     @required this.productTitle,
     @required this.quantity,
     @required this.productPrice,
@@ -199,7 +201,7 @@ class _CartItemState extends State<CartItem> {
                             children: <Widget>[
                               FittedBox(
                                 child: Text(
-                                  "(${widget.quantity} k)",
+                                  "(${widget.quantity} ${widget.productUnit})",
                                   style: TextStyle(
                                     fontSize: widget.isLandScape
                                         ? widget.screenUtil.setSp(25)

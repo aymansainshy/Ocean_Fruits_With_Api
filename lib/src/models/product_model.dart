@@ -8,7 +8,7 @@ class Product with ChangeNotifier {
   final double price;
   final double discount;
   final String imageUrl;
-  final int unit;
+  final String unit;
   final bool isFruit;
   bool isFavorits;
 

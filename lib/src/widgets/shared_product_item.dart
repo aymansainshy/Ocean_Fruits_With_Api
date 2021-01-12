@@ -162,7 +162,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                     ? EdgeInsets.only(right: 8)
                     : EdgeInsets.only(left: 8),
                 child: Text(
-                  "1 kg",
+                  "1 ${product.unit}",
                   style: TextStyle(
                     fontSize: _isLandScape
                         ? screenUtil.setSp(25)
@@ -260,6 +260,8 @@ class _SharedProductItemState extends State<SharedProductItem> {
                         cart.addItem(
                           productId: product.id,
                           productPrice: product.price,
+                          productDiscount: product.discount,
+                          productUnit: product.unit,
                           productTitle: language == "ar"
                               ? product.arTitle
                               : product.enTitle,

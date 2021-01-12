@@ -178,22 +178,26 @@ class Products with ChangeNotifier {
 
       List<Product> _productData = [];
       responseData.forEach(
-        (product) => _productData.add(
-          Product(
-            id: product["product"]["id"].toString(),
-            imageUrl:
-                "http://veget.ocean-sudan.com" + product["product"]["image"],
-            price: double.parse(product["product"]["price"]),
-            discount: double.parse(product["product"]["discount"]),
-            isFruit: (product["product"]["type"] as String).contains("1")
-                ? true
-                : false,
-            arTitle: product["product"]["name_ar"],
-            enTitle: product["product"]["name_en"],
-            unit: product["product"]["unit_id"],
-            isFavorits: true,
-          ),
-        ),
+        (product) {
+          String unit = _unitTile(product["product"]["unit_id"].toString());
+
+          _productData.add(
+            Product(
+              id: product["product"]["id"].toString(),
+              imageUrl:
+                  "http://veget.ocean-sudan.com" + product["product"]["image"],
+              price: double.parse(product["product"]["price"]),
+              discount: double.parse(product["product"]["discount"]),
+              isFruit: (product["product"]["type"] as String).contains("1")
+                  ? true
+                  : false,
+              arTitle: product["product"]["name_ar"],
+              enTitle: product["product"]["name_en"],
+              unit: unit,
+              isFavorits: true,
+            ),
+          );
+        },
       );
       _favProduct = _productData;
       notifyListeners();
@@ -226,8 +230,11 @@ class Products with ChangeNotifier {
       }
 
       List<Product> _productsListData = [];
-      productResponse.forEach(
-        (product) => _productsListData.add(
+      productResponse.forEach((product) {
+        String unit = _unitTile(product["unit_id"].toString());
+        bool isFavorits = isFavContainProductId(product["id"].toString());
+
+        _productsListData.add(
           Product(
             id: product["id"].toString(),
             imageUrl: "http://veget.ocean-sudan.com" + product["image"],
@@ -236,11 +243,11 @@ class Products with ChangeNotifier {
             isFruit: (product["type"] as String).contains("1") ? true : false,
             arTitle: product["name_ar"],
             enTitle: product["name_en"],
-            unit: product["unit_id"],
-            isFavorits: isFavContainProductId(product["id"].toString()),
+            unit: unit,
+            isFavorits: isFavorits,
           ),
-        ),
-      );
+        );
+      });
 
       _recommendedProducts = _productsListData;
 
@@ -252,6 +259,28 @@ class Products with ChangeNotifier {
     } catch (e) {
       print("Error Massege ...." + e.toString());
       throw e;
+    }
+  }
+
+  String _unitTile(String unit) {
+    switch (unit) {
+      case "0":
+        return "kh";
+        break;
+      case "1":
+        return "haba";
+        break;
+      case "2":
+        return "kk";
+        break;
+      case "3":
+        return "rr";
+        break;
+      case "4":
+        return "k2h";
+        break;
+      default:
+        return "kg";
     }
   }
 }
