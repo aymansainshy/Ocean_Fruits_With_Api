@@ -329,7 +329,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                 width: _isLandScape
                     ? screenUtil.setWidth(170)
                     : screenUtil.setWidth(230),
-                child: Image.asset(
+                child: Image.network(
                   product.imageUrl,
                   fit: _isLandScape ? BoxFit.contain : BoxFit.contain,
                 ),

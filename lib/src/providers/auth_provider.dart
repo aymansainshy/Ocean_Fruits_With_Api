@@ -59,7 +59,7 @@ class AuthProvider with ChangeNotifier {
       // _userPassword = responseData["password"];
       // imageUrl = responseData["image_url"] == null
       //     ? ""
-      //     : 'https://veget.ocean-sudan.com/api/' +
+      //     : 'http://veget.ocean-sudan.com/api/' +
       //         responseData["image_url"];
       notifyListeners();
 
@@ -75,7 +75,7 @@ class AuthProvider with ChangeNotifier {
         // "userPassword": responseData["password"],
         // "imageUrl": responseData["image_url"] == null
         //     ? ""
-        //     : 'https://veget.ocean-sudan.com/api/' +
+        //     : 'http://veget.ocean-sudan.com/api/' +
         //         responseData["image_url"],
       });
       prefs.setString('userData', userData);
@@ -90,7 +90,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> register(String name, String address, String phone, String email,
       String password) async {
-    final url = 'https://veget.ocean-sudan.com/api/user/';
+    final url = 'http://veget.ocean-sudan.com/api/user/';
     var data = {
       "name": name,
       "password": password,
@@ -103,7 +103,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> login(String email, String password) async {
-    final url = 'https://veget.ocean-sudan.com/api/user/login';
+    final url = 'http://veget.ocean-sudan.com/api/user/login';
     var data = {
       "email": email,
       "password": password,
@@ -149,7 +149,7 @@ class AuthProvider with ChangeNotifier {
     File image,
   }) async {
     Dio dio = Dio();
-    final url = 'https://backend.bdcafrica.site/api/user/$userId/';
+    final url = 'http://backend.bdcafrica.site/api/user/$userId/';
 
     Map<String, dynamic> data = {
       "name": userName,
@@ -198,7 +198,7 @@ class AuthProvider with ChangeNotifier {
         "imageUrl": _userData['imageUrl'],
         //  responseData["image_url"] == null
         //     ? ""
-        //     : 'https://backend.bdcafrica.site/images/' +
+        //     : 'http://backend.bdcafrica.site/images/' +
         //         responseData["image_url"],
       });
       prefs.setString("userData", userData);
@@ -212,7 +212,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> uploadImage(File image, String userId) async {
     Dio dio = Dio();
-    final url = 'https://backend.bdcafrica.site/api/user/$userId/imageUpdate';
+    final url = 'http://backend.bdcafrica.site/api/user/$userId/imageUpdate';
     try {
       String fileName = image.path.split('/').last;
       FormData formData = FormData.fromMap({
@@ -252,7 +252,7 @@ class AuthProvider with ChangeNotifier {
         "userToken": responseData["remember_token"],
         "imageUrl": responseData["image_url"] == null
             ? ""
-            : 'https://backend.bdcafrica.site/images/' +
+            : 'http://backend.bdcafrica.site/images/' +
                 responseData["image_url"],
       });
       prefs.setString("userData", userData);
@@ -266,7 +266,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> forgetPassword(String email) async {
     Dio dio = Dio();
-    final url = 'https://backend.bdcafrica.site/api/user/forgetpassword';
+    final url = 'http://backend.bdcafrica.site/api/user/forgetpassword';
     try {
       final response = await dio.post(
         url,

@@ -181,8 +181,8 @@ class Products with ChangeNotifier {
         (product) => _productData.add(
           Product(
             id: product["product"]["id"].toString(),
-            imageUrl: "http://veget.ocean-sudan.com/api" +
-                product["product"]["image"],
+            imageUrl:
+                "http://veget.ocean-sudan.com" + product["product"]["image"],
             price: double.parse(product["product"]["price"]),
             discount: double.parse(product["product"]["discount"]),
             isFruit: (product["product"]["type"] as String).contains("1")
@@ -203,7 +203,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchProducts() async {
-    const url = 'http://veget.ocean-sudan.com/api/';
+    const url = 'http://veget.ocean-sudan.com/api';
     try {
       final response = await dio.get(
         url,
@@ -230,7 +230,7 @@ class Products with ChangeNotifier {
         (product) => _productsListData.add(
           Product(
             id: product["id"].toString(),
-            imageUrl: "http://veget.ocean-sudan.com/api" + product["image"],
+            imageUrl: "http://veget.ocean-sudan.com" + product["image"],
             price: double.parse(product["price"]),
             discount: double.parse(product["discount"]),
             isFruit: (product["type"] as String).contains("1") ? true : false,

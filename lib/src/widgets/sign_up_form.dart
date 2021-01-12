@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../widgets/build_form_field.dart';
 import '../models/http_exception.dart';
 import '../providers/auth_provider.dart';
+import '../screens/tap_screen.dart';
 import '../lang/language_provider.dart';
 import '../utils/app_constant.dart';
 
@@ -463,8 +464,8 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                           ),
                         ),
                   onPressed: () {
-                    _saveForm();
-                    // Navigator.of(context).pushNamed(TapScreen.routeName);
+                    // _saveForm();
+                    Navigator.of(context).pushNamed(TapScreen.routeName);
                   },
                 ),
               ),

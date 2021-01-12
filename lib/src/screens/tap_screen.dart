@@ -18,23 +18,19 @@ class TapScreen extends StatefulWidget {
 class _TapScreenState extends State<TapScreen> {
   final GlobalKey<ScaffoldState> _tapScaffoldKey =
       new GlobalKey<ScaffoldState>();
-  // final _pageController = PageController();
+  final _pageController = PageController();
 
   List<Widget> _pages;
   @override
   void initState() {
     super.initState();
     _pages = [
-      HomeScreen(
-        tapScaffoldKey: _tapScaffoldKey,
-        key: PageStorageKey("homePage"),
-      ),
+      HomeScreen(tapScaffoldKey: _tapScaffoldKey),
       CartScreen(tapScaffoldKey: _tapScaffoldKey),
       FavoritesScreen(tapScaffoldKey: _tapScaffoldKey),
     ];
   }
 
-  final PageStorageBucket bucket = PageStorageBucket();
   int _selectedItemIndex = 0;
 
   @override
@@ -45,21 +41,17 @@ class _TapScreenState extends State<TapScreen> {
     return Scaffold(
       key: _tapScaffoldKey,
       drawer: AppDrawer(),
-      body: PageStorage(
-        child: _pages[_selectedItemIndex],
-        bucket: bucket,
+      body: PageView(
+        controller: _pageController,
+        children: _pages,
+        // physics: NeverScrollableScrollPhysics(),
+        onPageChanged: (index) {
+          setState(() {
+            _selectedItemIndex = index;
+          });
+        },
       ),
-
-      // PageView(
-      //   controller: _pageController,
-      //   children: _pages,
-      //   // physics: NeverScrollableScrollPhysics(),
-      //   onPageChanged: (index) {
-      //     setState(() {
-      //       _selectedItemIndex = index;
-      //     });
-      //   },
-      // ),
+      // _pages[_selectedItemIndex],
       //  IndexedStack(
       //   index: _selectedItemIndex,
       //   children: _pages,
@@ -128,10 +120,10 @@ class _TapScreenState extends State<TapScreen> {
       {Widget redCircle}) {
     return GestureDetector(
       onTap: () {
-        // _pageController.jumpToPage(index);
-        setState(() {
-          _selectedItemIndex = index;
-        });
+        _pageController.jumpToPage(index);
+        // setState(() {
+        // _selectedItemIndex = index;
+        // });
       },
       child: Container(
         height: 55,

@@ -307,7 +307,7 @@ class _ProductItemState extends State<ProductItem> {
                 width: isLandScape
                     ? screenUtil.setWidth(170)
                     : screenUtil.setWidth(160),
-                child: Image.asset(
+                child: Image.network(
                   product.imageUrl,
                   fit: BoxFit.contain,
                 ),

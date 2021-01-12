@@ -24,8 +24,8 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  // with AutomaticKeepAliveClientMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
   var isLoading = false;
   @override
   void initState() {
@@ -41,12 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  // @override
-  // bool get wantKeepAlive => true;
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
-    // super.build(context);
+    super.build(context);
 
     var mediaQuery = MediaQuery.of(context).size;
     var products = Provider.of<Products>(context, listen: false);
