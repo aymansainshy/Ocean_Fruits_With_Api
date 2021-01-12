@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../widgets/custom_alert_not_autherazed.dart';
+import '../providers/auth_provider.dart';
 import '../lang/language_provider.dart';
 import '../widgets/upcoming_order.dart';
 import '../widgets/past_order.dart';
@@ -17,14 +19,54 @@ class OrderScreen extends StatelessWidget {
     ScreenUtil screenUtil = ScreenUtil();
     var isLandScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
-    final List<Widget> _tabBarView = [
-      PastOrder(),
-      UpComingOrder(),
-    ];
 
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
     final language = langugeProvider.appLocal.languageCode;
+    final userData = Provider.of<AuthProvider>(context, listen: false);
+
+    if (!userData.isAuth) {
+      return Scaffold(
+        appBar: AppBar(
+          leading: Builder(
+            builder: (context) => Transform.translate(
+              offset: Offset(6, 0),
+              child: IconButton(
+                padding: const EdgeInsets.all(0.0),
+                onPressed: () => Navigator.of(context).pop(),
+                icon: Container(
+                  // color: Colors.teal,
+                  height: 30,
+                  width: 50,
+                  child: language == "ar"
+                      ? Image.asset(
+                          "assets/icons/arrow_back2.png",
+                          fit: BoxFit.contain,
+                          color: Colors.white,
+                        )
+                      : Image.asset(
+                          "assets/icons/arrow_back.png",
+                          fit: BoxFit.contain,
+                          color: Colors.white,
+                        ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        body: CustomAlertNotAutherazed(
+          color: Colors.yellow[800],
+          topText: translate("youDontHavOrder2", context),
+          bottomText: translate("please", context),
+          iconData: Icons.priority_high,
+        ),
+      );
+    }
+
+    final List<Widget> _tabBarView = [
+      PastOrder(),
+      UpComingOrder(),
+    ];
 
     return DefaultTabController(
       length: 2,

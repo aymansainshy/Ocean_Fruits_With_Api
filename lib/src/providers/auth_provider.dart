@@ -83,7 +83,7 @@ class AuthProvider with ChangeNotifier {
       print("Catch Dio error " + e.response.data['code'].toString());
       throw HttpException(e.response.data['code'].toString());
     } catch (e) {
-      // print("Catch " + e.toString());
+      print("Catch " + e.toString());
       throw e.toString();
     }
   }
