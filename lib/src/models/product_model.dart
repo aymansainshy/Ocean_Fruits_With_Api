@@ -31,7 +31,7 @@ class Product with ChangeNotifier {
 
   Future<void> toggleFavorites(String userId) async {
     Dio dio = Dio();
-    var url = 'https://veget.ocean-sudan.com/api/user/favort';
+    var url = 'http://veget.ocean-sudan.com/api/user/favort';
     final oldStatus = isFavorits;
     isFavorits = !isFavorits;
     notifyListeners();
