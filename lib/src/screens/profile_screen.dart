@@ -35,10 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       key: _scaffoldKey,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-          // Navigator.of(context).pop();
-        },
+        onPressed: () => Navigator.of(context).pop(),
         child: Container(
           height: isLandScape
               ? screenUtil.setHeight(150)

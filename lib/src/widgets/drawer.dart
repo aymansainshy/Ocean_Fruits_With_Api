@@ -7,7 +7,7 @@ import '../providers/auth_provider.dart';
 import '../screens/language_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/order_screen.dart';
-import '../screens/tap_screen.dart';
+// import '../screens/tap_screen.dart';
 import '../utils/app_constant.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -35,24 +35,24 @@ class AppDrawer extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
             ),
-            SizedBox(height: 5),
-            Divider(
-              height: 6,
-              thickness: 1,
-              color: Colors.grey,
-            ),
-            BuildDrawerList(
-              leading: Image.asset(
-                'assets/icons/home stroke.png',
-                color: Colors.white,
-                height: screenUtil.setHeight(65),
-                width: screenUtil.setWidth(65),
-              ),
-              title: translate("home", context),
-              onTap: () {
-                Navigator.of(context).pushReplacementNamed(TapScreen.routeName);
-              },
-            ),
+            // SizedBox(height: 5),
+            // Divider(
+            //   height: 6,
+            //   thickness: 1,
+            //   color: Colors.grey,
+            // ),
+            // BuildDrawerList(
+            //   leading: Image.asset(
+            //     'assets/icons/home stroke.png',
+            //     color: Colors.white,
+            //     height: screenUtil.setHeight(65),
+            //     width: screenUtil.setWidth(65),
+            //   ),
+            //   title: translate("home", context),
+            //   onTap: () {
+            //     Navigator.of(context).pushReplacementNamed(TapScreen.routeName);
+            //   },
+            // ),
             SizedBox(
               height: screenUtil.setHeight(5),
             ),
@@ -68,6 +68,7 @@ class AppDrawer extends StatelessWidget {
               ),
               title: translate("profile", context),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).pushNamed(ProfileScreen.routeName);
               },
             ),
@@ -86,6 +87,7 @@ class AppDrawer extends StatelessWidget {
               ),
               title: translate("order", context),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).pushNamed(OrderScreen.routeName);
               },
             ),
@@ -104,6 +106,7 @@ class AppDrawer extends StatelessWidget {
               ),
               title: translate("language", context),
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).pushNamed(LanguageScreen.routeName);
               },
             ),
@@ -155,10 +158,46 @@ class AppDrawer extends StatelessWidget {
                   color: Colors.white,
                 ),
                 title: translate("logOut", context),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pushReplacementNamed('/');
-                  authData.logOut();
+                onTap: () async {
+                  return showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: Text(translate("areYouSure", context)),
+                      content: Text("You want logOut"),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            translate("yes", context),
+                            style: TextStyle(
+                              color: AppColors.redColor,
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.of(ctx).pop(true);
+                          },
+                        ),
+                        FlatButton(
+                          child: Text(
+                            translate("no", context),
+                            style: TextStyle(
+                              color: AppColors.greenColor,
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.of(ctx).pop(false);
+                          },
+                        ),
+                      ],
+                    ),
+                  ).then((isOk) {
+                    if (isOk) {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushReplacementNamed('/');
+                      authData.logOut();
+                    } else {
+                      Navigator.of(context).pop();
+                    }
+                  });
                 },
               ),
             if (!authData.isAuth)

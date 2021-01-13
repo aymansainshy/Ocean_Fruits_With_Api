@@ -68,7 +68,7 @@ class _CartItemState extends State<CartItem> {
                 ),
                 child: Container(
                   // color: Colors.red,
-                  child: Image.asset(
+                  child: Image.network(
                     widget.productImage,
                     fit: BoxFit.contain,
                   ),

@@ -140,112 +140,121 @@ class _HomeScreenState extends State<HomeScreen>
                 strokeWidth: 2.5,
               ),
             )
-          : Stack(
-              children: [
-                Container(
-                  height: 80,
-                  color: AppColors.primaryColor,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      CustomScrollView(
-                        slivers: [
-                          SliverToBoxAdapter(
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: mediaQuery.width,
-                                  height: isLandScape
-                                      ? screenUtil.setHeight(700)
-                                      : screenUtil.setHeight(480),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
+          : RefreshIndicator(
+              color: AppColors.greenColor,
+              onRefresh: () async {
+                await Provider.of<Products>(context, listen: false)
+                    .fetchProducts();
+                setState(() {});
+              },
+              child: Stack(
+                children: [
+                  Container(
+                    height: 80,
+                    color: AppColors.primaryColor,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: [
+                        CustomScrollView(
+                          slivers: [
+                            SliverToBoxAdapter(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: mediaQuery.width,
+                                    height: isLandScape
+                                        ? screenUtil.setHeight(700)
+                                        : screenUtil.setHeight(480),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
                                     ),
+                                    child: products.adsImage == null
+                                        ? Image.asset(
+                                            "assets/images/offer.png",
+                                            fit: BoxFit.fill,
+                                          )
+                                        : Image.network(
+                                            products.adsImage,
+                                            fit: BoxFit.fill,
+                                          ),
                                   ),
-                                  child: products.adsImage == null
-                                      ? Image.asset(
-                                          "assets/images/offer.png",
-                                          fit: BoxFit.fill,
-                                        )
-                                      : Image.network(
-                                          products.adsImage,
-                                          fit: BoxFit.fill,
-                                        ),
+                                  Container(
+                                    height: 10,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SliverAppBar(
+                              automaticallyImplyLeading: false,
+                              pinned: true,
+                              elevation: 0.0,
+                              backgroundColor: Colors.transparent,
+                              flexibleSpace: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  _buildRaisedBattom(
+                                      translate("fruits", context), mediaQuery,
+                                      () {
+                                    Navigator.of(context).pushNamed(
+                                      FruitsScreen.routeName,
+                                    );
+                                  }, screenUtil, isLandScape),
+                                  SizedBox(width: 10),
+                                  _buildRaisedBattom(
+                                      translate("vegetabel", context),
+                                      mediaQuery, () {
+                                    Navigator.of(context).pushNamed(
+                                      VegetableScreen.routeName,
+                                    );
+                                  }, screenUtil, isLandScape),
+                                ],
+                              ),
+                            ),
+                            SliverGrid(
+                              delegate: SliverChildBuilderDelegate(
+                                (context, index) =>
+                                    ChangeNotifierProvider.value(
+                                  value: products.recommendeProducts[index],
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                      top: 10,
+                                      left: 5,
+                                      right: 5,
+                                    ),
+                                    child: ProductItem(),
+                                  ),
                                 ),
-                                Container(
+                                childCount: products.recommendeProducts.length,
+                              ),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                childAspectRatio: 0.97,
+                                crossAxisSpacing: 2,
+                                mainAxisSpacing: 4,
+                              ),
+                            ),
+                            SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                (context, indext) => Container(
                                   height: 10,
                                 ),
-                              ],
-                            ),
-                          ),
-                          SliverAppBar(
-                            automaticallyImplyLeading: false,
-                            pinned: true,
-                            elevation: 0.0,
-                            backgroundColor: Colors.transparent,
-                            flexibleSpace: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                _buildRaisedBattom(
-                                    translate("fruits", context), mediaQuery,
-                                    () {
-                                  Navigator.of(context).pushNamed(
-                                    FruitsScreen.routeName,
-                                  );
-                                }, screenUtil, isLandScape),
-                                SizedBox(width: 10),
-                                _buildRaisedBattom(
-                                    translate("vegetabel", context), mediaQuery,
-                                    () {
-                                  Navigator.of(context).pushNamed(
-                                    VegetableScreen.routeName,
-                                  );
-                                }, screenUtil, isLandScape),
-                              ],
-                            ),
-                          ),
-                          SliverGrid(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) => ChangeNotifierProvider.value(
-                                value: products.recommendeProducts[index],
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                    top: 10,
-                                    left: 5,
-                                    right: 5,
-                                  ),
-                                  child: ProductItem(),
-                                ),
+                                childCount: 1,
                               ),
-                              childCount: products.recommendeProducts.length,
                             ),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              childAspectRatio: 0.97,
-                              crossAxisSpacing: 2,
-                              mainAxisSpacing: 4,
-                            ),
-                          ),
-                          SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, indext) => Container(
-                                height: 10,
-                              ),
-                              childCount: 1,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
     );
   }
