@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-// import 'package:dio/dio.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +9,7 @@ import '../models/cart_model.dart';
 import '../models/order_model.dart';
 
 class Orders with ChangeNotifier {
+  Dio dio = Dio();
   List<Order> _orders = [];
 
   List<Order> get orders {
@@ -64,14 +65,14 @@ class Orders with ChangeNotifier {
   //           totalAmount: double.parse(order["total_price"].toString()),
   //           totalDiscount: double.parse(order["toatal_discount"].toString()),
   //           orderStatus: int.parse(order["order_status"].toString()),
-  //           meals: (order["meals_list"] as List<dynamic>)
-  //               .map((meal) => Cart(
-  //                     mealId: meal["id"].toString(),
-  //                     quantity: int.parse(meal["quntity"].toString()),
-  //                     mealTitle: meal["meals"]["name"],
-  //                     mealPrice: double.parse(meal["price"].toString()),
-  //                     mealImage: 'http://backend.bdcafrica.site' +
-  //                         meal["meals"]["image_full_path"],
+  //           products: (order["products_list"] as List<dynamic>)
+  //               .map((product) => Cart(
+  //                     productId: product["id"].toString(),
+  //                     quantity: int.parse(product["quntity"].toString()),
+  //                     productTitle: product["products"]["name"],
+  //                     productPrice: double.parse(product["price"].toString()),
+  //                     productImage: 'http://backend.bdcafrica.site' +
+  //                         product["products"]["image_full_path"],
   //                   ))
   //               .toList(),
   //         ),
@@ -86,51 +87,68 @@ class Orders with ChangeNotifier {
   //   }
   // }
 
-  // Future<void> addOrder({
-  //   @required String userId,
-  //   @required String userName,
-  //   @required String address,
-  //   @required String phoneNumber,
-  //   @required double totalAmount,
-  //   @required String paymentMethod,
-  //   @required List<Cart> cartMeals,
-  // }) async {
-  //   Dio dio = Dio();
-  //   final url = 'https://backend.bdcafrica.site/api/user/order';
-  //   print("Star Post Order .......");
-  //   Map<String, dynamic> data = {
-  //     "name": userName,
-  //     "address": address,
-  //     "phone": phoneNumber,
-  //     "dateTime": DateTime.now().toIso8601String(),
-  //     "user_id": userId,
-  //     "total_price": totalAmount.toString(),
-  //     "payment_mthod_id": paymentMethod,
-  //     "meals_list": cartMeals
-  //         .map((meal) => {
-  //               "meals_id": meal.mealId,
-  //               "quntity": meal.quantity.toString(),
-  //             })
-  //         .toList(),
-  //   };
+  Future<void> addOrder({
+    @required String userId,
+    @required String userName,
+    @required String address,
+    @required String dileveryTime,
+    @required String phoneNumber,
+    @required String dileveryDate,
+    @required String deliveryFee,
+    // @required double totalAmount,
+    // @required double totalDiscount,
+    @required String paymentMethod,
+    @required List<Cart> cartProducts,
+  }) async {
+    final url = 'http://veget.ocean-sudan.com/api/user/order';
+    print("Star Post Order .......");
+    Map<String, dynamic> data = {
+      "user_id": userId,
+      "deliver_time_id": dileveryTime,
+      "deliver_date": dileveryDate,
+      "deliver_fee": deliveryFee,
+      // "address": address,
+      // "phone": phoneNumber,
+      // "total_price": totalAmount.toString(),
+      // "toatal_discount": totalDiscount,
+      "payment_mthod_id": paymentMethod,
+      "product_list": cartProducts
+          .map((product) => {
+                "product_id": product.productId,
+                "quntity": product.quantity.toString(),
+              })
+          .toList(),
+    };
 
-  //   try {
-  //     await dio.post(
-  //       url,
-  //       data: jsonEncode(data),
-  //       options: Options(
-  //         sendTimeout: 2000,
-  //         receiveTimeout: 1000,
-  //         headers: {
-  //           'content-type': 'application/json',
-  //           'Accept': 'application/json',
-  //         },
-  //       ),
-  //     );
-  //   } catch (e) {
-  //     throw e.toString();
-  //   }
-  // }
+    try {
+      final response = await dio.post(
+        url,
+        data: jsonEncode(data),
+        options: Options(
+          sendTimeout: 2000,
+          receiveTimeout: 1000,
+          headers: {
+            'content-type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+
+      print("Response Status Code ...." + response.statusCode.toString());
+      print("Response Data ...." + response.data.toString());
+    }
+
+    // on DioError catch (e) {
+    //   print("Response DioError...." + e.response.toString());
+    //   print("Requeste DioError...." + e.request.toString());
+    // }
+
+    catch (e) {
+      print("Response Error ...." + e.toString());
+
+      throw e.toString();
+    }
+  }
 
   // Future<void> cancelOrder(String orderId) async {
   //   print('Star Canceling Order ........');

@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/http_exception.dart';
 
 class AuthProvider with ChangeNotifier {
-  String userId;
+  String userId = "1";
   String userName;
   String userAddress;
   String userPhone;

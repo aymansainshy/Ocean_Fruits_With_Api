@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../models/product_model.dart';
+import '../models/dilevery_time_model.dart';
 
 class Products with ChangeNotifier {
   final String userId;
@@ -141,6 +142,11 @@ class Products with ChangeNotifier {
     return [..._favProduct];
   }
 
+  List<DileveryTime> _dileveryTime = [];
+  List<DileveryTime> get dileveryTime {
+    return [..._dileveryTime];
+  }
+
   bool isFavContainProductId(String id) {
     if (_favProduct.isEmpty || _favProduct == null) {
       return false;
@@ -224,6 +230,7 @@ class Products with ChangeNotifier {
       final responseData = response.data as Map<String, dynamic>;
       final productResponse = responseData["products"] as List<dynamic>;
       final adAndDeliveryFeeResponse = responseData["Config"] as List<dynamic>;
+      final dileveryTime = responseData["delivery_time"] as List<dynamic>;
 
       if (userId != null) {
         await fetchFavoritesProducts(userId);
@@ -255,6 +262,19 @@ class Products with ChangeNotifier {
         _adImage = "http://veget.ocean-sudan.com/" + e["ad_image"];
         _deliverFee = double.parse(e["deliver_fee"]);
       });
+
+      List<DileveryTime> _dileveryTimeList = [];
+      dileveryTime.forEach((time) {
+        _dileveryTimeList.add(
+          DileveryTime(
+            id: time["id"].toString(),
+            startTime: time["start_time"].toString(),
+            endTime: time["end_time"].toString(),
+          ),
+        );
+      });
+
+      _dileveryTime = _dileveryTimeList;
       notifyListeners();
     } catch (e) {
       print("Error Massege ...." + e.toString());

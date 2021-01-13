@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+// import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/custom_alert_not_autherazed.dart';
 import '../widgets/custom_alert_order.dart';
-import '../lang/language_provider.dart';
+import '../providers/products_provider.dart';
 import '../providers/orders_provider.dart';
 import '../widgets/build_form_field.dart';
 import '../providers/cart_provider.dart';
-// import '../providers/auth_provider.dart';
-// import '../screens/order_screen.dart';
+import '../lang/language_provider.dart';
+import '../providers/auth_provider.dart';
+import '../screens/order_screen.dart';
 import '../utils/app_constant.dart';
 
 class CheckOutScreen extends StatefulWidget {
@@ -29,19 +30,21 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     'adderss': '',
     'phoneNumber': '',
   };
-  // AuthProvider userData;
+  AuthProvider userData;
   var isLoading = false;
 
   @override
   void initState() {
-    // userData = Provider.of<AuthProvider>(context, listen: false);
-    // userInfo['phone'] = userData.userPhone;
-    // userInfo['address'] = userData.userAddress;
+    userData = Provider.of<AuthProvider>(context, listen: false);
+    userInfo['phone'] = userData.userPhone ?? "09118882722";
+    userInfo['address'] = userData.userAddress ?? "arkweet";
     super.initState();
   }
 
-  int _selectedDeliveryDate = 0;
-  int _selectedDeliveryTime = 0;
+  int _selectedDeliveryDate;
+  int _selectedDeliveryTime;
+  bool noDateDeliverySelected = false;
+  bool noTimeDeliverySelected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +57,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
+    final productProvider = Provider.of<Products>(context, listen: false);
     final language = langugeProvider.appLocal.languageCode;
 
     return Scaffold(
@@ -119,81 +123,98 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
               _formKey.currentState.save();
 
-              // if (!userData.isAuth) {
-              // showDialog(
-              //   context: context,
-              //   builder: (context) => CustomAlertNotAutherazed(
-              //     color: Colors.yellow[800],
-              //     topText: translate("notAuthorized", context),
-              //     bottomText: translate("please", context),
-              //     iconData: Icons.priority_high,
-              //   ),
-              // );
+              if (!userData.isAuth) {
+                showDialog(
+                  context: context,
+                  builder: (context) => CustomAlertNotAutherazed(
+                    color: Colors.yellow[800],
+                    topText: translate("notAuthorized", context),
+                    bottomText: translate("please", context),
+                    iconData: Icons.priority_high,
+                  ),
+                );
 
-              //   return;
-              // }
+                return;
+              }
+              if (_selectedDeliveryDate == null) {
+                setState(() {
+                  noDateDeliverySelected = true;
+                });
+                return;
+              }
+              if (_selectedDeliveryTime == null) {
+                setState(() {
+                  noTimeDeliverySelected = true;
+                });
+                return;
+              }
+              setState(() {
+                isLoading = true;
+              });
+              try {
+                print("Delivery Date  " + _selectedDeliveryDate.toString());
+                print(
+                    "Delivery Time  " + (_selectedDeliveryTime + 1).toString());
 
-              // setState(() {
-              //   isLoading = true;
-              // });
-              // try {
-              //   await Provider.of<Orders>(context, listen: false).addOrder(
-              //     userId: userData.userId,
-              //     userName: userData.userName,
-              //     address: userInfo['address'],
-              //     phoneNumber: userInfo['phone'],
-              //     totalAmount:
-              //         double.parse(cart.totalAmount.toStringAsFixed(2)),
-              //     paymentMethod: "0",
-              //     cartMeals: cart.items.values.toList(),
-              //   );
+                await Provider.of<Orders>(context, listen: false).addOrder(
+                  userId: userData.userId,
+                  userName: userData.userName,
+                  deliveryFee: productProvider.delveryFee.toString(),
+                  dileveryDate: _selectedDeliveryDate.toString(),
+                  dileveryTime: (_selectedDeliveryTime + 1).toString(),
+                  address: userInfo['address'],
+                  phoneNumber: userInfo['phone'],
+                  paymentMethod: "0",
+                  cartProducts: cart.items.values.toList(),
+                );
 
-              //   Provider.of<Carts>(context, listen: false).clear();
+                Provider.of<Carts>(context, listen: false).clear();
 
-              //   setState(() {
-              //     isLoading = false;
-              //   });
+                setState(() {
+                  isLoading = false;
+                });
 
-              //   showDialog(
-              //     context: context,
-              //     builder: (context) => CustomAlertOrder(
-              //       topText: translate("yorOrderDone", context),
-              //       bottomText: translate("thanksUsingApp", context),
-              //       color: Colors.green,
-              //       iconData: Icons.check,
-              //       function: () {
-              //         // Navigator.of(context)
-              //         //     .pushReplacementNamed(OrderScreen.routeName);
-              //       },
-              //     ),
-              //   );
-              // } catch (e) {
-              //   setState(() {
-              //     isLoading = false;
-              //   });
-              showDialog(
-                context: context,
-                builder: (context) => CustomAlertOrder(
-                  topText: translate("yourOrderFailed", context),
-                  bottomText: translate("checkYourInternet", context),
-                  color: Colors.redAccent,
-                  iconData: Icons.clear,
-                  function: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                  },
-                ),
-              );
-              // }
+                showDialog(
+                  context: context,
+                  builder: (context) => CustomAlertOrder(
+                    topText: translate("yorOrderDone", context),
+                    bottomText: translate("thanksUsingApp", context),
+                    color: Colors.green,
+                    iconData: Icons.check,
+                    function: () {
+                      // Navigator.of(context).pop();
+                      Navigator.of(context)
+                          .pushReplacementNamed(OrderScreen.routeName);
+                    },
+                  ),
+                );
+              } catch (e) {
+                setState(() {
+                  isLoading = false;
+                });
+                showDialog(
+                  context: context,
+                  builder: (context) => CustomAlertOrder(
+                    topText: translate("yourOrderFailed", context),
+                    bottomText: translate("checkYourInternet", context),
+                    color: Colors.redAccent,
+                    iconData: Icons.clear,
+                    function: () {
+                      Navigator.of(context).pop();
+                      // Navigator.of(context).pop();
+                    },
+                  ),
+                );
+              }
             },
+
             color: AppColors.scondryColor,
             textColor: Colors.white,
             child: isLoading
                 ? Center(
-                    child: SpinKitFadingCircle(
-                      color: Colors.grey,
-                      size: 40,
-                      duration: Duration(milliseconds: 500),
+                    child: CircularProgressIndicator(
+                      backgroundColor: AppColors.greenColor,
+                      strokeWidth: 2.5,
                     ),
                   )
                 : Text(
@@ -380,6 +401,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       mediaQuery / 3, translate("Tomorrow", context), 1),
                 ],
               ),
+              if (noDateDeliverySelected)
+                Text(
+                  "Pleas Select Delivery Date",
+                  style: TextStyle(color: Colors.red),
+                ),
               SizedBox(
                 height: screenUtil.setHeight(35),
               ),
@@ -393,13 +419,28 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       isLandScape ? screenUtil.setSp(30) : screenUtil.setSp(45),
                 ),
               ),
-              Row(
-                children: [
-                  _buildDelivryTimeContainer(mediaQuery / 3.5, "8 : 45 AM", 0),
-                  _buildDelivryTimeContainer(mediaQuery / 3.5, "9 : 34 AM", 1),
-                  _buildDelivryTimeContainer(mediaQuery / 3.5, "10 : 34 AM", 2),
-                ],
+              Container(
+                height: 60,
+                width: mediaQuery.width,
+                // color: Colors.green,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: productProvider.dileveryTime.length,
+                  itemBuilder: (context, i) {
+                    return _buildDelivryTimeContainer(
+                      mediaQuery / 3.5,
+                      productProvider.dileveryTime[i].startTime,
+                      productProvider.dileveryTime[i].endTime,
+                      i,
+                    );
+                  },
+                ),
               ),
+              if (noTimeDeliverySelected)
+                Text(
+                  "Pleas Select Delivery Time",
+                  style: TextStyle(color: Colors.red),
+                ),
               SizedBox(
                 height: screenUtil.setHeight(35),
               ),
@@ -461,6 +502,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       onTap: () {
         setState(() {
           _selectedDeliveryDate = index;
+          noDateDeliverySelected = false;
         });
       },
       child: Container(
@@ -492,7 +534,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       ),
                       SizedBox(height: 3),
                       Text(
-                        "12/23/ 2020",
+                        "12/23/2020",
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -538,13 +580,15 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
   Widget _buildDelivryTimeContainer(
     Size mediaQuery,
-    String text,
+    String startTime,
+    String endTime,
     int index,
   ) {
     return GestureDetector(
       onTap: () {
         setState(() {
           _selectedDeliveryTime = index;
+          noTimeDeliverySelected = false;
         });
       },
       child: Container(
@@ -569,7 +613,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          text,
+                          startTime,
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -585,7 +629,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          text,
+                          endTime,
                           style: TextStyle(
                             color: Colors.white,
                           ),
@@ -610,7 +654,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          text,
+                          startTime,
                           style: TextStyle(
                             color: Colors.grey.shade700,
                           ),
@@ -626,7 +670,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          text,
+                          endTime,
                           style: TextStyle(
                             color: Colors.grey.shade700,
                           ),

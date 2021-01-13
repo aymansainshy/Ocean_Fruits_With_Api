@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/check_out_screen.dart';
+import '../providers/products_provider.dart';
 import '../providers/cart_provider.dart';
 import '../lang/language_provider.dart';
 import '../utils/app_constant.dart';
@@ -34,6 +35,8 @@ class _CartScreenState extends State<CartScreen> {
 
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
+    final _deliveryFee =
+        Provider.of<Products>(context, listen: false).delveryFee;
     final language = langugeProvider.appLocal.languageCode;
     return Scaffold(
       appBar: AppBar(
@@ -243,7 +246,7 @@ class _CartScreenState extends State<CartScreen> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: '50',
+                                text: "$_deliveryFee",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Cairo',
