@@ -34,7 +34,7 @@ class Orders with ChangeNotifier {
   Future<void> fetchOrder(String userId) async {
     print('Star fetch Order ........');
     print('usder ID ' + userId);
-    Dio dio = Dio();
+
     final url = 'http://veget.ocean-sudan.com/api/user/order';
 
     try {

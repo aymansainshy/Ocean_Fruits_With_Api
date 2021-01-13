@@ -6,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
+import '../lang/language_provider.dart';
 import '../providers/orders_provider.dart';
 import '../utils/app_constant.dart';
 import '../models/order_model.dart';
@@ -52,6 +53,9 @@ class _OrderItemState extends State<OrderItem> {
 
   @override
   Widget build(BuildContext context) {
+    final langugeProvider =
+        Provider.of<LanguageProvider>(context, listen: false);
+    final language = langugeProvider.appLocal.languageCode;
     final order = Provider.of<Orders>(context, listen: false);
     return Card(
       margin: EdgeInsets.all(8),
@@ -103,13 +107,14 @@ class _OrderItemState extends State<OrderItem> {
                     : widget.order.products.length * 30.0,
                 child: ListView(
                   children: widget.order.products
-                      .map((meal) => Row(
+                      .map((product) => Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Expanded(
                                 child: Text(
-                                  "Sainshy",
-                                  // meal.mealTitle,
+                                  language == "ar"
+                                      ? product.productTitle
+                                      : product.productTitleEn,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -117,7 +122,7 @@ class _OrderItemState extends State<OrderItem> {
                                 ),
                               ),
                               Text(
-                                '${meal.quantity}',
+                                '${product.quantity}',
                                 style: TextStyle(
                                   fontSize: widget.isLandScape
                                       ? widget.screenUtil.setSp(28)
@@ -130,8 +135,8 @@ class _OrderItemState extends State<OrderItem> {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: "350",
-                                      // '${meal.mealPrice.toStringAsFixed(1)}',
+                                      text:
+                                          '${product.productPrice.toStringAsFixed(1)}',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: widget.isLandScape
