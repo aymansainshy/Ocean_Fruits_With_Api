@@ -155,6 +155,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 print("Delivery Date  " + _selectedDeliveryDate.toString());
                 print(
                     "Delivery Time  " + (_selectedDeliveryTime + 1).toString());
+                print("Delivery Fee  " + productProvider.delveryFee.toString());
 
                 await Provider.of<Orders>(context, listen: false).addOrder(
                   userId: userData.userId,
@@ -182,7 +183,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     color: Colors.green,
                     iconData: Icons.check,
                     function: () {
-                      // Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                       Navigator.of(context)
                           .pushReplacementNamed(OrderScreen.routeName);
                     },
@@ -403,7 +404,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               ),
               if (noDateDeliverySelected)
                 Text(
-                  "Pleas Select Delivery Date",
+                  translate("pleasSelcetDate", context),
                   style: TextStyle(color: Colors.red),
                 ),
               SizedBox(
@@ -438,7 +439,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               ),
               if (noTimeDeliverySelected)
                 Text(
-                  "Pleas Select Delivery Time",
+                  translate("pleasSelcetTime", context),
                   style: TextStyle(color: Colors.red),
                 ),
               SizedBox(

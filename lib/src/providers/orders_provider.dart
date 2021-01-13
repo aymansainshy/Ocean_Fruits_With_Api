@@ -31,61 +31,72 @@ class Orders with ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<void> fetchOrder(String userId) async {
-  //   print('Star fetch Order ........');
-  //   print('usder ID ' + userId);
-  //   Dio dio = Dio();
-  //   final url = 'https://backend.bdcafrica.site/api/user/order';
+  Future<void> fetchOrder(String userId) async {
+    print('Star fetch Order ........');
+    print('usder ID ' + userId);
+    Dio dio = Dio();
+    final url = 'http://veget.ocean-sudan.com/api/user/order';
 
-  //   try {
-  //     final response = await dio.get(
-  //       url,
-  //       queryParameters: {
-  //         "user_id": int.parse(userId),
-  //       },
-  //       options: Options(
-  //         sendTimeout: 2000,
-  //         receiveTimeout: 1000,
-  //         headers: {
-  //           'content-type': 'application/json',
-  //           'Accept': 'application/json',
-  //         },
-  //       ),
-  //     );
+    try {
+      final response = await dio.get(
+        url,
+        queryParameters: {
+          "user_id": int.parse(userId),
+        },
+        options: Options(
+          sendTimeout: 2000,
+          receiveTimeout: 1000,
+          headers: {
+            'content-type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
 
-  //     final responseDate = response.data as List<dynamic>;
+      print("Response Status Code ...." + response.statusCode.toString());
+      print("Response Data ...." + response.data.toString());
 
-  //     final List<Order> _orderData = [];
-  //     responseDate.forEach((order) {
-  //       _orderData.add(
-  //         Order(
-  //           id: order["id"].toString(),
-  //           name: order["name"],
-  //           dateTime: DateTime.parse(order["dateTime"].toString()),
-  //           totalAmount: double.parse(order["total_price"].toString()),
-  //           totalDiscount: double.parse(order["toatal_discount"].toString()),
-  //           orderStatus: int.parse(order["order_status"].toString()),
-  //           products: (order["products_list"] as List<dynamic>)
-  //               .map((product) => Cart(
-  //                     productId: product["id"].toString(),
-  //                     quantity: int.parse(product["quntity"].toString()),
-  //                     productTitle: product["products"]["name"],
-  //                     productPrice: double.parse(product["price"].toString()),
-  //                     productImage: 'http://backend.bdcafrica.site' +
-  //                         product["products"]["image_full_path"],
-  //                   ))
-  //               .toList(),
-  //         ),
-  //       );
-  //     });
-  //     _orders = _orderData;
-  //     notifyListeners();
-  //   } on DioError catch (e) {
-  //     throw e.response.data["code"];
-  //   } catch (e) {
-  //     throw e.toString();
-  //   }
-  // }
+      final responseDate = response.data as List<dynamic>;
+
+      final List<Order> _orderData = [];
+      responseDate.forEach((order) {
+        _orderData.add(
+          Order(
+            id: order["id"].toString(),
+            deliverTime: order["deliver_time_id"].toString(),
+            deliveryDate: order["deliver_date"].toString(),
+            dateTime: DateTime.parse(order["created_at"].toString()),
+            totalAmount: double.parse(order["total_price"].toString()),
+            totalDiscount: double.parse(order["toatal_discount"].toString()),
+            orderStatus: int.parse(order["status"].toString()),
+            products: (order["product_list"] as List<dynamic>)
+                .map((product) => Cart(
+                      productId: product["product_id"].toString(),
+                      quantity: int.parse(product["quntity"].toString()),
+                      unitTitle: product["product"]["unit_id"].toString(),
+                      productPrice:
+                          double.parse(product["product"]["price"].toString()),
+                      productDiscount: double.parse(
+                          product["product"]["discount"].toString()),
+                      productTitle: product["product"]["name_ar"],
+                      productTitleEn: product["product"]["name_en"],
+                      productImage: 'http://veget.ocean-sudan.com/api' +
+                          product["product"]["image"],
+                    ))
+                .toList(),
+          ),
+        );
+      });
+      _orders = _orderData;
+      notifyListeners();
+    } on DioError catch (e) {
+      print("Response Error Dio ...." + e.request.toString());
+      throw e.response.data["code"];
+    } catch (e) {
+      print("Response Error ...." + e.toString());
+      throw e.toString();
+    }
+  }
 
   Future<void> addOrder({
     @required String userId,
@@ -107,8 +118,8 @@ class Orders with ChangeNotifier {
       "deliver_time_id": dileveryTime,
       "deliver_date": dileveryDate,
       "deliver_fee": deliveryFee,
-      // "address": address,
-      // "phone": phoneNumber,
+      "address": address,
+      "phone": phoneNumber,
       // "total_price": totalAmount.toString(),
       // "toatal_discount": totalDiscount,
       "payment_mthod_id": paymentMethod,

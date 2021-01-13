@@ -64,8 +64,8 @@ class OrderScreen extends StatelessWidget {
     }
 
     final List<Widget> _tabBarView = [
-      PastOrder(),
       UpComingOrder(),
+      PastOrder(),
     ];
 
     return DefaultTabController(
@@ -121,8 +121,8 @@ class OrderScreen extends StatelessWidget {
                   isLandScape ? screenUtil.setSp(25) : screenUtil.setSp(40),
             ),
             tabs: [
-              Tab(text: translate("past", context)),
               Tab(text: translate("upComing", context)),
+              Tab(text: translate("past", context)),
             ],
           ),
         ),

@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
-// import '../widgets/custom_alert_not_autherazed.dart';
+import '../widgets/custom_alert_not_autherazed.dart';
 import '../providers/orders_provider.dart';
-// import '../providers/auth_provider.dart';
+import '../providers/auth_provider.dart';
 import '../screens/tap_screen.dart';
 import '../utils/app_constant.dart';
 import '../widgets/order_item.dart';
@@ -17,8 +17,8 @@ class UpComingOrder extends StatefulWidget {
 }
 
 class _UpComingOrderState extends State<UpComingOrder> {
-  var _subscription;
-  Connectivity _connectivity;
+  // var _subscription;
+  // Connectivity _connectivity;
 
   // void _showArrorDialog(String message) {
   //   showDialog(
@@ -38,28 +38,28 @@ class _UpComingOrderState extends State<UpComingOrder> {
   //   );
   // }
 
-  @override
-  void initState() {
-    _connectivity = Connectivity();
-    _subscription =
-        _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
-      if (result == ConnectivityResult.mobile ||
-          result == ConnectivityResult.wifi) {
-        setState(() {});
-      }
+  // @override
+  // void initState() {
+  //   _connectivity = Connectivity();
+  //   _subscription =
+  //       _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
+  //     if (result == ConnectivityResult.mobile ||
+  //         result == ConnectivityResult.wifi) {
+  //       setState(() {});
+  //     }
 
-      //  else {
-      //   _showArrorDialog(translate("checkInternet", context));
-      // }
-    });
-    super.initState();
-  }
+  //     //  else {
+  //     //   _showArrorDialog(translate("checkInternet", context));
+  //     // }
+  //   });
+  //   super.initState();
+  // }
 
-  @override
-  dispose() {
-    super.dispose();
-    _subscription.cancel();
-  }
+  // @override
+  // dispose() {
+  //   super.dispose();
+  //   _subscription.cancel();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -67,34 +67,32 @@ class _UpComingOrderState extends State<UpComingOrder> {
     ScreenUtil screenUtil = ScreenUtil();
     var isLandScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
-    // final userData = Provider.of<AuthProvider>(context, listen: false);
-    // if (!userData.isAuth) {
-    //   return CustomAlertNotAutherazed(
-    //     color: Colors.yellow[800],
-    //     topText: translate("youDontHavOrder1", context),
-    //     bottomText: translate("please", context),
-    //     iconData: Icons.priority_high,
-    //   );
-    // }
+    final userData = Provider.of<AuthProvider>(context, listen: false);
+    if (!userData.isAuth) {
+      return CustomAlertNotAutherazed(
+        color: Colors.yellow[800],
+        topText: translate("youDontHavOrder1", context),
+        bottomText: translate("please", context),
+        iconData: Icons.priority_high,
+      );
+    }
 
     return FutureBuilder(
-      // future: Provider.of<Orders>(context, listen: false)
-      //     .fetchOrder(userData.userId),
+      future: Provider.of<Orders>(context, listen: false)
+          .fetchOrder(userData.userId),
       builder: (context, snapShote) {
         if (snapShote.connectionState == ConnectionState.waiting) {
           return Container(
-            width: double.infinity,
-            height: isLandScape
-                ? screenUtil.setHeight(660)
-                : screenUtil.setHeight(330),
-            child: Center(
-              child: SpinKitFadingCircle(
-                color: Colors.grey,
-                size: 45,
-                duration: Duration(milliseconds: 500),
-              ),
-            ),
-          );
+              width: double.infinity,
+              height: isLandScape
+                  ? screenUtil.setHeight(660)
+                  : screenUtil.setHeight(330),
+              child: Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: AppColors.greenColor,
+                  strokeWidth: 2.5,
+                ),
+              ));
         } else {
           if (snapShote.error != null) {
             if (snapShote.error.toString() == "8") {

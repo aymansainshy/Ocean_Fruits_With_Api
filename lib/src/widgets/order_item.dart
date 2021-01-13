@@ -92,17 +92,17 @@ class _OrderItemState extends State<OrderItem> {
             duration: Duration(milliseconds: 300),
             height: widget.expanded
                 ? widget.isLandScape
-                    ? widget.order.meals.length * 40.0
-                    : widget.order.meals.length * 35.0
+                    ? widget.order.products.length * 40.0
+                    : widget.order.products.length * 35.0
                 : 0.0,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               child: Container(
                 height: widget.isLandScape
-                    ? widget.order.meals.length * 40.0
-                    : widget.order.meals.length * 30.0,
+                    ? widget.order.products.length * 40.0
+                    : widget.order.products.length * 30.0,
                 child: ListView(
-                  children: widget.order.meals
+                  children: widget.order.products
                       .map((meal) => Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[

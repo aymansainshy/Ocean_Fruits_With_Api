@@ -3,24 +3,22 @@ import '../models/cart_model.dart';
 
 class Order {
   final String id;
-  final String name;
   final int orderStatus;
   final DateTime dateTime;
-  DateTime deliverTime = DateTime.now();
-  final int deliveryDate;
+  final String deliveryDate;
+  final String deliverTime;
   final double totalAmount;
   final double totalDiscount;
-  final List<Cart> meals;
+  final List<Cart> products;
 
   Order({
     @required this.id,
-    @required this.name,
     @required this.dateTime,
     this.deliverTime,
-    this.deliveryDate = 0, // 0 = Today , 1 = Tomorrow
+    this.deliveryDate, // 0 = Today , 1 = Tomorrow
     @required this.totalAmount,
     @required this.totalDiscount,
-    @required this.meals,
+    @required this.products,
     @required this.orderStatus,
   });
 }
