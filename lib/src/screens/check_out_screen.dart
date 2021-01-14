@@ -36,8 +36,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   @override
   void initState() {
     userData = Provider.of<AuthProvider>(context, listen: false);
-    userInfo['phone'] = userData.userPhone ?? "09118882722";
-    userInfo['address'] = userData.userAddress ?? "arkweet";
+    userInfo['phone'] = userData.userPhone;
+    userInfo['address'] = userData.userAddress;
     super.initState();
   }
 

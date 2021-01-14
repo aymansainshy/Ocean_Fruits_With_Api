@@ -110,14 +110,13 @@ class _PastOrderState extends State<PastOrder> {
                         },
                         child: Container(
                           child: Image.asset(
-                            'assets/images/waiting.png',
+                            "assets/icons/cart_empty.png",
                             height: isLandScape
                                 ? screenUtil.setHeight(600)
                                 : screenUtil.setHeight(600),
                             width: isLandScape
                                 ? screenUtil.setWidth(300)
                                 : screenUtil.setWidth(400),
-                            color: AppColors.primaryColor,
                             fit: BoxFit.fill,
                           ),
                         ),

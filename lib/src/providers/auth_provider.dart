@@ -149,14 +149,14 @@ class AuthProvider with ChangeNotifier {
     File image,
   }) async {
     Dio dio = Dio();
-    final url = 'http://veget.ocean-sudan.com/api/user/$userId/';
+    final url = 'http://veget.ocean-sudan.com/api/user/$userId';
 
     Map<String, dynamic> data = {
       "name": userName,
       "email": userEmail,
       "address": userAddress,
       "phone": userPhone,
-      // "password": userPassword,
+      "password": userPassword,
     };
 
     try {
@@ -204,10 +204,10 @@ class AuthProvider with ChangeNotifier {
       prefs.setString("userData", userData);
       await tryAutoLogin();
     } on DioError catch (e) {
-      print("Dio Error ......." + e.response.statusMessage);
+      print("Dio Error ......." + e.response.statusCode.toString());
       throw HttpException(e.response.data['code'].toString());
     } catch (e) {
-      print("Error ......." + e.toString());
+      print("Error ......." + e.response.statusMessage);
       throw e;
     }
   }

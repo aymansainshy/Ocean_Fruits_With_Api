@@ -246,7 +246,7 @@ class _CartScreenState extends State<CartScreen> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: "$_deliveryFee",
+                                text: "${_deliveryFee.toStringAsFixed(2)}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Cairo',
@@ -295,7 +295,7 @@ class _CartScreenState extends State<CartScreen> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: '${cart.totalAmount}',
+                                text: '${cart.totalAmount.toStringAsFixed(2)}',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Cairo',
