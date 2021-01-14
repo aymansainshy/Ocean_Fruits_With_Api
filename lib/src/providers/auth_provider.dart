@@ -149,14 +149,14 @@ class AuthProvider with ChangeNotifier {
     File image,
   }) async {
     Dio dio = Dio();
-    final url = 'http://backend.bdcafrica.site/api/user/$userId/';
+    final url = 'http://veget.ocean-sudan.com/api/user/$userId/';
 
     Map<String, dynamic> data = {
       "name": userName,
       "email": userEmail,
       "address": userAddress,
       "phone": userPhone,
-      "password": userPassword,
+      // "password": userPassword,
     };
 
     try {
@@ -173,9 +173,9 @@ class AuthProvider with ChangeNotifier {
         ),
       );
 
-      if (image != null) {
-        await uploadImage(image, userId);
-      }
+      // if (image != null) {
+      //   await uploadImage(image, userId);
+      // }
 
       final responseData = response.data as Map<String, dynamic>;
 
@@ -185,8 +185,8 @@ class AuthProvider with ChangeNotifier {
         return;
       }
       // prefs.remove("userData");
-      final _userData =
-          json.decode(prefs.getString("userData")) as Map<String, dynamic>;
+      // final _userData =
+      //     json.decode(prefs.getString("userData")) as Map<String, dynamic>;
       final userData = json.encode({
         "userId": responseData["id"].toString(),
         "userName": responseData["name"],
@@ -195,7 +195,7 @@ class AuthProvider with ChangeNotifier {
         "userPassword": responseData["password"],
         "userPhone": responseData["phone"].toString(),
         "userToken": responseData["remember_token"],
-        "imageUrl": _userData['imageUrl'],
+        // "imageUrl": _userData['imageUrl'],
         //  responseData["image_url"] == null
         //     ? ""
         //     : 'http://backend.bdcafrica.site/images/' +
@@ -204,8 +204,10 @@ class AuthProvider with ChangeNotifier {
       prefs.setString("userData", userData);
       await tryAutoLogin();
     } on DioError catch (e) {
+      print("Dio Error ......." + e.response.statusMessage);
       throw HttpException(e.response.data['code'].toString());
     } catch (e) {
+      print("Error ......." + e.toString());
       throw e;
     }
   }

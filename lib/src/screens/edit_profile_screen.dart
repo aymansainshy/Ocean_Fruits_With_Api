@@ -6,7 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 // import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-// import '../providers/auth_provider.dart';
+import '../providers/auth_provider.dart';
 import '../utils/app_constant.dart';
 import '../lang/language_provider.dart';
 
@@ -27,7 +27,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   var isVisible = false;
   var isPasswordHide = true;
   var isLoading = false;
-  // AuthProvider _userData;
+  AuthProvider _userData;
   // String _userImage;
 
   void _showArrorDialog(String message) {
@@ -57,12 +57,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   void initState() {
-    // _userData = Provider.of<AuthProvider>(context, listen: false);
-    // _editedData['name'] = _userData.userName;
-    // _editedData['email'] = _userData.userEmail;
-    // _editedData['address'] = _userData.userAddress;
-    // _editedData['password'] = _userData.password;
-    // _editedData['phoneNumber'] = _userData.userPhone;
+    _userData = Provider.of<AuthProvider>(context, listen: false);
+    _editedData['name'] = _userData.userName;
+    _editedData['email'] = _userData.userEmail;
+    _editedData['address'] = _userData.userAddress;
+    _editedData['password'] = _userData.password;
+    _editedData['phoneNumber'] = _userData.userPhone;
     // _userImage = _userData.imageUrl;
 
     super.initState();
@@ -83,15 +83,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       isLoading = true;
     });
     try {
-      // await Provider.of<AuthProvider>(context, listen: false).updataUser(
-      //   userId: _userData.userId,
-      //   userName: _editedData['name'],
-      //   userEmail: _editedData['email'],
-      //   userPassword: _editedData['password'],
-      //   userAddress: _editedData['address'],
-      //   userPhone: _editedData['phoneNumber'],
-      //   image: _storedImage,
-      // );
+      await Provider.of<AuthProvider>(context, listen: false).updataUser(
+        userId: _userData.userId,
+        userName: _editedData['name'],
+        userEmail: _editedData['email'],
+        userPassword: _editedData['password'],
+        userAddress: _editedData['address'],
+        userPhone: _editedData['phoneNumber'],
+        // image: _storedImage,
+      );
       // if (_storedImage != null) {
       //   await Provider.of<AuthProvider>(context, listen: false).uploadImage(
       //     _storedImage,
@@ -239,7 +239,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           labelText: translate('userName', context),
                         ),
                         cursorColor: Colors.grey.shade300,
-                        // initialValue: _userData.userName,
+                        initialValue: _userData.userName,
                         validator: (value) {
                           if (value.isEmpty) {
                             return translate("enterYourFullName", context);
@@ -250,6 +250,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           _editedData['name'] = value;
                         },
                       ),
+                      SizedBox(height: 5),
                       TextFormField(
                         keyboardType: TextInputType.streetAddress,
                         decoration: InputDecoration(
@@ -257,7 +258,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           labelText: translate('address', context),
                         ),
                         cursorColor: Colors.grey.shade300,
-                        // initialValue: _userData.userAddress,
+                        initialValue: _userData.userAddress,
                         validator: (value) {
                           if (value.isEmpty) {
                             return translate("enterYourFullAddress", context);
@@ -268,6 +269,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           _editedData['address'] = value;
                         },
                       ),
+                      SizedBox(height: 5),
                       TextFormField(
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
@@ -275,7 +277,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           labelText: translate('email', context),
                         ),
                         cursorColor: Colors.grey.shade300,
-                        // initialValue: _userData.userEmail,
+                        initialValue: _userData.userEmail,
                         validator: (value) {
                           if (value.isEmpty) {
                             return translate("enterYourValidEmail", context);
@@ -289,6 +291,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           _editedData['email'] = value;
                         },
                       ),
+                      SizedBox(height: 5),
                       TextFormField(
                         obscureText: isPasswordHide,
                         keyboardType: TextInputType.visiblePassword,
@@ -310,7 +313,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                         ),
                         cursorColor: Colors.grey.shade300,
-                        // initialValue: _userData.password,
+                        initialValue: _userData.password,
                         validator: (value) {
                           if (value.isEmpty) {
                             return translate("enterPassword", context);
@@ -324,6 +327,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           _editedData['password'] = value;
                         },
                       ),
+                      SizedBox(height: 5),
                       TextFormField(
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(4),
@@ -331,7 +335,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         keyboardType: TextInputType.phone,
                         cursorColor: Colors.grey.shade300,
-                        // initialValue: _userData.userPhone,
+                        initialValue: _userData.userPhone,
                         validator: (value) {
                           if (value.isEmpty) {
                             return translate("enterYourPhoneNumber", context);
