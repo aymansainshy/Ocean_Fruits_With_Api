@@ -191,9 +191,8 @@ class AppDrawer extends StatelessWidget {
                     ),
                   ).then((isOk) {
                     if (isOk) {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushReplacementNamed('/');
                       authData.logOut();
+                      Navigator.of(context).pushReplacementNamed('/');
                     } else {
                       Navigator.of(context).pop();
                     }

@@ -168,7 +168,7 @@ class Products with ChangeNotifier {
       final response = await dio.get(
         url,
         queryParameters: {
-          'user_id': userId ?? 1,
+          'user_id': userId,
         },
         options: Options(
           sendTimeout: 2000,

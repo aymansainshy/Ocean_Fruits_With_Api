@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/http_exception.dart';
 
 class AuthProvider with ChangeNotifier {
-  String userId = "1";
+  String userId;
   String userName;
   String userAddress;
   String userPhone;
@@ -19,9 +19,9 @@ class AuthProvider with ChangeNotifier {
 
   bool get isAuth {
     print('Rebuilding ............');
-    print("Tookeeeeeeeeeeeeeeeen is " + userId.toString());
-    return userId != null;
-    // return _userToken != null;
+    print("Tookeeeeeeeeeeeeeeeen is " + _userToken.toString());
+    // return userId != null;
+    return _userToken != null;
   }
 
   String get password {
@@ -55,7 +55,7 @@ class AuthProvider with ChangeNotifier {
       userAddress = responseData["address"];
       userEmail = responseData["email"];
       userPhone = responseData["phone"].toString();
-      // _userToken = responseData["remember_token"];
+      _userToken = responseData["remember_token"];
       // _userPassword = responseData["password"];
       // imageUrl = responseData["image_url"] == null
       //     ? ""
@@ -71,7 +71,7 @@ class AuthProvider with ChangeNotifier {
         "userAddress": responseData["address"],
         "userEmail": responseData["email"],
         "userPhone": responseData["phone"].toString(),
-        // "userToken": responseData["remember_token"],
+        "userToken": responseData["remember_token"],
         // "userPassword": responseData["password"],
         // "imageUrl": responseData["image_url"] == null
         //     ? ""
@@ -90,7 +90,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> register(String name, String address, String phone, String email,
       String password) async {
-    final url = 'http://veget.ocean-sudan.com/api/user/';
+    final url = 'http://veget.ocean-sudan.com/api/user';
     var data = {
       "name": name,
       "password": password,
@@ -126,7 +126,7 @@ class AuthProvider with ChangeNotifier {
     userPhone = _userData["userPhone"];
     // _userPassword = _userData["userPassword"];
     // imageUrl = _userData["imageUrl"];
-    // _userToken = _userData["userToken"];
+    _userToken = _userData["userToken"];
     notifyListeners();
     return true;
   }

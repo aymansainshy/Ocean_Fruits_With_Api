@@ -53,9 +53,11 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
   final TextEditingController _phoneNumberController = TextEditingController();
   String initialCountry = 'SD';
   PhoneNumber number = PhoneNumber(isoCode: 'SD');
+  String phoneNumber;
 
   @override
   void initState() {
+    super.initState();
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 500),
@@ -91,7 +93,6 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
         curve: Curves.ease,
       ),
     );
-    super.initState();
   }
 
   // void getPhoneNumber(String phoneNumber) async {
@@ -134,6 +135,11 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
   }
 
   Future<void> _saveForm() async {
+    if (isPhoneValide) {
+      setState(() {
+        signUpData['phoneNumber'] = phoneNumber;
+      });
+    }
     final isValid = _formKey.currentState.validate();
     if (!isValid) {
       return;
@@ -161,9 +167,9 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
       // if (widget.isLogin) {
       //   Navigator.of(context).pushReplacementNamed('/');
       // } else {
+      // Navigator.of(context).pop();
       //   Navigator.of(context).pop();
-      //   Navigator.of(context).pop();
-      //   Navigator.of(context).pushReplacementNamed('/');
+      Navigator.of(context).pushReplacementNamed('/');
       // }
     } on HttpException catch (e) {
       var errorMessage = translate("anErrorPleaseTryLater", context);
@@ -416,6 +422,9 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                   return null;
                 },
                 onInputChanged: (PhoneNumber number) {
+                  setState(() {
+                    phoneNumber = number.toString();
+                  });
                   print(number.phoneNumber);
                 },
                 onInputValidated: (bool value) {
@@ -424,11 +433,12 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                   });
                   print(value);
                 },
-                onSaved: (value) {
-                  if (isPhoneValide) {
-                    signUpData['phoneNumber'] = value.toString();
-                  }
-                },
+                // onSaved: (value) {
+                //   print("is phone valide ....." + isPhoneValide.toString());
+                //   if (isPhoneValide) {
+                //     signUpData['phoneNumber'] = value.toString();
+                //   }
+                // },
               ),
             ),
             SizedBox(
@@ -464,8 +474,8 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                           ),
                         ),
                   onPressed: () {
-                    // _saveForm();
-                    Navigator.of(context).pushNamed(TapScreen.routeName);
+                    _saveForm();
+                    // Navigator.of(context).pushNamed(TapScreen.routeName);
                   },
                 ),
               ),
