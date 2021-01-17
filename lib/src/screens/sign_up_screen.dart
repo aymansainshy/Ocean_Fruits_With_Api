@@ -122,7 +122,13 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(width: 3),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).pushNamed(LoginScreen.routeName);
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(
+                              isSingUp: true,
+                            ),
+                          ),
+                        );
                       },
                       child: Text(
                         translate("login", context),

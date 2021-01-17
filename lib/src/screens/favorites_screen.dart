@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../providers/products_provider.dart';
@@ -23,11 +24,50 @@ class FavoritesScreen extends StatefulWidget {
 class _FavoritesScreenState extends State<FavoritesScreen>
     with AutomaticKeepAliveClientMixin {
   bool _keepAlive = false;
+  var _subscription;
+  Connectivity _connectivity;
+
+  Future<void> _showArrorDialog(String message) async {
+    await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(translate("errorOccurred", context)),
+        content: Text(message),
+        actions: [
+          FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("Ok"),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
+    _connectivity = Connectivity();
+    _subscription = _connectivity.onConnectivityChanged.listen(
+      (ConnectivityResult result) {
+        if (result == ConnectivityResult.mobile ||
+            result == ConnectivityResult.wifi) {
+          setState(() {});
+        }
+        if (result == ConnectivityResult.none) {
+          return _showArrorDialog(translate("checkInternet", context));
+        }
+      },
+      // onError: (e) =>
+    );
     _doAsyncStuff();
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    _subscription.cancel();
   }
 
   Future<void> _doAsyncStuff() async {
@@ -166,19 +206,25 @@ class _FavoritesScreenState extends State<FavoritesScreen>
                           width: screenUtil.setWidth(700),
                           margin: EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: Colors.red,
-                            border: Border.all(width: 1),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                          ),
+                              color: Colors.grey.shade100,
+                              border: Border.all(width: 1),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 10,
+                                  offset: Offset(10, 10),
+                                  color: Colors.grey,
+                                ),
+                              ]),
                           child: Center(
                             child: Text(
                               translate("anErrorOccurred", context),
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: screenUtil.setSp(45),
+                                color: Colors.redAccent,
+                                fontSize: screenUtil.setSp(35),
                                 fontWeight: FontWeight.bold,
                                 wordSpacing: 2,
                               ),

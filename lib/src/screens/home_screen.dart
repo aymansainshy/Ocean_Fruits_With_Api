@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ocean_fruits/src/screens/tap_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/drawer.dart';
@@ -14,6 +16,7 @@ import '../utils/app_constant.dart';
 import '../widgets/build_cart_stack.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const routeName = 'home_screen';
   final GlobalKey<ScaffoldState> tapScaffoldKey;
   const HomeScreen({
     Key key,
@@ -28,20 +31,76 @@ class _HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin {
   var isLoading = false;
   bool _keepAlive = false;
+  var _subscription;
+  Connectivity _connectivity;
+
+  Future<void> _showArrorDialog(String message) async {
+    await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(translate("errorOccurred", context)),
+        content: Text(message),
+        actions: [
+          FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("Ok"),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
-    _doAsyncStuff();
+    _connectivity = Connectivity();
+
+    _subscription = _connectivity.onConnectivityChanged.listen(
+      (ConnectivityResult result) {
+        if (result == ConnectivityResult.mobile ||
+            result == ConnectivityResult.wifi) {
+          setState(() {});
+
+          // Navigator.of(context).pushReplacementNamed(TapScreen.routeName);
+        }
+        if (result == ConnectivityResult.none) {
+          return _showArrorDialog(translate("checkInternet", context));
+        }
+      },
+
+      // onError: (e) =>
+    );
+
     print('_HomeScreenState initState');
     setState(() {
       isLoading = true;
     });
-    Provider.of<Products>(context, listen: false).fetchProducts().then((_) {
+    try {
+      Provider.of<Products>(context, listen: false).fetchProducts().then((_) {
+        setState(() {
+          isLoading = false;
+        });
+      }).catchError((e) {
+        setState(() {
+          isLoading = false;
+        });
+        _showArrorDialog(translate("anErrorOccurred", context));
+      });
+    } catch (e) {
       setState(() {
         isLoading = false;
       });
-    });
+      _showArrorDialog(translate("anErrorOccurred", context));
+    }
+    _doAsyncStuff();
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    _subscription.cancel();
   }
 
   Future<void> _doAsyncStuff() async {

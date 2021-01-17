@@ -1,4 +1,5 @@
 import '../screens/edit_profile_screen.dart';
+import '../screens/home_screen.dart';
 import '../screens/favorites_screen.dart';
 import '../screens/vegetable_screen.dart';
 import '../screens/check_out_screen.dart';
@@ -13,6 +14,7 @@ import '../screens/tap_screen.dart';
 
 var routs = {
   TapScreen.routeName: (context) => TapScreen(),
+  HomeScreen.routeName: (context) => HomeScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   LoginScreen.routeName: (context) => LoginScreen(),
   OrderScreen.routeName: (context) => OrderScreen(),

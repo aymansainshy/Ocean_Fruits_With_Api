@@ -122,9 +122,10 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
       setState(() {
         isLoading = false;
       });
-      // if (widget.isSignUp) {
-      //   Navigator.of(context).pushReplacementNamed('/');
-      // } else {
+      if (widget.isSignUp) {
+        Navigator.of(context).pushReplacementNamed('/');
+      }
+      //  else {
       //   Navigator.of(context).pop();
       //   Navigator.of(context).pop();
       //   Navigator.of(context).pushReplacementNamed('/');

@@ -1,7 +1,6 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/custom_alert_not_autherazed.dart';
@@ -16,53 +15,74 @@ class PastOrder extends StatefulWidget {
   _PastOrderState createState() => _PastOrderState();
 }
 
-class _PastOrderState extends State<PastOrder> {
-  // var _subscription;
-  // Connectivity _connectivity;
+class _PastOrderState extends State<PastOrder>
+    with AutomaticKeepAliveClientMixin {
+  var _subscription;
+  Connectivity _connectivity;
+  bool _keepAlive = false;
 
-  // void _showArrorDialog(String message) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (ctx) => AlertDialog(
-  //       title: Text(translate("noConnection", context)),
-  //       content: Text(message),
-  //       actions: [
-  //         FlatButton(
-  //           onPressed: () {
-  //             Navigator.of(context).pop();
-  //           },
-  //           child: Text("Ok"),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  Future<void> _showArrorDialog(String message) async {
+    await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(translate("noConnection", context)),
+        content: Text(message),
+        actions: [
+          FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("Ok"),
+          ),
+        ],
+      ),
+    );
+  }
 
-  // @override
-  // void initState() {
-  //   _connectivity = Connectivity();
-  //   _subscription =
-  //       _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
-  //     if (result == ConnectivityResult.mobile ||
-  //         result == ConnectivityResult.wifi) {
-  //       setState(() {});
-  //     }
+  @override
+  void initState() {
+    super.initState();
+    _connectivity = Connectivity();
+    _subscription = _connectivity.onConnectivityChanged.listen(
+      (ConnectivityResult result) {
+        if (result == ConnectivityResult.mobile ||
+            result == ConnectivityResult.wifi) {
+          setState(() {});
+        }
+        if (result == ConnectivityResult.none) {
+          return _showArrorDialog(translate("checkInternet", context));
+        }
+      },
+      // onError: (e) =>
+    );
+    _doAsyncStuff();
+  }
 
-  //     //  else {
-  //     //   _showArrorDialog(translate("checkInternet", context));
-  //     // }
-  //   });
-  //   super.initState();
-  // }
+  @override
+  dispose() {
+    super.dispose();
+    _subscription.cancel();
+  }
 
-  // @override
-  // dispose() {
-  //   super.dispose();
-  //   _subscription.cancel();
-  // }
+  Future<void> _doAsyncStuff() async {
+    _keepAlive = true;
+    updateKeepAlive();
+    // Keeping alive...
+
+    await Future.delayed(Duration(minutes: 10));
+
+    _keepAlive = false;
+    updateKeepAlive();
+    // Can be disposed whenever now.
+  }
+
+  @override
+  bool get wantKeepAlive => _keepAlive;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     ScreenUtil.init(context);
     ScreenUtil screenUtil = ScreenUtil();
     var isLandScape =
@@ -148,21 +168,25 @@ class _PastOrderState extends State<PastOrder> {
                   width: screenUtil.setWidth(700),
                   margin: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.red,
-                    border: Border.all(width: 1),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
+                      color: Colors.grey.shade100,
+                      border: Border.all(width: 1),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 10,
+                          offset: Offset(10, 10),
+                          color: Colors.grey,
+                        ),
+                      ]),
                   child: Center(
                     child: Text(
                       translate("anErrorOccurred", context),
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: isLandScape
-                            ? screenUtil.setSp(35)
-                            : screenUtil.setSp(40),
+                        color: Colors.redAccent,
+                        fontSize: screenUtil.setSp(35),
                         fontWeight: FontWeight.bold,
                         wordSpacing: 2,
                       ),

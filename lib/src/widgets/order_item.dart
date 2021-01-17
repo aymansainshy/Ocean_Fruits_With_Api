@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -122,7 +121,7 @@ class _OrderItemState extends State<OrderItem> {
                                 ),
                               ),
                               Text(
-                                '${product.quantity}',
+                                '${product.quantity} ',
                                 style: TextStyle(
                                   fontSize: widget.isLandScape
                                       ? widget.screenUtil.setSp(28)
@@ -215,19 +214,21 @@ class _OrderItemState extends State<OrderItem> {
                   if (widget.order.orderStatus == 0)
                     RaisedButton(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                       ),
                       textColor: Colors.white,
                       color: AppColors.primaryColor,
                       child: isLoading
                           ? Center(
-                              child: SpinKitFadingCircle(
-                                color: Colors.grey,
-                                size: 30,
-                                duration: Duration(milliseconds: 500),
+                              child: CircularProgressIndicator(
+                                backgroundColor: AppColors.greenColor,
+                                strokeWidth: 2.5,
                               ),
                             )
-                          : Text(translate("cancel", context)),
+                          : Text(
+                              translate("cancel", context),
+                              style: TextStyle(fontSize: 12),
+                            ),
                       onPressed: () async {
                         try {
                           setState(() {
@@ -250,7 +251,12 @@ class _OrderItemState extends State<OrderItem> {
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text("Ok"),
+                                  child: Text(
+                                    "Ok",
+                                    style: TextStyle(
+                                      color: AppColors.scondryColor,
+                                    ),
+                                  ),
                                 )
                               ],
                             ),
