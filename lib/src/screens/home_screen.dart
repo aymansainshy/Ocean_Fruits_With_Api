@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_fruits/src/screens/tap_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:connectivity/connectivity.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/drawer.dart';
@@ -31,8 +29,6 @@ class _HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin {
   var isLoading = false;
   bool _keepAlive = false;
-  var _subscription;
-  Connectivity _connectivity;
 
   Future<void> _showArrorDialog(String message) async {
     await showDialog(
@@ -55,23 +51,6 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
-    _connectivity = Connectivity();
-
-    _subscription = _connectivity.onConnectivityChanged.listen(
-      (ConnectivityResult result) {
-        if (result == ConnectivityResult.mobile ||
-            result == ConnectivityResult.wifi) {
-          setState(() {});
-
-          // Navigator.of(context).pushReplacementNamed(TapScreen.routeName);
-        }
-        if (result == ConnectivityResult.none) {
-          return _showArrorDialog(translate("checkInternet", context));
-        }
-      },
-
-      // onError: (e) =>
-    );
 
     print('_HomeScreenState initState');
     setState(() {
@@ -95,12 +74,6 @@ class _HomeScreenState extends State<HomeScreen>
       _showArrorDialog(translate("anErrorOccurred", context));
     }
     _doAsyncStuff();
-  }
-
-  @override
-  dispose() {
-    super.dispose();
-    _subscription.cancel();
   }
 
   Future<void> _doAsyncStuff() async {
@@ -195,12 +168,12 @@ class _HomeScreenState extends State<HomeScreen>
       body: isLoading
           ? Center(
               child: CircularProgressIndicator(
-                backgroundColor: AppColors.greenColor,
+                backgroundColor: AppColors.primaryColor,
                 strokeWidth: 2.5,
               ),
             )
           : RefreshIndicator(
-              color: AppColors.greenColor,
+              color: AppColors.primaryColor,
               onRefresh: () async {
                 await Provider.of<Products>(context, listen: false)
                     .fetchProducts();

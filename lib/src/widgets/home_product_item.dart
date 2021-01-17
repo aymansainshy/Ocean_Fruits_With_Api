@@ -32,6 +32,7 @@ class _ProductItemState extends State<ProductItem> {
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
     final language = langugeProvider.appLocal.languageCode;
+    final productUnit = langugeProvider.unitTile(product.unit);
     return Stack(
       overflow: Overflow.visible,
       alignment: Alignment.center,
@@ -158,7 +159,7 @@ class _ProductItemState extends State<ProductItem> {
                     ? EdgeInsets.only(right: 6)
                     : EdgeInsets.only(left: 6),
                 child: Text(
-                  "1 ${product.unit}",
+                  "1 $productUnit",
                   style: TextStyle(
                     fontSize: screenUtil.setSp(25),
                     color: Colors.grey,
@@ -246,7 +247,7 @@ class _ProductItemState extends State<ProductItem> {
                         cart.addItem(
                           productId: product.id,
                           productDiscount: product.discount,
-                          productUnit: product.unit,
+                          productUnit: productUnit,
                           productPrice: product.price,
                           productTitle: language == "ar"
                               ? product.arTitle

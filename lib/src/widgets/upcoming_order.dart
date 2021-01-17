@@ -109,7 +109,7 @@ class _UpComingOrderState extends State<UpComingOrder>
                   : screenUtil.setHeight(330),
               child: Center(
                 child: CircularProgressIndicator(
-                  backgroundColor: AppColors.greenColor,
+                  backgroundColor: AppColors.primaryColor,
                   strokeWidth: 2.5,
                 ),
               ));

@@ -54,4 +54,26 @@ class LanguageProvider with ChangeNotifier {
       "assets/images/united-arab-emirates.png",
     ),
   ];
+
+  String unitTile(String unit) {
+    switch (unit) {
+      case "0":
+        return _appLocale.languageCode == "ar" ? "كيلو" : "Kg";
+        break;
+      case "1":
+        return _appLocale.languageCode == "ar" ? "حبة" : "Haba";
+        break;
+      case "2":
+        return _appLocale.languageCode == "ar" ? "ربطة" : "Rapta";
+        break;
+      case "3":
+        return _appLocale.languageCode == "ar" ? "دستة" : "Dasta";
+        break;
+      case "4":
+        return _appLocale.languageCode == "ar" ? "رزمة" : "Rasma";
+        break;
+      default:
+        return _appLocale.languageCode == "ar" ? "كيلو" : "Kg";
+    }
+  }
 }

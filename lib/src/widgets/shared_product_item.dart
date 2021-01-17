@@ -32,6 +32,8 @@ class _SharedProductItemState extends State<SharedProductItem> {
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
     final language = langugeProvider.appLocal.languageCode;
+
+    final productUnit = langugeProvider.unitTile(product.unit);
     return Stack(
       overflow: Overflow.visible,
       alignment: Alignment.center,
@@ -162,7 +164,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                     ? EdgeInsets.only(right: 8)
                     : EdgeInsets.only(left: 8),
                 child: Text(
-                  "1 ${product.unit}",
+                  "1 $productUnit",
                   style: TextStyle(
                     fontSize: _isLandScape
                         ? screenUtil.setSp(25)
@@ -261,7 +263,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                           productId: product.id,
                           productPrice: product.price,
                           productDiscount: product.discount,
-                          productUnit: product.unit,
+                          productUnit: productUnit,
                           productTitle: language == "ar"
                               ? product.arTitle
                               : product.enTitle,

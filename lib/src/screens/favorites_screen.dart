@@ -192,7 +192,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                     child: CircularProgressIndicator(
-                      backgroundColor: AppColors.greenColor,
+                      backgroundColor: AppColors.primaryColor,
                       strokeWidth: 2.5,
                     ),
                   );

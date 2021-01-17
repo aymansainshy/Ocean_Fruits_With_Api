@@ -110,7 +110,7 @@ class _PastOrderState extends State<PastOrder>
                   : screenUtil.setHeight(330),
               child: Center(
                 child: CircularProgressIndicator(
-                  backgroundColor: AppColors.greenColor,
+                  backgroundColor: AppColors.primaryColor,
                   strokeWidth: 2.5,
                 ),
               ));

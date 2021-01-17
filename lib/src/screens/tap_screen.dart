@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:connectivity/connectivity.dart';
 
 import '../screens/favorites_screen.dart';
 import '../utils/app_constant.dart';
@@ -19,11 +20,48 @@ class _TapScreenState extends State<TapScreen> {
   final GlobalKey<ScaffoldState> _tapScaffoldKey =
       new GlobalKey<ScaffoldState>();
   final _pageController = PageController();
+  var _subscription;
+  Connectivity _connectivity;
 
   List<Widget> _pages;
+
+  Future<void> _showArrorDialog(String message) async {
+    await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(translate("errorOccurred", context)),
+        content: Text(message),
+        actions: [
+          FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("Ok"),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
+
+    _connectivity = Connectivity();
+
+    _subscription = _connectivity.onConnectivityChanged.listen(
+      (ConnectivityResult result) {
+        if (result == ConnectivityResult.mobile ||
+            result == ConnectivityResult.wifi) {
+          setState(() {});
+        }
+        if (result == ConnectivityResult.none) {
+          return _showArrorDialog(translate("checkInternet", context));
+        }
+      },
+
+      // onError: (e) =>
+    );
     _pages = [
       HomeScreen(tapScaffoldKey: _tapScaffoldKey),
       CartScreen(tapScaffoldKey: _tapScaffoldKey),
@@ -32,6 +70,12 @@ class _TapScreenState extends State<TapScreen> {
   }
 
   int _selectedItemIndex = 0;
+
+  @override
+  dispose() {
+    super.dispose();
+    _subscription.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
