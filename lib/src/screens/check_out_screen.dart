@@ -667,6 +667,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           translate("To", context),
                           style: TextStyle(
                             color: Colors.grey.shade700,
+                            fontSize: 12,
                           ),
                         ),
                       ),
@@ -695,7 +696,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       String quantity,
       String unit) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
           child: Text(
@@ -707,11 +708,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             ),
           ),
         ),
-        Text(
-          "$quantity  $unit",
-          style: TextStyle(
-            fontSize: isLandScape ? screenUtil.setSp(23) : screenUtil.setSp(35),
-            color: Colors.black,
+        Expanded(
+          child: Text(
+            "$quantity  $unit",
+            style: TextStyle(
+              fontSize:
+                  isLandScape ? screenUtil.setSp(23) : screenUtil.setSp(35),
+              color: Colors.black,
+            ),
           ),
         ),
         // SizedBox(width: 5),
@@ -723,29 +727,34 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         //   ),
         // ),
         SizedBox(width: screenUtil.setWidth(80)),
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: double.parse(price).toStringAsFixed(2),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize:
-                      isLandScape ? screenUtil.setSp(30) : screenUtil.setSp(40),
-                  color: AppColors.scondryColor,
+        Expanded(
+          flex: 2,
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: double.parse(price).toStringAsFixed(2),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: isLandScape
+                        ? screenUtil.setSp(28)
+                        : screenUtil.setSp(35),
+                    color: AppColors.scondryColor,
+                  ),
                 ),
-              ),
-              TextSpan(
-                text: translate("SDG", context),
-                style: TextStyle(
-                  // fontFamily: "Cairo",
-                  color: Colors.red,
-                  fontSize:
-                      isLandScape ? screenUtil.setSp(20) : screenUtil.setSp(30),
-                  letterSpacing: 1,
+                TextSpan(
+                  text: translate("SDG", context),
+                  style: TextStyle(
+                    // fontFamily: "Cairo",
+                    color: Colors.red,
+                    fontSize: isLandScape
+                        ? screenUtil.setSp(20)
+                        : screenUtil.setSp(25),
+                    letterSpacing: 1,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],

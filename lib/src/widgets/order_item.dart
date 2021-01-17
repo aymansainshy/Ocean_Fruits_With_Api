@@ -109,9 +109,10 @@ class _OrderItemState extends State<OrderItem> {
                     final unitTitle =
                         langugeProvider.unitTile(product.unitTitle);
                     return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Expanded(
+                          flex: 2,
                           child: Text(
                             language == "ar"
                                 ? product.productTitle
@@ -122,42 +123,46 @@ class _OrderItemState extends State<OrderItem> {
                             ),
                           ),
                         ),
-                        Text(
-                          '${product.quantity}  $unitTitle ',
-                          style: TextStyle(
-                            fontSize: widget.isLandScape
-                                ? widget.screenUtil.setSp(28)
-                                : widget.screenUtil.setSp(35),
-                            color: Colors.grey,
+                        Expanded(
+                          child: Text(
+                            '${product.quantity}  $unitTitle ',
+                            style: TextStyle(
+                              fontSize: widget.isLandScape
+                                  ? widget.screenUtil.setSp(28)
+                                  : widget.screenUtil.setSp(35),
+                              color: Colors.grey,
+                            ),
                           ),
                         ),
                         SizedBox(width: widget.screenUtil.setWidth(70)),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text:
-                                    '${product.productPrice.toStringAsFixed(1)}',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: widget.isLandScape
-                                      ? widget.screenUtil.setSp(28)
-                                      : widget.screenUtil.setSp(35),
-                                  color: Colors.red,
+                        Expanded(
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text:
+                                      '${product.productPrice.toStringAsFixed(1)}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: widget.isLandScape
+                                        ? widget.screenUtil.setSp(28)
+                                        : widget.screenUtil.setSp(35),
+                                    color: Colors.red,
+                                  ),
                                 ),
-                              ),
-                              TextSpan(
-                                text: translate("SDG", context),
-                                style: TextStyle(
-                                  // fontFamily: "Cairo",
-                                  color: Colors.black87,
-                                  fontSize: widget.isLandScape
-                                      ? widget.screenUtil.setSp(20)
-                                      : widget.screenUtil.setSp(30),
-                                  letterSpacing: 1,
+                                TextSpan(
+                                  text: translate("SDG", context),
+                                  style: TextStyle(
+                                    // fontFamily: "Cairo",
+                                    color: Colors.black87,
+                                    fontSize: widget.isLandScape
+                                        ? widget.screenUtil.setSp(20)
+                                        : widget.screenUtil.setSp(30),
+                                    letterSpacing: 1,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
