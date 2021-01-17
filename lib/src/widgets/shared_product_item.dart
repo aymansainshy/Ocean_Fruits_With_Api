@@ -34,6 +34,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
     final language = langugeProvider.appLocal.languageCode;
 
     final productUnit = langugeProvider.unitTile(product.unit);
+    final productTitle = language == "ar" ? product.arTitle : product.enTitle;
     return Stack(
       overflow: Overflow.visible,
       alignment: Alignment.center,
@@ -105,27 +106,18 @@ class _SharedProductItemState extends State<SharedProductItem> {
                 padding: language == "ar"
                     ? EdgeInsets.only(right: 8)
                     : EdgeInsets.only(left: 8),
-                child: language == "ar"
-                    ? Text(
-                        "${product.arTitle}",
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: _isLandScape
-                              ? screenUtil.setSp(30)
-                              : screenUtil.setSp(50),
-                          color: Colors.black,
-                        ),
-                      )
-                    : Text(
-                        "${product.enTitle}",
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: _isLandScape
-                              ? screenUtil.setSp(30)
-                              : screenUtil.setSp(50),
-                          color: Colors.black,
-                        ),
-                      ),
+                child: Text(
+                  "$productTitle",
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: _isLandScape
+                        ? screenUtil.setSp(25)
+                        : language == "ar"
+                            ? screenUtil.setSp(40)
+                            : screenUtil.setSp(45),
+                    color: Colors.black,
+                  ),
+                ),
               ),
               SizedBox(height: 1),
               Padding(
@@ -140,8 +132,10 @@ class _SharedProductItemState extends State<SharedProductItem> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: _isLandScape
-                              ? screenUtil.setSp(30)
-                              : screenUtil.setSp(45),
+                              ? screenUtil.setSp(25)
+                              : language == "ar"
+                                  ? screenUtil.setSp(40)
+                                  : screenUtil.setSp(45),
                           color: AppColors.greenColor,
                         ),
                       ),
@@ -150,7 +144,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                         style: TextStyle(
                           color: Colors.red,
                           fontSize: _isLandScape
-                              ? screenUtil.setSp(25)
+                              ? screenUtil.setSp(20)
                               : screenUtil.setSp(33),
                           letterSpacing: 1,
                         ),
@@ -264,9 +258,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                           productPrice: product.price,
                           productDiscount: product.discount,
                           productUnit: productUnit,
-                          productTitle: language == "ar"
-                              ? product.arTitle
-                              : product.enTitle,
+                          productTitle: productTitle,
                           productImage: product.imageUrl,
                         );
                       },

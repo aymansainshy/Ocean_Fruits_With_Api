@@ -33,6 +33,7 @@ class _ProductItemState extends State<ProductItem> {
         Provider.of<LanguageProvider>(context, listen: false);
     final language = langugeProvider.appLocal.languageCode;
     final productUnit = langugeProvider.unitTile(product.unit);
+    final productTitle = language == "ar" ? product.arTitle : product.enTitle;
     return Stack(
       overflow: Overflow.visible,
       alignment: Alignment.center,
@@ -64,7 +65,7 @@ class _ProductItemState extends State<ProductItem> {
               Container(
                 // color: Colors.green,
                 margin: language == "ar"
-                    ? EdgeInsets.only(right: 3, top: isLandScape ? 8 : 1)
+                    ? EdgeInsets.only(right: 3, top: isLandScape ? 8 : 0)
                     : EdgeInsets.only(left: 3, top: isLandScape ? 8 : 1),
                 height: isLandScape
                     ? screenUtil.setHeight(220)
@@ -99,34 +100,23 @@ class _ProductItemState extends State<ProductItem> {
                   ),
                 ),
               ),
-              SizedBox(height: isLandScape ? 5 : 0),
+              if (language == "en") SizedBox(height: isLandScape ? 5 : 0),
               Padding(
                 padding: language == "ar"
                     ? EdgeInsets.only(right: 6)
                     : EdgeInsets.only(left: 6),
-                child: language == "ar"
-                    ? Text(
-                        "${product.arTitle}",
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: isLandScape
-                              ? screenUtil.setSp(30)
-                              : screenUtil.setSp(34),
-                          color: Colors.black,
-                        ),
-                      )
-                    : Text(
-                        "${product.enTitle}",
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: isLandScape
-                              ? screenUtil.setSp(30)
-                              : screenUtil.setSp(34),
-                          color: Colors.black,
-                        ),
-                      ),
+                child: Text(
+                  "$productTitle",
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: isLandScape
+                        ? screenUtil.setSp(28)
+                        : screenUtil.setSp(30),
+                    color: Colors.black,
+                  ),
+                ),
               ),
-              SizedBox(height: 1),
+              SizedBox(height: language == "ar" ? 0 : 1),
               Padding(
                 padding: language == "ar"
                     ? EdgeInsets.only(right: 6)
@@ -138,7 +128,9 @@ class _ProductItemState extends State<ProductItem> {
                         text: "${product.price.toStringAsFixed(2)}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: screenUtil.setSp(32),
+                          fontSize: language == "ar"
+                              ? screenUtil.setSp(26)
+                              : screenUtil.setSp(32),
                           color: AppColors.greenColor,
                         ),
                       ),
@@ -162,11 +154,11 @@ class _ProductItemState extends State<ProductItem> {
                   "1 $productUnit",
                   style: TextStyle(
                     fontSize: screenUtil.setSp(25),
-                    color: Colors.grey,
+                    color: Colors.grey[500],
                   ),
                 ),
               ),
-              SizedBox(height: 2),
+              SizedBox(height: language == "ar" ? 0 : 2),
               Container(
                 height: 1,
                 width: double.infinity,
@@ -249,9 +241,7 @@ class _ProductItemState extends State<ProductItem> {
                           productDiscount: product.discount,
                           productUnit: productUnit,
                           productPrice: product.price,
-                          productTitle: language == "ar"
-                              ? product.arTitle
-                              : product.enTitle,
+                          productTitle: productTitle,
                           productImage: product.imageUrl,
                         );
                       },

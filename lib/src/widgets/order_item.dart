@@ -105,62 +105,64 @@ class _OrderItemState extends State<OrderItem> {
                     ? widget.order.products.length * 40.0
                     : widget.order.products.length * 30.0,
                 child: ListView(
-                  children: widget.order.products
-                      .map((product) => Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Expanded(
-                                child: Text(
-                                  language == "ar"
-                                      ? product.productTitle
-                                      : product.productTitleEn,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                '${product.quantity} ',
+                  children: widget.order.products.map((product) {
+                    final unitTitle =
+                        langugeProvider.unitTile(product.unitTitle);
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            language == "ar"
+                                ? product.productTitle
+                                : product.productTitleEn,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          '${product.quantity}  $unitTitle ',
+                          style: TextStyle(
+                            fontSize: widget.isLandScape
+                                ? widget.screenUtil.setSp(28)
+                                : widget.screenUtil.setSp(35),
+                            color: Colors.grey,
+                          ),
+                        ),
+                        SizedBox(width: widget.screenUtil.setWidth(70)),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text:
+                                    '${product.productPrice.toStringAsFixed(1)}',
                                 style: TextStyle(
+                                  fontWeight: FontWeight.bold,
                                   fontSize: widget.isLandScape
                                       ? widget.screenUtil.setSp(28)
                                       : widget.screenUtil.setSp(35),
-                                  color: Colors.grey,
+                                  color: Colors.red,
                                 ),
                               ),
-                              SizedBox(width: widget.screenUtil.setWidth(70)),
-                              RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          '${product.productPrice.toStringAsFixed(1)}',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: widget.isLandScape
-                                            ? widget.screenUtil.setSp(28)
-                                            : widget.screenUtil.setSp(35),
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: translate("SDG", context),
-                                      style: TextStyle(
-                                        // fontFamily: "Cairo",
-                                        color: Colors.black87,
-                                        fontSize: widget.isLandScape
-                                            ? widget.screenUtil.setSp(20)
-                                            : widget.screenUtil.setSp(30),
-                                        letterSpacing: 1,
-                                      ),
-                                    ),
-                                  ],
+                              TextSpan(
+                                text: translate("SDG", context),
+                                style: TextStyle(
+                                  // fontFamily: "Cairo",
+                                  color: Colors.black87,
+                                  fontSize: widget.isLandScape
+                                      ? widget.screenUtil.setSp(20)
+                                      : widget.screenUtil.setSp(30),
+                                  letterSpacing: 1,
                                 ),
                               ),
                             ],
-                          ))
-                      .toList(),
+                          ),
+                        ),
+                      ],
+                    );
+                  }).toList(),
                 ),
               ),
             ),

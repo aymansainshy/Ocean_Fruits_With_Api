@@ -269,6 +269,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                 .productPrice
                                 .toString(),
                             cart.items.values.toList()[i].quantity.toString(),
+                            cart.items.values.toList()[i].unitTitle,
                           ),
                         ),
                       ),
@@ -685,8 +686,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     );
   }
 
-  Widget _buildRow(bool isLandScape, ScreenUtil screenUtil,
-      BuildContext context, String text, String price, String quantity) {
+  Widget _buildRow(
+      bool isLandScape,
+      ScreenUtil screenUtil,
+      BuildContext context,
+      String text,
+      String price,
+      String quantity,
+      String unit) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -701,12 +708,20 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           ),
         ),
         Text(
-          quantity,
+          "$quantity  $unit",
           style: TextStyle(
-            fontSize: isLandScape ? screenUtil.setSp(25) : screenUtil.setSp(40),
+            fontSize: isLandScape ? screenUtil.setSp(23) : screenUtil.setSp(35),
             color: Colors.black,
           ),
         ),
+        // SizedBox(width: 5),
+        // Text(
+        //   unit,
+        //   style: TextStyle(
+        //     fontSize: isLandScape ? screenUtil.setSp(25) : screenUtil.setSp(40),
+        //     color: Colors.black,
+        //   ),
+        // ),
         SizedBox(width: screenUtil.setWidth(80)),
         RichText(
           text: TextSpan(

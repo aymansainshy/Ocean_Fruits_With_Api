@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../lang/language_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/build_form_field.dart';
@@ -154,6 +155,10 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     _animationController.forward();
     _animationController2.forward();
+
+    final langugeProvider =
+        Provider.of<LanguageProvider>(context, listen: false);
+    final language = langugeProvider.appLocal.languageCode;
     return Form(
       key: _formKey,
       child: Padding(
@@ -308,6 +313,22 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                     _saveForm();
                     // Navigator.of(context).pushNamed(TapScreen.routeName);
                   },
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: language == "ar"
+                  ? EdgeInsets.only(left: 10)
+                  : EdgeInsets.only(right: 10),
+              child: GestureDetector(
+                onTap: () =>
+                    Navigator.of(context).pushNamed(TapScreen.routeName),
+                child: Text(
+                  translate("skip", context),
+                  style: TextStyle(
+                    color: AppColors.scondryColor,
+                  ),
                 ),
               ),
             ),
