@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../widgets/build_drawer_list.dart';
 import '../providers/auth_provider.dart';
@@ -218,118 +219,49 @@ class AppDrawer extends StatelessWidget {
   }
 }
 
+Future<void> _launchUrls(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    print("Can't launch");
+  }
+}
+
+Future<void> _launchPhone(String phone) async {
+  var url = "tel:${phone.toString()}";
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    print("Can't launch");
+  }
+}
+
+Future<void> _launchMail(String mail) async {
+  var url = "mailto:${mail.toString()}?subject=hello";
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    print("Can't launch");
+  }
+}
+
 Future<void> showAboutDailog(
     bool isLandScape, ScreenUtil screenUtil, BuildContext context) {
   return showDialog(
     context: context,
     builder: (ctx) => AlertDialog(
+      backgroundColor: AppColors.primaryColor,
       scrollable: true,
+      elevation: 0.0,
       title: Column(
         children: [
           Image.asset(
-            'assets/images/logo.png',
+            'assets/images/Ocean Agriculture fruit & Vegetables-01.png',
             height: isLandScape
-                ? screenUtil.setHeight(400)
+                ? screenUtil.setHeight(200)
                 : screenUtil.setHeight(300),
             width: isLandScape
-                ? screenUtil.setWidth(400)
-                : screenUtil.setWidth(300),
-          ),
-          Transform.translate(
-            offset: Offset(0, -20),
-            child: Text(
-              "Ocean Fruits & Vegetable",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize:
-                    isLandScape ? screenUtil.setSp(20) : screenUtil.setSp(35),
-                color: AppColors.primaryColor,
-              ),
-            ),
-          ),
-        ],
-      ),
-      content: Container(
-        height:
-            isLandScape ? screenUtil.setHeight(800) : screenUtil.setHeight(600),
-        child: Expanded(
-          child: Text(
-            " Greate and important assets to mobile app indestory , you will have agood experience whith us  !",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize:
-                  isLandScape ? screenUtil.setSp(25) : screenUtil.setSp(40),
-              color: Colors.black,
-            ),
-          ),
-        ),
-      ),
-      actions: <Widget>[
-        FlatButton(
-          onPressed: () {},
-          child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: translate("poweredBy", context),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: isLandScape
-                        ? screenUtil.setSp(18)
-                        : screenUtil.setSp(30),
-                    color: Colors.black,
-                  ),
-                ),
-                TextSpan(
-                  text: 'Ease-group',
-                  style: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontSize: isLandScape
-                        ? screenUtil.setSp(15)
-                        : screenUtil.setSp(30),
-                    letterSpacing: 1,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Spacer(),
-        FlatButton(
-          child: Text(
-            "Ok",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize:
-                  isLandScape ? screenUtil.setSp(25) : screenUtil.setSp(35),
-              color: AppColors.primaryColor,
-            ),
-          ),
-          onPressed: () {
-            Navigator.of(ctx).pop();
-          },
-        ),
-      ],
-    ),
-  );
-}
-
-Future<void> showContactUsDailog(
-    bool isLandScape, ScreenUtil screenUtil, BuildContext context) {
-  return showDialog(
-    context: context,
-    builder: (ctx) => AlertDialog(
-      scrollable: true,
-      title: Column(
-        children: [
-          Image.asset(
-            'assets/images/logo.png',
-            height: isLandScape
-                ? screenUtil.setHeight(400)
-                : screenUtil.setHeight(300),
-            width: isLandScape
-                ? screenUtil.setWidth(400)
+                ? screenUtil.setWidth(200)
                 : screenUtil.setWidth(300),
           ),
           Transform.translate(
@@ -340,7 +272,96 @@ Future<void> showContactUsDailog(
                 fontWeight: FontWeight.bold,
                 fontSize:
                     isLandScape ? screenUtil.setSp(20) : screenUtil.setSp(35),
-                color: AppColors.primaryColor,
+                color: AppColors.scondryColor,
+                fontFamily: "Cairo",
+              ),
+            ),
+          ),
+        ],
+      ),
+      content: Container(
+        height:
+            isLandScape ? screenUtil.setHeight(800) : screenUtil.setHeight(600),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Container(
+              width: 220,
+              child: Text(
+                "Ocean Fruits & Vegetable Ocean Fruits &ean Fruits & Vegetable getable Ocean Fruits & Vegetable Ocean Fruits & Vegetable vvv Ocean Fruits & VegetableOcean Fruits & Vegetable ",
+                style: TextStyle(
+                  fontSize:
+                      isLandScape ? screenUtil.setSp(20) : screenUtil.setSp(35),
+                  color: Colors.white60,
+                ),
+              ),
+            ),
+            FlatButton(
+              onPressed: () => _launchUrls('https://ease-group.com/'),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: translate("poweredBy", context),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: isLandScape
+                            ? screenUtil.setSp(18)
+                            : screenUtil.setSp(30),
+                        color: AppColors.greenColor,
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'Ease-group',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: isLandScape
+                            ? screenUtil.setSp(15)
+                            : screenUtil.setSp(30),
+                        letterSpacing: 1,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Future<void> showContactUsDailog(
+    bool isLandScape, ScreenUtil screenUtil, BuildContext context) {
+  return showDialog(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      backgroundColor: AppColors.primaryColor,
+      scrollable: true,
+      elevation: 0.0,
+      title: Column(
+        children: [
+          Image.asset(
+            'assets/images/Ocean Agriculture fruit & Vegetables-01.png',
+            height: isLandScape
+                ? screenUtil.setHeight(200)
+                : screenUtil.setHeight(300),
+            width: isLandScape
+                ? screenUtil.setWidth(200)
+                : screenUtil.setWidth(300),
+          ),
+          Transform.translate(
+            offset: Offset(0, -20),
+            child: Text(
+              "Ocean Fruits & Vegetable ",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize:
+                    isLandScape ? screenUtil.setSp(20) : screenUtil.setSp(35),
+                color: AppColors.scondryColor,
+                fontFamily: "Cairo",
               ),
             ),
           ),
@@ -354,91 +375,64 @@ Future<void> showContactUsDailog(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Icon(
-                  Icons.mail_outline,
-                  size: 16,
-                  color: AppColors.primaryColor,
-                ),
-                SizedBox(width: 10),
-                Text(
-                  "Email",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.primaryColor,
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Container(
-                width: double.infinity,
-                child: Card(
-                  child: InkWell(
-                    onTap: () {},
-                    child: Text(
-                      "-  Ocean@gmail.com",
-                      style: TextStyle(
-                        fontSize: 12,
-                        // fontWeight: FontWeight.bold,
-                      ),
+                InkWell(
+                  onTap: () => _launchUrls(
+                      "https://www.linkedin.com/in/ayman-abdulrahman-4aa89b195/"),
+                  child: Container(
+                    height: screenUtil.setHeight(200),
+                    width: screenUtil.setWidth(200),
+                    child: Image.asset(
+                      "assets/icons/facebook.png",
+                      fit: BoxFit.contain,
+                      color: Colors.blue,
                     ),
                   ),
                 ),
-              ),
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Icon(
-                  Icons.phone,
-                  size: 16,
-                  color: AppColors.primaryColor,
-                ),
-                SizedBox(width: 10),
-                Text(
-                  "Phone",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.primaryColor,
+                InkWell(
+                  onTap: () => _launchPhone("+249924081893"),
+                  child: Container(
+                    height: screenUtil.setHeight(200),
+                    width: screenUtil.setWidth(200),
+                    child: Image.asset(
+                      "assets/icons/whatsapp.png",
+                      fit: BoxFit.contain,
+                      color: AppColors.greenColor,
+                    ),
                   ),
                 ),
               ],
             ),
-            Container(
-              width: double.infinity,
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: Text(
-                          "-  09128842444",
-                          style: TextStyle(
-                            fontSize: 12,
-                            // fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Divider(),
-                      InkWell(
-                        onTap: () {},
-                        child: Text(
-                          "-  09134234444",
-                          style: TextStyle(
-                            fontSize: 12,
-                            // fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
+            SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                InkWell(
+                  onTap: () => _launchMail("aymansainshy@gmail.com"),
+                  child: Container(
+                    height: screenUtil.setHeight(200),
+                    width: screenUtil.setWidth(200),
+                    child: Image.asset(
+                      "assets/icons/arroba.png",
+                      fit: BoxFit.contain,
+                      color: Colors.redAccent,
+                    ),
                   ),
                 ),
-              ),
+                InkWell(
+                  onTap: () => _launchUrls("https://twitter.com/aymansainshy1"),
+                  child: Container(
+                    height: screenUtil.setHeight(200),
+                    width: screenUtil.setWidth(200),
+                    child: Image.asset(
+                      "assets/icons/twitter.png",
+                      fit: BoxFit.contain,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
