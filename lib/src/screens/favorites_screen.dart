@@ -6,8 +6,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../providers/products_provider.dart';
 import '../widgets/shared_product_item.dart';
 import '../providers/auth_provider.dart';
-import '../lang/language_provider.dart';
+import '../providers/cart_provider.dart';
 import '../utils/app_constant.dart';
+import '../widgets/build_cart_stack.dart';
+import '../lang/language_provider.dart';
+import '../screens/cart_screen.dart';
 
 class FavoritesScreen extends StatefulWidget {
   static const routeName = 'favorites_screen';
@@ -100,6 +103,8 @@ class _FavoritesScreenState extends State<FavoritesScreen>
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
     final language = langugeProvider.appLocal.languageCode;
+    // final cart = Provider.of<Carts>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 68,
@@ -110,6 +115,23 @@ class _FavoritesScreenState extends State<FavoritesScreen>
         // backgroundColor: Colors.black87,
         centerTitle: true,
         elevation: 0.0,
+        actions: [
+          Padding(
+            padding: language == "ar"
+                ? EdgeInsets.only(left: 10)
+                : EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: Consumer<Carts>(
+                  builder: (context, cart, child) =>
+                      BuildCartStack(carts: cart)),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => CartScreen(isTap: true),
+                ));
+              },
+            ),
+          ),
+        ],
         leading: Builder(
           builder: (context) => Transform.translate(
             offset: Offset(6, 0),

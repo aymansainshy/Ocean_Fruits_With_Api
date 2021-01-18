@@ -48,6 +48,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final DateTime _dateTimeNow = DateTime.now();
+    final DateTime _today =
+        DateTime(_dateTimeNow.year, _dateTimeNow.month, _dateTimeNow.day);
+    final DateTime _tomorrow =
+        DateTime(_dateTimeNow.year, _dateTimeNow.month, _dateTimeNow.day + 1);
     ScreenUtil.init(context);
     ScreenUtil screenUtil = ScreenUtil();
     var isLandScape =
@@ -57,8 +62,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
-    final productProvider = Provider.of<Products>(context, listen: false);
     final language = langugeProvider.appLocal.languageCode;
+    final productProvider = Provider.of<Products>(context, listen: false);
 
     return Scaffold(
       key: _checkScaffoldKey,
@@ -398,9 +403,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               Row(
                 children: [
                   _buildDelivryDateContainer(
-                      mediaQuery / 3, translate("Today", context), 0),
-                  _buildDelivryDateContainer(
-                      mediaQuery / 3, translate("Tomorrow", context), 1),
+                      mediaQuery / 3, translate("Today", context), 0, _today),
+                  _buildDelivryDateContainer(mediaQuery / 3,
+                      translate("Tomorrow", context), 1, _tomorrow),
                 ],
               ),
               if (noDateDeliverySelected)
@@ -422,7 +427,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 ),
               ),
               Container(
-                height: 60,
+                height: 70,
                 width: mediaQuery.width,
                 // color: Colors.green,
                 child: ListView.builder(
@@ -499,6 +504,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     Size mediaQuery,
     String text,
     int index,
+    DateTime date,
   ) {
     return GestureDetector(
       onTap: () {
@@ -536,7 +542,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       ),
                       SizedBox(height: 3),
                       Text(
-                        "12/23/2020",
+                        "${date.year}/${date.month}/${date.day}",
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -567,7 +573,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       ),
                       SizedBox(height: 3),
                       Text(
-                        "12/24/ 2020",
+                        "${date.year}/${date.month}/${date.day}",
                         style: TextStyle(
                           color: Colors.grey.shade700,
                         ),
@@ -594,7 +600,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         });
       },
       child: Container(
-        height: 75,
+        height: 90,
         width: mediaQuery.width,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -728,7 +734,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         // ),
         SizedBox(width: screenUtil.setWidth(80)),
         Expanded(
-          flex: 2,
           child: RichText(
             text: TextSpan(
               children: [

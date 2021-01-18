@@ -164,7 +164,7 @@ class AppDrawer extends StatelessWidget {
                     context: context,
                     builder: (ctx) => AlertDialog(
                       title: Text(translate("areYouSure", context)),
-                      content: Text("You want logOut"),
+                      content: Text(translate("youWantLogOut", context)),
                       actions: <Widget>[
                         FlatButton(
                           child: Text(
@@ -396,7 +396,7 @@ Future<void> showContactUsDailog(
                     height: screenUtil.setHeight(200),
                     width: screenUtil.setWidth(200),
                     child: Image.asset(
-                      "assets/icons/whatsapp.png",
+                      "assets/icons/phone-call.png",
                       fit: BoxFit.contain,
                       color: AppColors.greenColor,
                     ),
@@ -414,7 +414,7 @@ Future<void> showContactUsDailog(
                     height: screenUtil.setHeight(200),
                     width: screenUtil.setWidth(200),
                     child: Image.asset(
-                      "assets/icons/arroba.png",
+                      "assets/icons/email.png",
                       fit: BoxFit.contain,
                       color: Colors.redAccent,
                     ),

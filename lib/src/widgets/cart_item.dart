@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import '../lang/language_provider.dart';
 
 import '../providers/cart_provider.dart';
 import '../utils/app_constant.dart';
@@ -34,7 +35,9 @@ class CartItem extends StatefulWidget {
 class _CartItemState extends State<CartItem> {
   @override
   Widget build(BuildContext context) {
-    // final locale = Provider.of<LanguageProvider>(context).appLocal;
+    final langugeProvider =
+        Provider.of<LanguageProvider>(context, listen: false);
+    final language = langugeProvider.appLocal.languageCode;
     final cart = Provider.of<Carts>(context, listen: false);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 5),
@@ -193,9 +196,10 @@ class _CartItemState extends State<CartItem> {
                             wordSpacing: 1.0,
                           ),
                         ),
-                        SizedBox(
-                          height: widget.screenUtil.setHeight(5),
-                        ),
+                        if (language == "en")
+                          SizedBox(
+                            height: widget.screenUtil.setHeight(5),
+                          ),
                         Expanded(
                           child: Row(
                             children: <Widget>[
