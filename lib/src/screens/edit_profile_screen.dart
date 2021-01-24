@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-// import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
@@ -205,11 +203,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         label: isLoading
             ? Center(
-                child: SpinKitFadingCircle(
-                  color: Colors.grey.shade400,
-                  size: 30,
-                  duration: Duration(milliseconds: 500),
-                ),
+                child: sleekCircularSlider(context, screenUtil.setSp(80),
+                    AppColors.greenColor, AppColors.scondryColor),
               )
             : Icon(
                 Icons.check,

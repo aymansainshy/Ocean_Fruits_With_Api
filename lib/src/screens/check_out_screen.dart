@@ -218,10 +218,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             textColor: Colors.white,
             child: isLoading
                 ? Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor: AppColors.greenColor,
-                      strokeWidth: 2.5,
-                    ),
+                    child: sleekCircularSlider(context, screenUtil.setSp(80),
+                        AppColors.primaryColor, AppColors.primaryColor),
                   )
                 : Text(
                     translate("placeOrder", context),

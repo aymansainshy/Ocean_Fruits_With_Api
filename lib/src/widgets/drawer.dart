@@ -296,35 +296,35 @@ Future<void> showAboutDailog(
                 ),
               ),
             ),
-            FlatButton(
-              onPressed: () => _launchUrls('https://ease-group.com/'),
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: translate("poweredBy", context),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: isLandScape
-                            ? screenUtil.setSp(18)
-                            : screenUtil.setSp(30),
-                        color: AppColors.greenColor,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'Ease-group',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: isLandScape
-                            ? screenUtil.setSp(15)
-                            : screenUtil.setSp(30),
-                        letterSpacing: 1,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  translate("poweredBy", context),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: isLandScape
+                        ? screenUtil.setSp(18)
+                        : screenUtil.setSp(30),
+                    color: AppColors.greenColor,
+                  ),
                 ),
-              ),
+                SizedBox(width: 5),
+                InkWell(
+                  onTap: () => _launchUrls('https://ease-group.com/'),
+                  child: Text(
+                    'Ease-group',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: isLandScape
+                          ? screenUtil.setSp(15)
+                          : screenUtil.setSp(30),
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

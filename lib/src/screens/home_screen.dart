@@ -167,10 +167,8 @@ class _HomeScreenState extends State<HomeScreen>
       ),
       body: isLoading
           ? Center(
-              child: CircularProgressIndicator(
-                backgroundColor: AppColors.primaryColor,
-                strokeWidth: 2.5,
-              ),
+              child: sleekCircularSlider(context, screenUtil.setSp(100),
+                  AppColors.greenColor, AppColors.scondryColor),
             )
           : RefreshIndicator(
               color: AppColors.primaryColor,

@@ -213,10 +213,8 @@ class _FavoritesScreenState extends State<FavoritesScreen>
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor: AppColors.primaryColor,
-                      strokeWidth: 2.5,
-                    ),
+                    child: sleekCircularSlider(context, screenUtil.setSp(100),
+                        AppColors.greenColor, AppColors.scondryColor),
                   );
                 } else {
                   if (snapshot.error != null) {

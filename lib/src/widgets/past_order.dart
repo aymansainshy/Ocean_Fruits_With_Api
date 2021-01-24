@@ -103,17 +103,10 @@ class _PastOrderState extends State<PastOrder>
           .fetchOrder(userData.userId),
       builder: (context, snapShote) {
         if (snapShote.connectionState == ConnectionState.waiting) {
-          return Container(
-              width: double.infinity,
-              height: isLandScape
-                  ? screenUtil.setHeight(660)
-                  : screenUtil.setHeight(330),
-              child: Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: AppColors.primaryColor,
-                  strokeWidth: 2.5,
-                ),
-              ));
+          return Center(
+            child: sleekCircularSlider(
+                context, 40, AppColors.scondryColor, AppColors.greenColor),
+          );
         } else {
           if (snapShote.error != null) {
             if (snapShote.error.toString() == "8") {

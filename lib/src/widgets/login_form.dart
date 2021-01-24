@@ -295,10 +295,11 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                   textColor: Colors.white,
                   child: isLoading
                       ? Center(
-                          child: CircularProgressIndicator(
-                            backgroundColor: AppColors.greenColor,
-                            strokeWidth: 2.5,
-                          ),
+                          child: sleekCircularSlider(
+                              context,
+                              widget.screenUtil.setSp(80),
+                              AppColors.greenColor,
+                              AppColors.scondryColor),
                         )
                       : Text(
                           translate("login", context),
