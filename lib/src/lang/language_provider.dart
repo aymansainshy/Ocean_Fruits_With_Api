@@ -45,7 +45,7 @@ class LanguageProvider with ChangeNotifier {
       "English",
       "English",
       "assets/images/united-states-of-america.png",
-      selected: true,
+      // selected: true,
     ),
     Language(
       "ar",
@@ -54,6 +54,13 @@ class LanguageProvider with ChangeNotifier {
       "assets/images/united-arab-emirates.png",
     ),
   ];
+
+  bool isSelected(String langCode, String locale) {
+    if (langCode == locale) {
+      return true;
+    }
+    return false;
+  }
 
   String unitTile(String unit) {
     switch (unit) {

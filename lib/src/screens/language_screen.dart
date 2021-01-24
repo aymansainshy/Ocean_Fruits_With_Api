@@ -115,26 +115,20 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 return InkWell(
                   onTap: () async {
                     languageProvider.changeLanguage(Locale(_language.code));
-                    languageProvider.languages.forEach((_langa) {
-                      setState(() {
-                        _langa.selected = false;
-                      });
-                    });
-                    _language.selected = !_language.selected;
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                     margin: EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      border: _language.selected
+                      border: language == _language.code
                           ? Border.all(
                               color: Color.fromRGBO(14, 59, 101, 1),
                               style: BorderStyle.solid,
                               width: 1,
                             )
                           : null,
-                      color: _language.selected
+                      color: language == _language.code
                           ? AppColors.circleColor
                           : Colors.grey[300],
                       boxShadow: [
@@ -164,21 +158,22 @@ class _LanguageScreenState extends State<LanguageScreen> {
                               ),
                             ),
                             Container(
-                              height: _language.selected ? 50 : 0,
-                              width: _language.selected ? 50 : 0,
+                              height: language == _language.code ? 50 : 0,
+                              width: language == _language.code ? 50 : 0,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(40),
                                 ),
                                 color: Theme.of(context)
                                     .accentColor
-                                    .withOpacity(_language.selected ? 0.70 : 0),
+                                    .withOpacity(
+                                        language == _language.code ? 0.70 : 0),
                               ),
                               child: Icon(
                                 Icons.check,
-                                size: _language.selected ? 24 : 0,
-                                color: Colors.white
-                                    .withOpacity(_language.selected ? 0.95 : 0),
+                                size: language == _language.code ? 24 : 0,
+                                color: Colors.white.withOpacity(
+                                    language == _language.code ? 0.95 : 0),
                               ),
                             ),
                           ],
