@@ -288,7 +288,7 @@ Future<void> showAboutDailog(
             Container(
               width: 220,
               child: Text(
-                "Ocean Fruits & Vegetable Ocean Fruits &ean Fruits & Vegetable getable Ocean Fruits & Vegetable Ocean Fruits & Vegetable vvv Ocean Fruits & VegetableOcean Fruits & Vegetable ",
+                translate("oceanAboutUs", context),
                 style: TextStyle(
                   fontSize:
                       isLandScape ? screenUtil.setSp(20) : screenUtil.setSp(35),
@@ -391,7 +391,7 @@ Future<void> showContactUsDailog(
                   ),
                 ),
                 InkWell(
-                  onTap: () => _launchPhone("+249924081893"),
+                  onTap: () => _launchPhone("+249911098045"),
                   child: Container(
                     height: screenUtil.setHeight(200),
                     width: screenUtil.setWidth(200),

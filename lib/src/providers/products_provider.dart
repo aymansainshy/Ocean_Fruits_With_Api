@@ -163,7 +163,7 @@ class Products with ChangeNotifier {
 
   Future<void> fetchFavoritesProducts(String userId) async {
     Dio dio = Dio();
-    var url = 'http://veget.ocean-sudan.com/api/user/favort';
+    var url = 'https://veget.ocean-sudan.com/api/user/favort';
     try {
       final response = await dio.get(
         url,
@@ -189,7 +189,7 @@ class Products with ChangeNotifier {
             Product(
               id: product["product"]["id"].toString(),
               imageUrl:
-                  "http://veget.ocean-sudan.com" + product["product"]["image"],
+                  "https://veget.ocean-sudan.com" + product["product"]["image"],
               price: double.parse(product["product"]["price"]),
               discount: double.parse(product["product"]["discount"]),
               isFruit: (product["product"]["type"] as String).contains("1")
@@ -211,7 +211,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchProducts() async {
-    const url = 'http://veget.ocean-sudan.com/api';
+    const url = 'https://veget.ocean-sudan.com/api';
     try {
       final response = await dio.get(
         url,
@@ -241,7 +241,7 @@ class Products with ChangeNotifier {
         _productsListData.add(
           Product(
             id: product["id"].toString(),
-            imageUrl: "http://veget.ocean-sudan.com" + product["image"],
+            imageUrl: "https://veget.ocean-sudan.com" + product["image"],
             price: double.parse(product["price"]),
             discount: double.parse(product["discount"]),
             isFruit: (product["type"] as String).contains("1") ? true : false,
@@ -256,7 +256,7 @@ class Products with ChangeNotifier {
       _recommendedProducts = _productsListData;
 
       adAndDeliveryFeeResponse.forEach((e) {
-        _adImage = "http://veget.ocean-sudan.com/" + e["ad_image"];
+        _adImage = "https://veget.ocean-sudan.com/" + e["ad_image"];
         _deliverFee = double.parse(e["deliver_fee"]);
       });
 

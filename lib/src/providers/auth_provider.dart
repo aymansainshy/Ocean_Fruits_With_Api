@@ -59,7 +59,7 @@ class AuthProvider with ChangeNotifier {
       // _userPassword = responseData["password"];
       // imageUrl = responseData["image_url"] == null
       //     ? ""
-      //     : 'http://veget.ocean-sudan.com/api/' +
+      //     : 'https://veget.ocean-sudan.com/api/' +
       //         responseData["image_url"];
       notifyListeners();
 
@@ -75,7 +75,7 @@ class AuthProvider with ChangeNotifier {
         // "userPassword": responseData["password"],
         // "imageUrl": responseData["image_url"] == null
         //     ? ""
-        //     : 'http://veget.ocean-sudan.com/api/' +
+        //     : 'https://veget.ocean-sudan.com/api/' +
         //         responseData["image_url"],
       });
       prefs.setString('userData', userData);
@@ -90,7 +90,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> register(String name, String address, String phone, String email,
       String password) async {
-    final url = 'http://veget.ocean-sudan.com/api/user';
+    final url = 'https://veget.ocean-sudan.com/api/user';
     var data = {
       "name": name,
       "password": password,
@@ -103,7 +103,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> login(String email, String password) async {
-    final url = 'http://veget.ocean-sudan.com/api/user/login';
+    final url = 'https://veget.ocean-sudan.com/api/user/login';
     var data = {
       "email": email,
       "password": password,
@@ -149,7 +149,7 @@ class AuthProvider with ChangeNotifier {
     File image,
   }) async {
     Dio dio = Dio();
-    final url = 'http://veget.ocean-sudan.com/api/user/$userId';
+    final url = 'https://veget.ocean-sudan.com/api/user/$userId';
 
     Map<String, dynamic> data = {
       "name": userName,
