@@ -28,7 +28,7 @@ class CategoriesManager with ChangeNotifier {
       print(_categories.toString());
       notifyListeners();
     } catch (e) {
-      print("Errror " + e.toString());
+      // print("Errror " + e.toString());
       throw e.toString();
     }
   }

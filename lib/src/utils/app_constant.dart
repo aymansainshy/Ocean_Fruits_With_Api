@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 import '../utils/custom_page_transition.dart';

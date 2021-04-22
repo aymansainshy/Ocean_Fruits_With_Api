@@ -34,6 +34,7 @@ class _ProductsScreenState extends State<ProductsScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     ScreenUtil.init(context);
     ScreenUtil screenUtil = ScreenUtil();
     var _isLandScape =
@@ -41,7 +42,8 @@ class _ProductsScreenState extends State<ProductsScreen>
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
     final language = langugeProvider.appLocal.languageCode;
-    final cart = Provider.of<Carts>(context);
+
+    // final cart = Provider.of<Carts>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +61,9 @@ class _ProductsScreenState extends State<ProductsScreen>
                 ? EdgeInsets.only(left: 10)
                 : EdgeInsets.only(right: 10),
             child: IconButton(
-              icon: BuildCartStack(carts: cart),
+              icon: Consumer<Carts>(
+                  builder: (context, cart, child) =>
+                      BuildCartStack(carts: cart)),
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => CartScreen(isTap: true),
@@ -143,63 +147,62 @@ class _ProductsScreenState extends State<ProductsScreen>
           } else {
             return Consumer<Products>(
               builder: (context, products, _) {
-                if (products.categoryProdocts.isEmpty) {
-                  return Center(
-                    child: Container(
-                      padding: const EdgeInsets.all(15.0),
-                      height: screenUtil.setHeight(500),
-                      width: screenUtil.setWidth(700),
-                      margin: EdgeInsets.all(15.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          translate('sorryWeDontHave', context),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: _isLandScape
-                                ? screenUtil.setSp(30)
-                                : screenUtil.setSp(40),
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Cairo",
-                            wordSpacing: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                } else {
-                  return Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: _isLandScape ? 5 : 15),
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 1,
-                        crossAxisSpacing: _isLandScape ? 1 : 5,
-                        mainAxisSpacing: _isLandScape ? 1 : 5,
-                      ),
-                      itemCount: products.categoryProdocts.length,
-                      itemBuilder: (context, index) =>
-                          ChangeNotifierProvider.value(
-                        value: products.categoryProdocts[index],
+                return products.categoryProdocts.isEmpty
+                    ? Center(
                         child: Container(
-                          padding: EdgeInsets.only(
-                            top: 10,
-                            left: 5,
-                            right: 5,
+                          padding: const EdgeInsets.all(15.0),
+                          height: screenUtil.setHeight(500),
+                          width: screenUtil.setWidth(700),
+                          margin: EdgeInsets.all(15.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(20),
+                            ),
                           ),
-                          child: SharedProductItem(),
+                          child: Center(
+                            child: Text(
+                              translate('sorryWeDontHave', context),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: _isLandScape
+                                    ? screenUtil.setSp(30)
+                                    : screenUtil.setSp(40),
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Cairo",
+                                wordSpacing: 1,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  );
-                }
+                      )
+                    : Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: _isLandScape ? 5 : 15),
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 1,
+                            crossAxisSpacing: _isLandScape ? 1 : 5,
+                            mainAxisSpacing: _isLandScape ? 1 : 5,
+                          ),
+                          itemCount: products.categoryProdocts.length,
+                          itemBuilder: (context, index) =>
+                              ChangeNotifierProvider.value(
+                            value: products.categoryProdocts[index],
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                top: 10,
+                                left: 5,
+                                right: 5,
+                              ),
+                              child: SharedProductItem(),
+                            ),
+                          ),
+                        ),
+                      );
               },
             );
           }

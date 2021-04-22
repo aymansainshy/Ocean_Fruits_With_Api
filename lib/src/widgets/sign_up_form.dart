@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../widgets/build_form_field.dart';
 import '../models/http_exception.dart';
 import '../providers/auth_provider.dart';
-import '../lang/language_provider.dart';
 import '../utils/app_constant.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -198,9 +197,8 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
     _animationController.forward();
     _animationController2.forward();
 
-    final langugeProvider =
-        Provider.of<LanguageProvider>(context, listen: false);
-    final language = langugeProvider.appLocal.languageCode;
+    // final langugeProvider =
+    //     Provider.of<LanguageProvider>(context, listen: false);
     return Form(
       key: _formKey,
       child: Padding(

@@ -153,7 +153,7 @@ class Products with ChangeNotifier {
       );
       _categoryProducts = _productData;
 
-      print("Response Product Data ..." + _categoryProducts.toString());
+      // print("Response Product Data ..." + _categoryProducts.toString());
       notifyListeners();
     } catch (e) {
       throw e;

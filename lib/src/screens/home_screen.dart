@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_fruits/src/providers/categories_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/drawer.dart';
-import 'products_screen.dart';
+import '../utils/app_constant.dart';
 import '../screens/cart_screen.dart';
 import '../lang/language_provider.dart';
-import '../providers/products_provider.dart';
-import '../widgets/home_product_item.dart';
+import '../screens/products_screen.dart';
 import '../providers/cart_provider.dart';
-import '../utils/app_constant.dart';
 import '../widgets/build_cart_stack.dart';
+import '../widgets/home_product_item.dart';
+import '../providers/products_provider.dart';
+import '../providers/categories_manager.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = 'home_screen';
@@ -282,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   value: products.recommendeProducts[index],
                                   child: Container(
                                     padding: EdgeInsets.only(
-                                      top: 10,
+                                      top: 15,
                                       left: 5,
                                       right: 5,
                                     ),
@@ -320,37 +320,34 @@ class _HomeScreenState extends State<HomeScreen>
 
   Widget _buildRaisedBattom(String title, Size mediaQuery, Function function,
       ScreenUtil screenUtil, bool isLandScape) {
-    return Expanded(
-      child: Container(
-        width: mediaQuery.width / 3,
-        height:
-            isLandScape ? screenUtil.setHeight(200) : screenUtil.setHeight(130),
-        // padding: EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(6),
-          ),
-          border: Border.all(
-            color: Colors.grey,
-            width: 1,
+    return Container(
+      width: mediaQuery.width / 3,
+      height:
+          isLandScape ? screenUtil.setHeight(200) : screenUtil.setHeight(130),
+      // padding: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(
+          Radius.circular(6),
+        ),
+        border: Border.all(
+          color: Colors.grey,
+          width: 1,
+        ),
+      ),
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+        color: AppColors.primaryColor,
+        textColor: Colors.white,
+        child: Text(
+          title,
+          style: TextStyle(
+            fontSize: isLandScape ? screenUtil.setSp(30) : screenUtil.setSp(36),
+            fontWeight: FontWeight.bold,
           ),
         ),
-        child: RaisedButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          color: AppColors.primaryColor,
-          textColor: Colors.white,
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize:
-                  isLandScape ? screenUtil.setSp(30) : screenUtil.setSp(36),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          onPressed: function,
-        ),
+        onPressed: function,
       ),
     );
   }

@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../models/http_exception.dart';
 import '../models/cart_model.dart';
 import '../models/order_model.dart';
 
@@ -53,8 +52,8 @@ class Orders with ChangeNotifier {
         ),
       );
 
-      print("Response Status Code ...." + response.statusCode.toString());
-      print("Response Data ...." + response.data.toString());
+      // print("Response Status Code ...." + response.statusCode.toString());
+      // print("Response Data ...." + response.data.toString());
 
       final responseDate = response.data as List<dynamic>;
 
@@ -132,7 +131,7 @@ class Orders with ChangeNotifier {
     };
 
     try {
-      final response = await dio.post(
+      await dio.post(
         url,
         data: jsonEncode(data),
         options: Options(
@@ -145,8 +144,8 @@ class Orders with ChangeNotifier {
         ),
       );
 
-      print("Response Status Code ...." + response.statusCode.toString());
-      print("Response Data ...." + response.data.toString());
+      // print("Response Status Code ...." + response.statusCode.toString());
+      // print("Response Data ...." + response.data.toString());
     }
 
     // on DioError catch (e) {
