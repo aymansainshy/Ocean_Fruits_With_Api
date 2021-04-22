@@ -10,112 +10,13 @@ class Products with ChangeNotifier {
   double _deliverFee;
   String _adImage;
 
-  List<Product> _recommendedProducts = [
-    // Product(
-    //   id: "1",
-    //   imageUrl: "assets/images/fruit1.png",
-    //   price: 23.5,
-    //   title: "Enab",
-    //   isFruit: true,
-    // ),
-    // Product(
-    //   id: "2",
-    //   imageUrl: "assets/images/fruit2.png",
-    //   price: 23.5,
-    //   title: "apple",
-    //   isFruit: false,
-    // ),
-    // Product(
-    //   id: "3",
-    //   imageUrl: "assets/images/fruit3.png",
-    //   price: 25.5,
-    //   title: "banana",
-    //   isFruit: true,
-    // ),
-    // Product(
-    //   id: "4",
-    //   imageUrl: "assets/images/fruit4.png",
-    //   price: 55.5,
-    //   title: "Enab",
-    //   isFruit: false,
-    // ),
-    // Product(
-    //   id: "5",
-    //   imageUrl: "assets/images/fruit5.png",
-    //   price: 10.5,
-    //   title: "dates",
-    //   isFruit: true,
-    // ),
-    // Product(
-    //   id: "6",
-    //   imageUrl: "assets/images/fruit6.png",
-    //   price: 23.5,
-    //   title: "orange",
-    //   isFruit: true,
-    // ),
-    // Product(
-    //   id: "7",
-    //   imageUrl: "assets/images/fruit7.png",
-    //   price: 19.5,
-    //   title: "Enab",
-    //   isFruit: true,
-    // ),
-    // Product(
-    //   id: "8",
-    //   imageUrl: "assets/images/fruit8.png",
-    //   price: 23.5,
-    //   title: "Guafa",
-    //   isFruit: true,
-    // ),
-    // Product(
-    //   id: "9",
-    //   imageUrl: "assets/images/fruit9.png",
-    //   price: 23.5,
-    //   title: "Enab",
-    //   isFruit: false,
-    // ),
-    // Product(
-    //   id: "10",
-    //   imageUrl: "assets/images/fruit9.png",
-    //   price: 90.5,
-    //   title: "Enab",
-    //   isFruit: true,
-    // ),
-    // Product(
-    //   id: "11",
-    //   imageUrl: "assets/images/fruit9.png",
-    //   price: 90.5,
-    //   title: "Enab",
-    //   isFruit: false,
-    // ),
-    // Product(
-    //   id: "12",
-    //   imageUrl: "assets/images/fruit9.png",
-    //   price: 90.5,
-    //   title: "Enab",
-    //   isFruit: false,
-    // ),
-    // Product(
-    //   id: "13",
-    //   imageUrl: "assets/images/fruit9.png",
-    //   price: 90.5,
-    //   title: "Enab",
-    //   isFruit: false,
-    // ),
-    // Product(
-    //   id: "14",
-    //   imageUrl: "assets/images/fruit9.png",
-    //   price: 90.5,
-    //   title: "Enab",
-    //   isFruit: false,
-    // ),
-  ];
+  List<Product> _recommendedProducts = [];
+  List<Product> _categoryProducts = [];
 
   Products(this.userId);
 
-  List<Product> get recommendeProducts {
-    return [..._recommendedProducts];
-  }
+  List<Product> get recommendeProducts => [..._recommendedProducts];
+  List<Product> get categoryProdocts => [..._categoryProducts];
 
   double get delveryFee {
     return _deliverFee;
@@ -204,6 +105,55 @@ class Products with ChangeNotifier {
         },
       );
       _favProduct = _productData;
+      notifyListeners();
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<void> fetchCategoryProducts(String catId) async {
+    Dio dio = Dio();
+    var url = 'https://veget.ocean-sudan.com/api/catogry/$catId';
+    try {
+      final response = await dio.get(
+        url,
+        options: Options(
+          sendTimeout: 3000,
+          receiveTimeout: 3000,
+          headers: {
+            'content-type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+
+      if (userId != null) {
+        await fetchFavoritesProducts(userId);
+      }
+
+      final responseData = response.data["product"] as List<dynamic>;
+
+      List<Product> _productData = [];
+      responseData.forEach(
+        (product) {
+          bool isFavorits = isFavContainProductId(product["id"].toString());
+
+          _productData.add(Product(
+            id: product["id"].toString(),
+            imageUrl: "https://veget.ocean-sudan.com" + product["image"],
+            price: double.parse(product["price"]),
+            discount: double.parse(product["discount"]),
+            isFruit: (product["type"] as String).contains("1") ? true : false,
+            arTitle: product["name_ar"],
+            enTitle: product["name_en"],
+            unit: product["unit_id"].toString(),
+            isFavorits: isFavorits,
+          ));
+        },
+      );
+      _categoryProducts = _productData;
+
+      print("Response Product Data ..." + _categoryProducts.toString());
       notifyListeners();
     } catch (e) {
       throw e;

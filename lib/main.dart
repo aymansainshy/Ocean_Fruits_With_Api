@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:ocean_fruits/src/providers/categories_manager.dart';
 import 'package:provider/provider.dart';
 
 import './src/screens/animated_splash_screen.dart';
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: AuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CategoriesManager(),
         ),
 
         ///[ProxyProvider]  the 'UserProvider' widget depends on  [Auth] & [ProductProvider]
@@ -77,7 +81,7 @@ class MyApp extends StatelessWidget {
                                 : LoginScreen(),
                       ),
                 duration: 2500,
-                type: AnimatedSplashType.StaticDuration,
+                type: AnimatedSplashType.BackgroundProcess,
                 imagePath:
                     "assets/images/Ocean Agriculture fruit & Vegetables-01.png",
               ),

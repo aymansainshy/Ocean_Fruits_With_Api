@@ -1,3 +1,4 @@
+import 'package:ocean_fruits/src/models/category_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,31 +8,36 @@ import '../providers/products_provider.dart';
 import '../lang/language_provider.dart';
 import '../widgets/build_cart_stack.dart';
 import '../providers/cart_provider.dart';
-import '../screens/cart_screen.dart';
+import 'cart_screen.dart';
 import '../utils/app_constant.dart';
 
-class FruitsScreen extends StatefulWidget {
+class ProductsScreen extends StatefulWidget {
   static const routeName = 'fruits_screen';
   final GlobalKey<ScaffoldState> tapScaffoldKey;
-  const FruitsScreen({
+  final Category cat;
+
+  const ProductsScreen({
     Key key,
+    this.cat,
     this.tapScaffoldKey,
   }) : super(key: key);
 
   @override
-  _FruitsScreenState createState() => _FruitsScreenState();
+  _ProductsScreenState createState() => _ProductsScreenState();
 }
 
-class _FruitsScreenState extends State<FruitsScreen> {
+class _ProductsScreenState extends State<ProductsScreen>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     ScreenUtil.init(context);
     ScreenUtil screenUtil = ScreenUtil();
     var _isLandScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
-
-    final products = Provider.of<Products>(context, listen: false);
-
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
     final language = langugeProvider.appLocal.languageCode;
@@ -88,15 +94,24 @@ class _FruitsScreenState extends State<FruitsScreen> {
           ),
         ),
         title: Text(
-          translate("fruits", context),
+          language == "ar" ? widget.cat.arName : widget.cat.enName,
           style: TextStyle(
             color: Colors.white,
             fontSize: 18,
           ),
         ),
       ),
-      body: products.fruitesProducts.isEmpty
-          ? Center(
+      body: FutureBuilder(
+        future: Provider.of<Products>(context, listen: false)
+            .fetchCategoryProducts(widget.cat.id),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: sleekCircularSlider(context, screenUtil.setSp(100),
+                  AppColors.greenColor, AppColors.scondryColor),
+            );
+          } else if (snapshot.error != null) {
+            return Center(
               child: Container(
                 padding: const EdgeInsets.all(15.0),
                 height: screenUtil.setHeight(500),
@@ -110,7 +125,7 @@ class _FruitsScreenState extends State<FruitsScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    translate('sorryWeDontHave', context),
+                    translate('anErrorOccurred', context),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black54,
@@ -124,30 +139,72 @@ class _FruitsScreenState extends State<FruitsScreen> {
                   ),
                 ),
               ),
-            )
-          : Padding(
-              padding: EdgeInsets.symmetric(horizontal: _isLandScape ? 5 : 15),
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1,
-                  crossAxisSpacing: _isLandScape ? 1 : 5,
-                  mainAxisSpacing: _isLandScape ? 1 : 5,
-                ),
-                itemCount: products.fruitesProducts.length,
-                itemBuilder: (context, index) => ChangeNotifierProvider.value(
-                  value: products.fruitesProducts[index],
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      top: 10,
-                      left: 5,
-                      right: 5,
+            );
+          } else {
+            return Consumer<Products>(
+              builder: (context, products, _) {
+                if (products.categoryProdocts.isEmpty) {
+                  return Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(15.0),
+                      height: screenUtil.setHeight(500),
+                      width: screenUtil.setWidth(700),
+                      margin: EdgeInsets.all(15.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          translate('sorryWeDontHave', context),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: _isLandScape
+                                ? screenUtil.setSp(30)
+                                : screenUtil.setSp(40),
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Cairo",
+                            wordSpacing: 1,
+                          ),
+                        ),
+                      ),
                     ),
-                    child: SharedProductItem(),
-                  ),
-                ),
-              ),
-            ),
+                  );
+                } else {
+                  return Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: _isLandScape ? 5 : 15),
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 1,
+                        crossAxisSpacing: _isLandScape ? 1 : 5,
+                        mainAxisSpacing: _isLandScape ? 1 : 5,
+                      ),
+                      itemCount: products.categoryProdocts.length,
+                      itemBuilder: (context, index) =>
+                          ChangeNotifierProvider.value(
+                        value: products.categoryProdocts[index],
+                        child: Container(
+                          padding: EdgeInsets.only(
+                            top: 10,
+                            left: 5,
+                            right: 5,
+                          ),
+                          child: SharedProductItem(),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              },
+            );
+          }
+        },
+      ),
     );
   }
 }

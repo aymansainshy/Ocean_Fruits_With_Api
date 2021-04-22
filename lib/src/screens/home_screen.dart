@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ocean_fruits/src/providers/categories_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/drawer.dart';
-import '../screens/vegetable_screen.dart';
-import '../screens/fruit_screen.dart';
+import 'products_screen.dart';
 import '../screens/cart_screen.dart';
 import '../lang/language_provider.dart';
 import '../providers/products_provider.dart';
@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen>
     updateKeepAlive();
     // Keeping alive...
 
-    await Future.delayed(Duration(minutes: 10));
+    await Future.delayed(Duration(minutes: 100));
 
     _keepAlive = false;
     updateKeepAlive();
@@ -107,6 +107,9 @@ class _HomeScreenState extends State<HomeScreen>
     final language = langugeProvider.appLocal.languageCode;
 
     final cart = Provider.of<Carts>(context);
+
+    final categories =
+        Provider.of<CategoriesManager>(context, listen: false).categories;
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
@@ -225,26 +228,52 @@ class _HomeScreenState extends State<HomeScreen>
                               pinned: true,
                               elevation: 0.0,
                               backgroundColor: Colors.transparent,
-                              flexibleSpace: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  _buildRaisedBattom(
-                                      translate("fruits", context), mediaQuery,
+                              flexibleSpace: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: categories.length,
+                                itemBuilder: (context, i) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: _buildRaisedBattom(
+                                      language == "ar"
+                                          ? categories[i].arName
+                                          : categories[i].enName,
+                                      mediaQuery,
                                       () {
-                                    Navigator.of(context).pushNamed(
-                                      FruitsScreen.routeName,
-                                    );
-                                  }, screenUtil, isLandScape),
-                                  SizedBox(width: 10),
-                                  _buildRaisedBattom(
-                                      translate("vegetabel", context),
-                                      mediaQuery, () {
-                                    Navigator.of(context).pushNamed(
-                                      VegetableScreen.routeName,
-                                    );
-                                  }, screenUtil, isLandScape),
-                                ],
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProductsScreen(
+                                              cat: categories[i],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      screenUtil,
+                                      isLandScape,
+                                    ),
+                                  );
+                                },
                               ),
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   children: [
+                              //     _buildRaisedBattom(
+                              //         translate("fruits", context), mediaQuery,
+                              //         () {
+                              //       Navigator.of(context).pushNamed(
+                              //         FruitsScreen.routeName,
+                              //       );
+                              //     }, screenUtil, isLandScape),
+                              //     SizedBox(width: 10),
+                              //     _buildRaisedBattom(
+                              //         translate("vegetabel", context),
+                              //         mediaQuery, () {
+                              //       Navigator.of(context).pushNamed(
+                              //         VegetableScreen.routeName,
+                              //       );
+                              //     }, screenUtil, isLandScape),
+                              //   ],
                             ),
                             SliverGrid(
                               delegate: SliverChildBuilderDelegate(
@@ -293,9 +322,10 @@ class _HomeScreenState extends State<HomeScreen>
       ScreenUtil screenUtil, bool isLandScape) {
     return Expanded(
       child: Container(
-        width: mediaQuery.width,
+        width: mediaQuery.width / 3,
         height:
             isLandScape ? screenUtil.setHeight(200) : screenUtil.setHeight(130),
+        // padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(6),
@@ -315,7 +345,7 @@ class _HomeScreenState extends State<HomeScreen>
             title,
             style: TextStyle(
               fontSize:
-                  isLandScape ? screenUtil.setSp(30) : screenUtil.setSp(42),
+                  isLandScape ? screenUtil.setSp(30) : screenUtil.setSp(36),
               fontWeight: FontWeight.bold,
             ),
           ),

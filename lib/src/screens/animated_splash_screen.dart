@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ocean_fruits/src/providers/products_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../providers/categories_manager.dart';
 import '../utils/app_constant.dart';
 
 Widget _home;
-Function _customFunction;
-String _imagePath;
 int _duration;
-AnimatedSplashType _runfor;
+String _imagePath;
+AnimatedSplashType _animatedType;
 
 enum AnimatedSplashType { StaticDuration, BackgroundProcess }
 
-Map<dynamic, Widget> _outputAndHome = {};
-
 class AnimatedSplashScreen extends StatefulWidget {
   AnimatedSplashScreen({
-    @required String imagePath,
-    @required Widget home,
-    Function customFunction,
     int duration,
     AnimatedSplashType type,
-    Map<dynamic, Widget> outputAndHome,
+    @required Widget home,
+    @required String imagePath,
   }) {
     assert(duration != null);
     assert(home != null);
@@ -31,10 +27,8 @@ class AnimatedSplashScreen extends StatefulWidget {
 
     _home = home;
     _duration = duration;
-    _customFunction = customFunction;
     _imagePath = imagePath;
-    _runfor = type;
-    _outputAndHome = outputAndHome;
+    _animatedType = type;
   }
 
   @override
@@ -63,31 +57,36 @@ class _AnimatedSplashState extends State<AnimatedSplashScreen>
     _animationController.reset();
   }
 
-  // navigator(home) {
-  //   Navigator.of(context).pushReplacement(
-  //       CupertinoPageRoute(builder: (BuildContext context) => home));
-  // }
+  String error;
 
   @override
   Widget build(BuildContext context) {
-    _runfor == AnimatedSplashType.BackgroundProcess
-        ? Future.delayed(Duration.zero).then((value) {
-            var res = _customFunction();
-            //print("$res+${_outputAndHome[res]}");
-            Future.delayed(Duration(milliseconds: _duration)).then((value) {
-              Navigator.of(context).pushReplacement(CupertinoPageRoute(
-                  builder: (BuildContext context) => _outputAndHome[res]));
-            });
+    _animatedType == AnimatedSplashType.BackgroundProcess
+        ? Future.delayed(Duration.zero).then((_) async {
+            try {
+              await Provider.of<CategoriesManager>(context, listen: false)
+                  .fetchCategories();
+
+              await Future.delayed(Duration(milliseconds: 500)).then((_) {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) => _home));
+              });
+            } catch (e) {
+              buildShowDialog(context);
+
+              return;
+            }
           })
-        : Future.delayed(Duration(milliseconds: _duration)).then((value) {
+        : Future.delayed(Duration(milliseconds: _duration)).then((_) {
             Navigator.of(context).pushReplacement(
-                CupertinoPageRoute(builder: (BuildContext context) => _home));
+                MaterialPageRoute(builder: (BuildContext context) => _home));
           });
 
     ScreenUtil.init(context);
+    ScreenUtil screenUtil = ScreenUtil();
+
     var isLandScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
-    ScreenUtil screenUtil = ScreenUtil();
 
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
@@ -110,4 +109,103 @@ class _AnimatedSplashState extends State<AnimatedSplashScreen>
       ),
     );
   }
+
+  Future buildShowDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) => GestureDetector(
+        onTap: () {},
+        behavior: HitTestBehavior.opaque,
+        child: AlertDialog(
+          title: Text(
+            translate("anErrorOccurred", context),
+            style: TextStyle(
+              color: AppColors.primaryColor,
+              fontSize: 14,
+            ),
+          ),
+          actions: [
+            MaterialButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {});
+              },
+              child: Text(
+                translate("ok", context),
+                style: TextStyle(
+                  color: AppColors.greenColor,
+                  fontSize: 14,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }
+
+// Scaffold(
+//       backgroundColor: AppColors.primaryColor,
+//       body: FadeTransition(
+//         opacity: _animation,
+//         child: Center(
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             children: [
+//               Expanded(
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.center,
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     Container(
+//                       height: isLandScape
+//                           ? screenUtil.setHeight(400)
+//                           : screenUtil.setHeight(500),
+//                       width: isLandScape
+//                           ? screenUtil.setWidth(700)
+//                           : screenUtil.setWidth(500),
+//                       child: Image.asset(
+//                         _imagePath,
+//                         fit: BoxFit.contain,
+//                       ),
+//                     ),
+//                     SizedBox(height: 5),
+//                     Shimmer.fromColors(
+//                       baseColor: AppColors.secondaryColors,
+//                       highlightColor: Colors.grey.shade300,
+//                       child: Text(
+//                         "TOPAZ",
+//                         style: TextStyle(
+//                           fontSize: 60,
+//                           color: AppColors.secondaryColors,
+//                           letterSpacing: 2.5,
+//                           // fontWeight: FontWeight.bold,
+//                         ),
+//                       ),
+//                     )
+//                   ],
+//                 ),
+//               ),
+//               Transform.translate(
+//                 offset: Offset(0, -30),
+//                 child: Container(
+//                   height: isLandScape
+//                       ? screenUtil.setHeight(800)
+//                       : screenUtil.setHeight(200),
+//                   width: isLandScape
+//                       ? screenUtil.setWidth(700)
+//                       : screenUtil.setWidth(800),
+//                   child: SpinKitThreeBounce(
+//                     color: Colors.grey,
+//                     size: 20,
+//                     duration: Duration(milliseconds: 800),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
