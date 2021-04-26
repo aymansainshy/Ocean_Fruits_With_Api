@@ -91,14 +91,14 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text("An error accured "),
+        title: Text(translate("anErrorPleaseTryLater", context)),
         content: Text(message),
         actions: [
           FlatButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Ok"))
+              child: Text(translate("ok", context)))
         ],
       ),
     );
@@ -123,9 +123,10 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
       setState(() {
         isLoading = false;
       });
-      if (widget.isSignUp) {
-        Navigator.of(context).pushReplacementNamed('/');
-      }
+      Navigator.of(context).pushReplacementNamed(TapScreen.routeName);
+      // if (widget.isSignUp) {
+      //   Navigator.of(context).pushReplacementNamed('/');
+      // }
       //  else {
       //   Navigator.of(context).pop();
       //   Navigator.of(context).pop();
@@ -232,51 +233,51 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                 },
               ),
             ),
-            FlatButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (ctx) => AlertDialog(
-                    title: Text(translate("email", context)),
-                    content: BuilFormField(
-                      fieldName: translate("email", context),
-                      // prefixIcon: Icon(Icons.mail_outline),
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      contentPadding: 8.0,
-                      validator: (value) {
-                        if (value.trim().isEmpty) {
-                          return translate("pleaseEnterYourEmail", context);
-                        }
-                        if (!_isEmailValid.hasMatch(value.trim())) {
-                          return translate("enterYourValidEmail2", context);
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        logInData['email'] = value;
-                      },
-                    ),
-                    actions: [
-                      InkWell(
-                        child: Text(translate("sentPassword", context)),
-                        onTap: () {},
-                      ),
-                    ],
-                  ),
-                );
-              },
-              child: Text(
-                "${translate("forget_password", context)} ",
-                style: TextStyle(
-                  fontSize: widget.isLandScape
-                      ? widget.screenUtil.setSp(25)
-                      : widget.screenUtil.setSp(35),
-                  color: AppColors.primaryColor,
-                  letterSpacing: 0.8,
-                ),
-              ),
-            ),
+            // FlatButton(
+            //   onPressed: () {
+            //     showDialog(
+            //       context: context,
+            //       builder: (ctx) => AlertDialog(
+            //         title: Text(translate("email", context)),
+            //         content: BuilFormField(
+            //           fieldName: translate("email", context),
+            //           // prefixIcon: Icon(Icons.mail_outline),
+            //           keyboardType: TextInputType.emailAddress,
+            //           textInputAction: TextInputAction.next,
+            //           contentPadding: 8.0,
+            //           validator: (value) {
+            //             if (value.trim().isEmpty) {
+            //               return translate("pleaseEnterYourEmail", context);
+            //             }
+            //             if (!_isEmailValid.hasMatch(value.trim())) {
+            //               return translate("enterYourValidEmail2", context);
+            //             }
+            //             return null;
+            //           },
+            //           onSaved: (value) {
+            //             logInData['email'] = value;
+            //           },
+            //         ),
+            //         actions: [
+            //           InkWell(
+            //             child: Text(translate("sentPassword", context)),
+            //             onTap: () {},
+            //           ),
+            //         ],
+            //       ),
+            //     );
+            //   },
+            //   child: Text(
+            //     "${translate("forget_password", context)} ",
+            //     style: TextStyle(
+            //       fontSize: widget.isLandScape
+            //           ? widget.screenUtil.setSp(25)
+            //           : widget.screenUtil.setSp(35),
+            //       color: AppColors.primaryColor,
+            //       letterSpacing: 0.8,
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: widget.screenUtil.setHeight(80),
             ),

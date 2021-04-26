@@ -324,7 +324,7 @@ class _HomeScreenState extends State<HomeScreen>
       width: mediaQuery.width / 3,
       height:
           isLandScape ? screenUtil.setHeight(200) : screenUtil.setHeight(130),
-      // padding: EdgeInsets.all(5),
+      padding: EdgeInsets.all(3),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(
           Radius.circular(6),
@@ -343,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen>
         child: Text(
           title,
           style: TextStyle(
-            fontSize: isLandScape ? screenUtil.setSp(30) : screenUtil.setSp(36),
+            fontSize: isLandScape ? screenUtil.setSp(30) : screenUtil.setSp(37),
             fontWeight: FontWeight.bold,
           ),
         ),

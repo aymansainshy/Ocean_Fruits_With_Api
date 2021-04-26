@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/build_form_field.dart';
+import '../screens/tap_screen.dart';
 import '../models/http_exception.dart';
 import '../providers/auth_provider.dart';
 import '../utils/app_constant.dart';
@@ -162,12 +163,13 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
       setState(() {
         isLoading = false;
       });
+      Navigator.of(context).pushReplacementNamed(TapScreen.routeName);
       // if (widget.isLogin) {
       //   Navigator.of(context).pushReplacementNamed('/');
       // } else {
       // Navigator.of(context).pop();
       //   Navigator.of(context).pop();
-      Navigator.of(context).pushReplacementNamed('/');
+      // Navigator.of(context).pushReplacementNamed('/');
       // }
     } on HttpException catch (e) {
       var errorMessage = translate("anErrorPleaseTryLater", context);

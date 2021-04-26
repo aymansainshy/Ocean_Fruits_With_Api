@@ -81,7 +81,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(width: 3),
                   InkWell(
                     onTap: () {
-                      Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                      Navigator.of(context)
+                          .pushReplacementNamed(SignUpScreen.routeName);
                     },
                     child: Text(
                       translate("createNewAccount", context),
