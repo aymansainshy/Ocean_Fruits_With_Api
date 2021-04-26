@@ -35,16 +35,30 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
   @override
   void initState() {
+    super.initState();
     userData = Provider.of<AuthProvider>(context, listen: false);
     userInfo['phone'] = userData.userPhone;
     userInfo['address'] = userData.userAddress;
-    super.initState();
   }
 
   int _selectedDeliveryDate;
   int _selectedDeliveryTime;
   bool noDateDeliverySelected = false;
   bool noTimeDeliverySelected = false;
+
+  final ScrollController _scrollController = ScrollController();
+
+  // void _jumpTo(BuildContext context) {
+  //   _scrollController.addListener(() {
+  //     if (!_scrollController.position.atEdge) {
+  //       if (_scrollController.position.pixels != 0) {
+  //         _scrollController.jumpTo(
+  //           _scrollController.position.maxScrollExtent,
+  //         );
+  //       }
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +136,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             // ),
             onPressed: () async {
               final isValid = _formKey.currentState.validate();
+              _scrollController.jumpTo(
+                _scrollController.position.maxScrollExtent,
+              );
               if (!isValid) {
                 return;
               }
@@ -233,6 +250,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         ),
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           child: Column(
