@@ -275,6 +275,36 @@ class _HomeScreenState extends State<HomeScreen>
                               //     }, screenUtil, isLandScape),
                               //   ],
                             ),
+                            SliverToBoxAdapter(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 5,
+                                  vertical: 10,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Divider(thickness: 3),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Center(
+                                        child: Text(
+                                          translate(
+                                              "featuredProducts", context),
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Divider(thickness: 3),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                             SliverGrid(
                               delegate: SliverChildBuilderDelegate(
                                 (context, index) =>
@@ -282,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   value: products.recommendeProducts[index],
                                   child: Container(
                                     padding: EdgeInsets.only(
-                                      top: 15,
+                                      top: 10,
                                       left: 5,
                                       right: 5,
                                     ),
