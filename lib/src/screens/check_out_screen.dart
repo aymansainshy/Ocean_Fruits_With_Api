@@ -67,8 +67,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         DateTime(_dateTimeNow.year, _dateTimeNow.month, _dateTimeNow.day);
     final DateTime _tomorrow =
         DateTime(_dateTimeNow.year, _dateTimeNow.month, _dateTimeNow.day + 1);
+
     ScreenUtil.init(context);
     ScreenUtil screenUtil = ScreenUtil();
+
     var isLandScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
     final cart = Provider.of<Carts>(context, listen: false);
@@ -92,11 +94,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         elevation: 0.0,
         leading: Builder(
           builder: (context) => Transform.translate(
-            offset: Offset(6, 0),
+            offset: const Offset(6, 0),
             child: IconButton(
               padding: const EdgeInsets.all(0.0),
               onPressed: () => Navigator.of(context).pop(),
-              icon: Container(
+              icon: SizedBox(
                 // color: Colors.teal,
                 height: 30,
                 width: 50,
@@ -117,7 +119,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         ),
         title: Text(
           translate("checkout", context),
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
           ),
@@ -427,7 +429,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               if (noDateDeliverySelected)
                 Text(
                   translate("pleasSelcetDate", context),
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
               SizedBox(
                 height: screenUtil.setHeight(35),

@@ -22,8 +22,7 @@ class CategoriesManager with ChangeNotifier {
     try {
       final response = await _dio.get('/catogry');
       final responseData = response.data["catogry"] as List<dynamic>;
-      final List<Category> responseList =
-          responseData.map((cat) => Category.fromJson(cat)).toList();
+      final List<Category> responseList = responseData.map((cat) => Category.fromJson(cat)).toList();
       _categories = responseList;
       print(_categories.toString());
       notifyListeners();

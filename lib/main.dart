@@ -16,10 +16,13 @@ import './src/utils/app_constant.dart';
 import './src/utils/app_routes.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key key}) : super(key: key);
+
+  @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
@@ -53,11 +56,11 @@ class MyApp extends StatelessWidget {
             builder: (context, auth, _) => MaterialApp(
               title: "Osean Fruits",
               locale: languageProvider.appLocal,
-              supportedLocales: [
+              supportedLocales: const [
                 Locale('en', 'US'),
                 Locale('ar', 'SA'),
               ],
-              localizationsDelegates: [
+              localizationsDelegates: const [
                 AppLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
@@ -73,12 +76,12 @@ class MyApp extends StatelessWidget {
                         builder: (context, authResult) =>
                             authResult.connectionState ==
                                     ConnectionState.waiting
-                                ? Scaffold(
+                                ? const Scaffold(
                                     body: Center(
                                       child: CircularProgressIndicator(),
                                     ),
                                   )
-                                : LoginScreen(),
+                                : const LoginScreen(),
                       ),
                 duration: 2500,
                 type: AnimatedSplashType.BackgroundProcess,

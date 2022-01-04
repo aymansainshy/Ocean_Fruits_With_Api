@@ -388,7 +388,7 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
+                    borderSide:const  BorderSide(
                       color: AppColors.primaryColor,
                       width: 0.5,
                     ),
@@ -406,7 +406,7 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                     return translate("enterYourPhoneNumber", context);
                   }
 
-                  if (value.toString().length < 10) {
+                  if (value.toString().length < 9) {
                     return translate("PhoneNumberValid", context);
                   }
 
@@ -424,13 +424,13 @@ class _SignUpFormState extends State<SignUpForm> with TickerProviderStateMixin {
                   setState(() {
                     phoneNumber = number.toString();
                   });
+                  print("phone next");
                   print(number.phoneNumber);
                 },
                 onInputValidated: (bool value) {
                   setState(() {
                     isPhoneValide = value;
                   });
-                  print(value);
                 },
                 // onSaved: (value) {
                 //   print("is phone valide ....." + isPhoneValide.toString());

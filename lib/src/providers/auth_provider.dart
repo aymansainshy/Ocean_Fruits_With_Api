@@ -16,6 +16,7 @@ class AuthProvider with ChangeNotifier {
   String _userPassword;
   String _userToken;
   String imageUrl;
+  final Dio _dio = Dio();
 
   bool get isAuth {
     print('Rebuilding ............');
@@ -29,10 +30,9 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> _authenticat(String urls, Map<String, dynamic> data) async {
-    Dio dio = Dio();
     final url = urls;
     try {
-      final response = await dio.post(
+      final response = await _dio.post(
         url,
         options: Options(
           sendTimeout: 2000,
@@ -90,7 +90,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> register(String name, String address, String phone, String email,
       String password) async {
-    final url = 'https://veget.ocean-sudan.com/api/user';
+    const url = 'https://veget.ocean-sudan.com/api/user';
     var data = {
       "name": name,
       "password": password,
@@ -103,7 +103,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> login(String email, String password) async {
-    final url = 'https://veget.ocean-sudan.com/api/user/login';
+    const url = 'https://veget.ocean-sudan.com/api/user/login';
     var data = {
       "email": email,
       "password": password,
@@ -148,7 +148,6 @@ class AuthProvider with ChangeNotifier {
     @required String userPhone,
     File image,
   }) async {
-    Dio dio = Dio();
     final url = 'https://veget.ocean-sudan.com/api/user/$userId';
 
     Map<String, dynamic> data = {
@@ -160,7 +159,7 @@ class AuthProvider with ChangeNotifier {
     };
 
     try {
-      final response = await dio.put(
+      final response = await _dio.put(
         url,
         data: jsonEncode(data),
         options: Options(
@@ -213,7 +212,6 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> uploadImage(File image, String userId) async {
-    Dio dio = Dio();
     final url = 'http://backend.bdcafrica.site/api/user/$userId/imageUpdate';
     try {
       String fileName = image.path.split('/').last;
@@ -224,7 +222,7 @@ class AuthProvider with ChangeNotifier {
         ),
       });
 
-      final response = await dio.post(
+      final response = await _dio.post(
         url,
         data: formData,
         options: Options(
@@ -267,10 +265,9 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> forgetPassword(String email) async {
-    Dio dio = Dio();
-    final url = 'http://backend.bdcafrica.site/api/user/forgetpassword';
+    const url = 'http://backend.bdcafrica.site/api/user/forgetpassword';
     try {
-      final response = await dio.post(
+      final response = await _dio.post(
         url,
         data: jsonEncode(email),
         options: Options(

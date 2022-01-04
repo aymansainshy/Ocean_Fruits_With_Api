@@ -34,7 +34,7 @@ class Orders with ChangeNotifier {
     print('Star fetch Order ........');
     print('usder ID ' + userId);
 
-    final url = 'https://veget.ocean-sudan.com/api/user/order';
+    const url = 'https://veget.ocean-sudan.com/api/user/order';
 
     try {
       final response = await dio.get(
@@ -110,7 +110,7 @@ class Orders with ChangeNotifier {
     @required String paymentMethod,
     @required List<Cart> cartProducts,
   }) async {
-    final url = 'https://veget.ocean-sudan.com/api/user/order';
+    const url = 'https://veget.ocean-sudan.com/api/user/order';
     print("Star Post Order .......");
     Map<String, dynamic> data = {
       "user_id": userId,
