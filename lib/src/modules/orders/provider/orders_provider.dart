@@ -89,7 +89,6 @@ class Orders with ChangeNotifier {
       _orders = _orderData;
       notifyListeners();
     } on DioError catch (e) {
-      print("Response Error Dio ...." + e.request.toString());
       throw e.response.data["code"];
     } catch (e) {
       print("Response Error ...." + e.toString());

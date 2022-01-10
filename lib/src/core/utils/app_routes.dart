@@ -1,4 +1,4 @@
-import '../../modules/user/screens/edit_profile_screen.dart';
+import '../../modules/user-profile/screens/edit_profile_screen.dart';
 import '../../modules/main-view/screens/home_screen.dart';
 import '../../modules/products/screens/favorites_screen.dart';
 import '../../modules/cart/screens/check_out_screen.dart';
@@ -13,15 +13,15 @@ import '../../modules/main-view/screens/tap_screen.dart';
 
 var routs = {
   TapScreen.routeName: (context) => TapScreen(),
-  HomeScreen.routeName: (context) => HomeScreen(),
+  HomeScreen.routeName: (context) => const HomeScreen(),
   CartScreen.routeName: (context) => CartScreen(),
-  LoginScreen.routeName: (context) => LoginScreen(),
+  LoginScreen.routeName: (context) => const LoginScreen(),
   OrderScreen.routeName: (context) => OrderScreen(),
-  SignUpScreen.routeName: (context) => SignUpScreen(),
+  SignUpScreen.routeName: (context) => const SignUpScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
   LanguageScreen.routeName: (context) => LanguageScreen(),
-  ProductsScreen.routeName: (context) => ProductsScreen(),
+  ProductsScreen.routeName: (context) => const ProductsScreen(),
   CheckOutScreen.routeName: (context) => CheckOutScreen(),
-  FavoritesScreen.routeName: (context) => FavoritesScreen(),
+  FavoritesScreen.routeName: (context) => const FavoritesScreen(),
   EditProfileScreen.routeName: (context) => EditProfileScreen(),
 };
