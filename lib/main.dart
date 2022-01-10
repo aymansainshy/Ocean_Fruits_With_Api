@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:ocean_fruits/src/providers/categories_manager.dart';
+import 'package:ocean_fruits/src/modules/categories/provider/categories_manager.dart';
 import 'package:provider/provider.dart';
 
-import './src/screens/animated_splash_screen.dart';
-import './src/providers/products_provider.dart';
-import './src/providers/orders_provider.dart';
-import './src/providers/cart_provider.dart';
-import './src/providers/auth_provider.dart';
-import './src/lang/language_provider.dart';
-import './src/lang/app_locelazation.dart';
-import './src/screens/login_screen.dart';
-import './src/screens/tap_screen.dart';
-import './src/utils/app_constant.dart';
-import './src/utils/app_routes.dart';
+import 'src/modules/main-view/screens/animated_splash_screen.dart';
+import 'src/modules/products/provider/products_provider.dart';
+import 'src/modules/orders/provider/orders_provider.dart';
+import 'src/modules/cart/provider/cart_provider.dart';
+import 'src/modules/auth/provider/auth_provider.dart';
+import 'src/core/utils/app_routes.dart';
+import 'src/modules/lang/provider/language_provider.dart';
+import './src/modules/lang/app_locelazation.dart';
+import 'src/modules/auth/screens/login_screen.dart';
+import 'src/modules/main-view/screens/tap_screen.dart';
+import './src/core/utils/app_constant.dart';
 
 void main() {
   runApp(const MyApp());
