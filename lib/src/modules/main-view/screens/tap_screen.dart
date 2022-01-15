@@ -17,8 +17,7 @@ class TapScreen extends StatefulWidget {
 }
 
 class _TapScreenState extends State<TapScreen> {
-  final GlobalKey<ScaffoldState> _tapScaffoldKey =
-      new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _tapScaffoldKey = GlobalKey<ScaffoldState>();
   final _pageController = PageController();
   var _subscription;
   Connectivity _connectivity;
@@ -36,7 +35,7 @@ class _TapScreenState extends State<TapScreen> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text("Ok"),
+            child: const Text("Ok"),
           ),
         ],
       ),
@@ -101,7 +100,7 @@ class _TapScreenState extends State<TapScreen> {
       //   children: _pages,
       // ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
               blurRadius: 15.0,
@@ -126,7 +125,7 @@ class _TapScreenState extends State<TapScreen> {
               "assets/icons/Cart Fill.png",
               1,
               redCircle: cart.items.isEmpty
-                  ? SizedBox()
+                  ? const SizedBox()
                   : Positioned(
                       right: -5,
                       child: CircleAvatar(
@@ -137,7 +136,7 @@ class _TapScreenState extends State<TapScreen> {
                             padding: const EdgeInsets.all(2),
                             child: Text(
                               "${cart.itemCount}",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                               ),
                             ),
@@ -172,7 +171,7 @@ class _TapScreenState extends State<TapScreen> {
       child: Container(
         height: 55,
         width: mediaQuery.width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
         ),
         child: Column(
@@ -183,14 +182,14 @@ class _TapScreenState extends State<TapScreen> {
                 overflow: Overflow.visible,
                 alignment: Alignment.topRight,
                 children: [
-                  Container(
+                  SizedBox(
                     height: 30,
                     child: Image.asset(
                       icon,
                       fit: BoxFit.contain,
                     ),
                   ),
-                  redCircle ?? SizedBox(),
+                  redCircle ?? const SizedBox(),
                 ],
               ),
             if (index == _selectedItemIndex)
@@ -198,17 +197,17 @@ class _TapScreenState extends State<TapScreen> {
                 overflow: Overflow.visible,
                 alignment: Alignment.topRight,
                 children: [
-                  Container(
+                  SizedBox(
                     height: 30,
                     child: Image.asset(
                       icon2,
                       fit: BoxFit.contain,
                     ),
                   ),
-                  redCircle ?? SizedBox(),
+                  redCircle ?? const SizedBox(),
                 ],
               ),
-            SizedBox(height: 3),
+            const SizedBox(height: 3),
             Text(
               text,
               style: TextStyle(

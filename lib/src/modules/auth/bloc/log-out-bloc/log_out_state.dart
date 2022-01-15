@@ -16,5 +16,5 @@ class LogOutSuccess extends LogOutState {}
 class LogOutFailure extends LogOutState {
   final String errorMassage;
 
-  LogOutFailure({this.errorMassage});
+  const LogOutFailure({this.errorMassage});
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ocean_fruits/src/core/utils/assets_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,6 +12,8 @@ import '../../../core/utils/app_constant.dart';
 class ProfileScreen extends StatefulWidget {
   static const routeName = "profile-name";
 
+  const ProfileScreen({Key key}) : super(key: key);
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -18,14 +21,15 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey =
-        new GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
     var mediaQuery = MediaQuery.of(context).size;
+
     ScreenUtil.init(context);
+    ScreenUtil screenUtil = ScreenUtil();
+
     var isLandScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
-    ScreenUtil screenUtil = ScreenUtil();
 
     // final userData = Provider.of<AuthProvider>(context, listen: false);
     final langugeProvider =
@@ -36,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       key: _scaffoldKey,
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).pop(),
-        child: Container(
+        child: SizedBox(
           height: isLandScape
               ? screenUtil.setHeight(150)
               : screenUtil.setHeight(100),
@@ -44,12 +48,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           // color: Colors.green,
           child: language == "ar"
               ? Image.asset(
-                  "assets/icons/arrow_back2.png",
+                  AssetsUtils.arrowBackIcon2,
                   fit: BoxFit.contain,
                   // color: Colors.white,
                 )
               : Image.asset(
-                  "assets/icons/arrow_back.png",
+                  AssetsUtils.arrowBackIcon,
                   fit: BoxFit.contain,
                   // color: Colors.white,
                 ),
@@ -78,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: double.infinity,
                 color: Colors.white,
                 child: Image.asset(
-                  "assets/images/green_paper.png",
+                  AssetsUtils.greenPaperImage,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -90,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Column(
                       children: [
                         Text(
-                          "${userData.userName}",
+                          userData.userName ?? "",
                           style: TextStyle(
                             fontSize: isLandScape
                                 ? screenUtil.setSp(40)
@@ -100,7 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         Text(
-                          "${userData.userEmail}",
+                          userData.userEmail ?? "",
                           style: TextStyle(
                             fontSize: isLandScape
                                 ? screenUtil.setSp(30)
@@ -112,7 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         SizedBox(
                           height: screenUtil.setHeight(30),
                         ),
-                        Container(
+                        SizedBox(
                           width: isLandScape
                               ? screenUtil.setWidth(300)
                               : screenUtil.setWidth(400),
@@ -134,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 8.0),
                                     child: Transform.translate(
-                                      offset: Offset(-5, 0),
+                                      offset: const Offset(-5, 0),
                                       child: FittedBox(
                                         child: Text(
                                           translate("editProfile", context),
@@ -153,14 +157,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   flex: 1,
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 8.0),
-                                    child: Container(
+                                    child: SizedBox(
                                       // color: Colors.redAccent,
                                       height: isLandScape
                                           ? screenUtil.setHeight(90)
                                           : screenUtil.setHeight(70),
                                       width: screenUtil.setWidth(70),
                                       child: Image.asset(
-                                        "assets/icons/edit.png",
+                                        AssetsUtils.editIcon,
                                         fit: BoxFit.contain,
                                       ),
                                     ),
@@ -178,7 +182,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: screenUtil.setHeight(50),
                         ),
                         Card(
-                          child: Container(
+                          child: SizedBox(
                             width: screenUtil.setWidth(900),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,25 +194,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   isLandScape: isLandScape,
                                   screenUtil: screenUtil,
                                   text1: translate("userName", context),
-                                  text2: "${userData.userName}",
+                                  text2: userData.userName ?? "",
                                 ),
                                 BuildProfileCardText(
                                   isLandScape: isLandScape,
                                   screenUtil: screenUtil,
                                   text1: translate("email", context),
-                                  text2: "${userData.userEmail}",
+                                  text2: userData.userEmail ?? "",
                                 ),
                                 BuildProfileCardText(
                                   isLandScape: isLandScape,
                                   screenUtil: screenUtil,
                                   text1: translate("address", context),
-                                  text2: "${userData.userAddress}",
+                                  text2: userData.userAddress ?? '',
                                 ),
                                 BuildProfileCardText(
                                   isLandScape: isLandScape,
                                   screenUtil: screenUtil,
                                   text1: translate("phone", context),
-                                  text2: "${userData.userPhone}",
+                                  text2: userData.userPhone ?? '',
                                 ),
                                 // BuildProfileCardText(
                                 //   isLandScape: isLandScape,
@@ -268,7 +272,7 @@ class BuildProfileCardText extends StatelessWidget {
               // fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 2),
+          const SizedBox(height: 2),
           Text(
             text2,
             style: TextStyle(
@@ -278,7 +282,7 @@ class BuildProfileCardText extends StatelessWidget {
               color: Colors.grey.shade500,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           if (isDivider)
             Divider(
               color: Colors.grey.shade300,

@@ -6,7 +6,7 @@ class Application {
   static bool debug = true;
   static User user;
   static String version = '1.0.0';
-  static String domain = "http://backend.bdcafrica.site";
+  static String domain = "https://veget.ocean-sudan.com";
   static SharedPreferences preferences;
   static ScreenUtil screenUtil = ScreenUtil();
 

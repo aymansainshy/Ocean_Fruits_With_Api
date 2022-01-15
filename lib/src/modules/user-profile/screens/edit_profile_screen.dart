@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ocean_fruits/src/core/utils/assets_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../auth/provider/auth_provider.dart';
@@ -15,6 +16,8 @@ import '../../lang/provider/language_provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static const routeName = '/edit-profile-screen';
+
+  const EditProfileScreen({Key key}) : super(key: key);
 
   @override
   _EditProfileScreenState createState() => _EditProfileScreenState();
@@ -36,16 +39,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         content: Text(message),
         actions: [
           FlatButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(translate("ok", context)))
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              translate("ok", context),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  var _editedData = {
+  final _editedData = {
     'name': '',
     'address': '',
     'email': '',
@@ -72,11 +78,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       return;
     }
     _formKey.currentState.save();
-    print(_editedData['email']);
-    print(_editedData['password']);
-    print(_editedData['phoneNumber']);
-    print(_editedData['address']);
-    print(_editedData['name']);
     setState(() {
       isLoading = true;
     });
@@ -135,15 +136,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   //   });
   // }
 
-  RegExp _isEmailValid = RegExp(
+  final RegExp _isEmailValid = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
+    ScreenUtil screenUtil = ScreenUtil();
+
     var isLandScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
-    ScreenUtil screenUtil = ScreenUtil();
 
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
@@ -161,22 +163,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         elevation: 0.0,
         leading: Builder(
           builder: (context) => Transform.translate(
-            offset: Offset(6, 0),
+            offset: const Offset(6, 0),
             child: IconButton(
               padding: const EdgeInsets.all(0.0),
               onPressed: () => Navigator.of(context).pop(),
-              icon: Container(
+              icon: SizedBox(
                 // color: Colors.teal,
                 height: 30,
                 width: 50,
                 child: language == "ar"
                     ? Image.asset(
-                        "assets/icons/arrow_back2.png",
+                        AssetsUtils.arrowBackIcon,
                         fit: BoxFit.contain,
                         color: Colors.white,
                       )
                     : Image.asset(
-                        "assets/icons/arrow_back.png",
+                        AssetsUtils.arrowBackIcon2,
                         fit: BoxFit.contain,
                         color: Colors.white,
                       ),
@@ -186,7 +188,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         title: Text(
           translate("editProfile", context),
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
           ),
@@ -215,144 +217,140 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         isExtended: true,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15, top: 80),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(4),
-                          labelText: translate('userName', context),
-                        ),
-                        cursorColor: Colors.grey.shade300,
-                        initialValue: _userData.userName,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return translate("enterYourFullName", context);
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _editedData['name'] = value;
-                        },
+        child: Padding(
+          padding: const EdgeInsets.only(left: 15, right: 15, top: 80),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(4),
+                        labelText: translate('userName', context),
                       ),
-                      SizedBox(height: 5),
-                      TextFormField(
-                        keyboardType: TextInputType.streetAddress,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(4),
-                          labelText: translate('address', context),
-                        ),
-                        cursorColor: Colors.grey.shade300,
-                        initialValue: _userData.userAddress,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return translate("enterYourFullAddress", context);
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _editedData['address'] = value;
-                        },
+                      cursorColor: Colors.grey.shade300,
+                      initialValue: _userData.userName,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return translate("enterYourFullName", context);
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _editedData['name'] = value;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      keyboardType: TextInputType.streetAddress,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(4),
+                        labelText: translate('address', context),
                       ),
-                      SizedBox(height: 5),
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(4),
-                          labelText: translate('email', context),
-                        ),
-                        cursorColor: Colors.grey.shade300,
-                        initialValue: _userData.userEmail,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return translate("enterYourValidEmail", context);
-                          }
-                          if (!_isEmailValid.hasMatch(value)) {
-                            return translate("enterYourValidEmail2", context);
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _editedData['email'] = value;
-                        },
+                      cursorColor: Colors.grey.shade300,
+                      initialValue: _userData.userAddress,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return translate("enterYourFullAddress", context);
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _editedData['address'] = value;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(4),
+                        labelText: translate('email', context),
                       ),
-                      SizedBox(height: 5),
-                      TextFormField(
-                        obscureText: isPasswordHide,
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(4),
-                          labelText: translate('password', context),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              isVisible
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                isVisible = !isVisible;
-                                isPasswordHide = !isPasswordHide;
-                              });
-                            },
+                      cursorColor: Colors.grey.shade300,
+                      initialValue: _userData.userEmail,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return translate("enterYourValidEmail", context);
+                        }
+                        if (!_isEmailValid.hasMatch(value)) {
+                          return translate("enterYourValidEmail2", context);
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _editedData['email'] = value;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      obscureText: isPasswordHide,
+                      keyboardType: TextInputType.visiblePassword,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(4),
+                        labelText: translate('password', context),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            isVisible ? Icons.visibility_off : Icons.visibility,
                           ),
+                          onPressed: () {
+                            setState(() {
+                              isVisible = !isVisible;
+                              isPasswordHide = !isPasswordHide;
+                            });
+                          },
                         ),
-                        cursorColor: Colors.grey.shade300,
-                        initialValue: _userData.password,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return translate("enterPassword", context);
-                          }
-                          if (value.toString().length < 6) {
-                            return translate("enterValidPassword", context);
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _editedData['password'] = value;
-                        },
                       ),
-                      SizedBox(height: 5),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(4),
-                          labelText: translate('phone', context),
-                        ),
-                        keyboardType: TextInputType.phone,
-                        cursorColor: Colors.grey.shade300,
-                        initialValue: _userData.userPhone,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return translate("enterYourPhoneNumber", context);
-                          }
-
-                          if (value.toString().length < 8) {
-                            return translate("PhoneNumberValid", context);
-                          }
-
-                          if (!value.toString().startsWith('+') &&
-                              !value.toString().startsWith('0')) {
-                            return translate("validPhone", context);
-                          }
-
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _editedData['phoneNumber'] = value;
-                        },
+                      cursorColor: Colors.grey.shade300,
+                      initialValue: _userData.password,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return translate("enterPassword", context);
+                        }
+                        if (value.toString().length < 6) {
+                          return translate("enterValidPassword", context);
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _editedData['password'] = value;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(4),
+                        labelText: translate('phone', context),
                       ),
-                    ],
-                  ),
+                      keyboardType: TextInputType.phone,
+                      cursorColor: Colors.grey.shade300,
+                      initialValue: _userData.userPhone,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return translate("enterYourPhoneNumber", context);
+                        }
+
+                        if (value.toString().length < 8) {
+                          return translate("PhoneNumberValid", context);
+                        }
+
+                        if (!value.toString().startsWith('+') &&
+                            !value.toString().startsWith('0')) {
+                          return translate("validPhone", context);
+                        }
+
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _editedData['phoneNumber'] = value;
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),

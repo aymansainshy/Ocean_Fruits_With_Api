@@ -17,15 +17,19 @@ import '../../../core/utils/app_constant.dart';
 class CheckOutScreen extends StatefulWidget {
   static const routeName = '/check_out_screen';
 
+  const CheckOutScreen({Key key}) : super(key: key);
+
   @override
   _CheckOutScreenState createState() => _CheckOutScreenState();
 }
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
   final GlobalKey<ScaffoldState> _checkScaffoldKey =
-      new GlobalKey<ScaffoldState>();
+      GlobalKey<ScaffoldState>();
+
   final _formKey = GlobalKey<FormState>();
   final _phoneFocusNode = FocusNode();
+
   var userInfo = {
     'adderss': '',
     'phoneNumber': '',
@@ -127,7 +131,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(5.0),
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           height: isLandScape
               ? screenUtil.setHeight(240)
@@ -268,14 +272,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       isLandScape ? screenUtil.setSp(30) : screenUtil.setSp(45),
                 ),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Card(
                 color: Colors.grey.shade200,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: [
-                      Container(
+                      SizedBox(
                         // color: Colors.red,
                         height: isLandScape
                             ? screenUtil.setHeight(150 * cart.items.length)
@@ -296,7 +300,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           ),
                         ),
                       ),
-                      Divider(
+                      const Divider(
                         color: Colors.black45,
                       ),
                       _buildRow2(
@@ -345,7 +349,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       isLandScape ? screenUtil.setSp(30) : screenUtil.setSp(45),
                 ),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Form(
                 key: _formKey,
                 child: Column(
@@ -355,7 +359,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       contentPadding: 8.0,
                       keyboardType: TextInputType.name,
                       textInputAction: TextInputAction.next,
-                      prefixIcon: Icon(Icons.location_on),
+                      prefixIcon: const Icon(Icons.location_on),
                       initialValue: userInfo['address'],
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_phoneFocusNode);
@@ -379,7 +383,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       contentPadding: 8.0,
                       keyboardType: TextInputType.phone,
                       textInputAction: TextInputAction.done,
-                      prefixIcon: Icon(Icons.phone),
+                      prefixIcon: const Icon(Icons.phone),
                       initialValue: userInfo['phone'],
                       validator: (value) {
                         if (value.isEmpty) {
@@ -444,7 +448,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       isLandScape ? screenUtil.setSp(30) : screenUtil.setSp(45),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 70,
                 width: mediaQuery.width,
                 // color: Colors.green,
@@ -464,7 +468,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               if (noTimeDeliverySelected)
                 Text(
                   translate("pleasSelcetTime", context),
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
               SizedBox(
                 height: screenUtil.setHeight(35),
@@ -479,7 +483,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       isLandScape ? screenUtil.setSp(30) : screenUtil.setSp(45),
                 ),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Card(
                 color: Colors.grey.shade200,
                 child: Padding(
@@ -534,14 +538,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       child: Container(
         height: 70,
         width: mediaQuery.width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
         ),
         child: index == _selectedDeliveryDate
             ? Container(
-                padding: EdgeInsets.all(4),
-                margin: EdgeInsets.all(4),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.all(4),
+                margin: const EdgeInsets.all(4),
+                decoration: const BoxDecoration(
                   color: AppColors.scondryColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(4),
@@ -553,15 +557,15 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     children: [
                       Text(
                         text,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 3),
+                      const SizedBox(height: 3),
                       Text(
                         "${date.year}/${date.month}/${date.day}",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                         ),
                       ),
@@ -570,11 +574,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 ),
               )
             : Container(
-                padding: EdgeInsets.all(4),
-                margin: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
+                margin: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(4),
                   ),
                 ),
@@ -589,7 +593,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 3),
+                      const SizedBox(height: 3),
                       Text(
                         "${date.year}/${date.month}/${date.day}",
                         style: TextStyle(
@@ -620,14 +624,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       child: Container(
         height: 90,
         width: mediaQuery.width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
         ),
         child: index == _selectedDeliveryTime
             ? Container(
-                padding: EdgeInsets.all(4),
-                margin: EdgeInsets.all(4),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.all(4),
+                margin: const EdgeInsets.all(4),
+                decoration: const BoxDecoration(
                   color: AppColors.scondryColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(4),
@@ -640,7 +644,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       Expanded(
                         child: Text(
                           startTime,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                           ),
                         ),
@@ -648,7 +652,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       Expanded(
                         child: Text(
                           translate("To", context),
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                           ),
                         ),
@@ -656,7 +660,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       Expanded(
                         child: Text(
                           endTime,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                           ),
                         ),
@@ -666,11 +670,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 ),
               )
             : Container(
-                padding: EdgeInsets.all(4),
-                margin: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
+                margin: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(4),
                   ),
                 ),

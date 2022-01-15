@@ -16,7 +16,7 @@ class OtpSuccess extends OtpState {}
 class OtpFaliure extends OtpState {
   final String error;
 
-  OtpFaliure(this.error);
+  const OtpFaliure(this.error);
 }
 
 class ReSendingOtpInProgress extends OtpState {}
@@ -26,5 +26,5 @@ class ReSendingOtpSuccess extends OtpState {}
 class ReSendingOtpFaliure extends OtpState {
   final String error;
 
-  ReSendingOtpFaliure(this.error);
+  const ReSendingOtpFaliure(this.error);
 }

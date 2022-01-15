@@ -13,10 +13,10 @@ class CartItem extends StatefulWidget {
   final int quantity;
   final double productPrice;
   final String productImage;
-  final isLandScape;
+  final bool isLandScape ;
   final ScreenUtil screenUtil;
 
-  CartItem({
+  const CartItem({
     Key key,
     this.isLandScape,
     this.screenUtil,
@@ -40,13 +40,13 @@ class _CartItemState extends State<CartItem> {
     final language = langugeProvider.appLocal.languageCode;
     final cart = Provider.of<Carts>(context, listen: false);
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       height: widget.isLandScape
           ? widget.screenUtil.setHeight(500)
           : widget.screenUtil.setHeight(250),
       width: double.infinity,
       child: Card(
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(8),
           ),
@@ -54,7 +54,7 @@ class _CartItemState extends State<CartItem> {
         elevation: 3.0,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(8),
             ),
             border: Border.all(
@@ -66,10 +66,10 @@ class _CartItemState extends State<CartItem> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               ClipRRect(
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(5),
                 ),
-                child: Container(
+                child: SizedBox(
                   // color: Colors.red,
                   child: Image.network(
                     widget.productImage,
@@ -84,12 +84,12 @@ class _CartItemState extends State<CartItem> {
                 ),
               ),
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: widget.isLandScape
                       ? widget.screenUtil.setHeight(420)
                       : widget.screenUtil.setHeight(240),
                   child: Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       left: 8.0,
                       right: 8.0,
                     ),
@@ -139,7 +139,7 @@ class _CartItemState extends State<CartItem> {
                                       FlatButton(
                                         child: Text(
                                           translate("yes", context),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: AppColors.redColor,
                                           ),
                                         ),
@@ -150,7 +150,7 @@ class _CartItemState extends State<CartItem> {
                                       FlatButton(
                                         child: Text(
                                           translate("no", context),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: AppColors.greenColor,
                                           ),
                                         ),
@@ -179,7 +179,7 @@ class _CartItemState extends State<CartItem> {
                                   "assets/icons/cancel.png",
                                   fit: BoxFit.contain,
                                 ),
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: Colors.white,
                                   shape: BoxShape.circle,
                                 ),
@@ -215,16 +215,16 @@ class _CartItemState extends State<CartItem> {
                                   ),
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Expanded(
                                 child: Transform.translate(
-                                  offset: Offset(0, -5),
+                                  offset: const Offset(0, -5),
                                   child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(6),
                                       color: AppColors.scondryColor,
                                     ),
-                                    padding: EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(5),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,

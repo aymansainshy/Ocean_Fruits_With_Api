@@ -58,8 +58,8 @@ class _ProductsScreenState extends State<ProductsScreen>
         actions: [
           Padding(
             padding: language == "ar"
-                ? EdgeInsets.only(left: 10)
-                : EdgeInsets.only(right: 10),
+                ? const EdgeInsets.only(left: 10)
+                : const EdgeInsets.only(right: 10),
             child: IconButton(
               icon: Consumer<Carts>(
                   builder: (context, cart, child) =>
@@ -74,11 +74,11 @@ class _ProductsScreenState extends State<ProductsScreen>
         ],
         leading: Builder(
           builder: (context) => Transform.translate(
-            offset: Offset(6, 0),
+            offset: const Offset(6, 0),
             child: IconButton(
               padding: const EdgeInsets.all(0.0),
               onPressed: () => Navigator.of(context).pop(),
-              icon: Container(
+              icon: SizedBox(
                 // color: Colors.teal,
                 height: 30,
                 width: 50,
@@ -99,7 +99,7 @@ class _ProductsScreenState extends State<ProductsScreen>
         ),
         title: Text(
           language == "ar" ? widget.cat.arName : widget.cat.enName,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
           ),
@@ -120,7 +120,7 @@ class _ProductsScreenState extends State<ProductsScreen>
                 padding: const EdgeInsets.all(15.0),
                 height: screenUtil.setHeight(500),
                 width: screenUtil.setWidth(700),
-                margin: EdgeInsets.all(15.0),
+                margin: const EdgeInsets.all(15.0),
                 decoration: BoxDecoration(
                   border: Border.all(width: 1),
                   borderRadius: BorderRadius.all(
@@ -153,10 +153,10 @@ class _ProductsScreenState extends State<ProductsScreen>
                           padding: const EdgeInsets.all(15.0),
                           height: screenUtil.setHeight(500),
                           width: screenUtil.setWidth(700),
-                          margin: EdgeInsets.all(15.0),
+                          margin: const EdgeInsets.all(15.0),
                           decoration: BoxDecoration(
                             border: Border.all(width: 1),
-                            borderRadius: BorderRadius.all(
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(20),
                             ),
                           ),
@@ -193,12 +193,12 @@ class _ProductsScreenState extends State<ProductsScreen>
                               ChangeNotifierProvider.value(
                             value: products.categoryProdocts[index],
                             child: Container(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                 top: 10,
                                 left: 5,
                                 right: 5,
                               ),
-                              child: SharedProductItem(),
+                              child: const SharedProductItem(),
                             ),
                           ),
                         ),

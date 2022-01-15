@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'src/modules/auth/bloc/isAuth-bloc/auth_bloc.dart';
-import 'src/modules/main-view/app-start-bloc/app_bloc.dart';
+import 'src/modules/main-view/bloc/app-start-bloc/app_bloc.dart';
 
 class AppBlocs {
   static final appBloc = AppBloc();

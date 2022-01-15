@@ -37,93 +37,90 @@ class _CustomAlertOrderState extends State<CustomAlertOrder> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
-        child: Container(
-          child: Stack(
-            alignment: Alignment.topCenter,
-            overflow: Overflow.visible,
-            children: [
-              Container(
-                height: isLandScape
-                    ? screenUtil.setHeight(1000)
-                    : screenUtil.setHeight(660),
-                width: isLandScape
-                    ? screenUtil.setWidth(600)
-                    : screenUtil.setWidth(800),
-                padding: EdgeInsets.only(top: 55, left: 30, right: 30),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(30),
-                    // topLeft: Radius.circular(30),
-                    // topRight: Radius.circular(30),
-                  ),
+        child: Stack(
+          alignment: Alignment.topCenter,
+          overflow: Overflow.visible,
+          children: [
+            Container(
+              height: isLandScape
+                  ? screenUtil.setHeight(1000)
+                  : screenUtil.setHeight(660),
+              width: isLandScape
+                  ? screenUtil.setWidth(600)
+                  : screenUtil.setWidth(800),
+              padding: const EdgeInsets.only(top: 55, left: 30, right: 30),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(30),
+                  // topLeft: Radius.circular(30),
+                  // topRight: Radius.circular(30),
                 ),
-                child: Column(
-                  children: [
-                    SizedBox(height: isLandScape ? 5 : 15),
-                    FittedBox(
-                      child: Text(
-                        widget.topText,
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: isLandScape
-                              ? screenUtil.setSp(30)
-                              : screenUtil.setSp(45),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      widget.bottomText,
+              ),
+              child: Column(
+                children: [
+                  SizedBox(height: isLandScape ? 5 : 15),
+                  FittedBox(
+                    child: Text(
+                      widget.topText,
+                      maxLines: 1,
                       style: TextStyle(
                         fontSize: isLandScape
-                            ? screenUtil.setSp(25)
-                            : screenUtil.setSp(40),
+                            ? screenUtil.setSp(30)
+                            : screenUtil.setSp(45),
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: mediaQuery.height > 550 ? 30 : 10),
-                    Container(
-                      width: screenUtil.setWidth(500),
-                      height: isLandScape
-                          ? screenUtil.setHeight(170)
-                          : screenUtil.setHeight(120),
-                      child: RaisedButton(
-                        onPressed: widget.function,
-                        textColor: Colors.white,
-                        color: AppColors.primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          'Ok',
-                          style: TextStyle(
-                            fontSize: isLandScape
-                                ? screenUtil.setSp(25)
-                                : screenUtil.setSp(45),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                top: -45,
-                child: CircleAvatar(
-                  radius: isLandScape
-                      ? screenUtil.setSp(70)
-                      : screenUtil.setSp(110),
-                  backgroundColor: widget.color,
-                  child: Icon(
-                    widget.iconData,
-                    size: isLandScape
-                        ? screenUtil.setSp(70)
-                        : screenUtil.setSp(100),
                   ),
+                  Text(
+                    widget.bottomText,
+                    style: TextStyle(
+                      fontSize: isLandScape
+                          ? screenUtil.setSp(25)
+                          : screenUtil.setSp(40),
+                    ),
+                  ),
+                  SizedBox(height: mediaQuery.height > 550 ? 30 : 10),
+                  SizedBox(
+                    width: screenUtil.setWidth(500),
+                    height: isLandScape
+                        ? screenUtil.setHeight(170)
+                        : screenUtil.setHeight(120),
+                    child: RaisedButton(
+                      onPressed: widget.function,
+                      textColor: Colors.white,
+                      color: AppColors.primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        'Ok',
+                        style: TextStyle(
+                          fontSize: isLandScape
+                              ? screenUtil.setSp(25)
+                              : screenUtil.setSp(45),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: -45,
+              child: CircleAvatar(
+                radius:
+                    isLandScape ? screenUtil.setSp(70) : screenUtil.setSp(110),
+                backgroundColor: widget.color,
+                child: Icon(
+                  widget.iconData,
+                  size: isLandScape
+                      ? screenUtil.setSp(70)
+                      : screenUtil.setSp(100),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

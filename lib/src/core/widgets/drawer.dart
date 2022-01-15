@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ocean_fruits/src/core/utils/assets_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,12 +13,16 @@ import '../../modules/orders/screens/order_screen.dart';
 import '../utils/app_constant.dart';
 
 class AppDrawer extends StatelessWidget {
+  const AppDrawer({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
     ScreenUtil screenUtil = ScreenUtil();
+
     var isLandScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
+
     final authData = Provider.of<AuthProvider>(context, listen: false);
 
     return Drawer(
@@ -26,13 +31,13 @@ class AppDrawer extends StatelessWidget {
         body: ListView(
           children: [
             Container(
-              padding: EdgeInsets.all(40),
+              padding: const EdgeInsets.all(40),
               height: isLandScape
                   ? screenUtil.setHeight(700)
                   : screenUtil.setHeight(500),
               color: AppColors.primaryColor,
               child: Image.asset(
-                "assets/images/Ocean Agriculture fruit & Vegetables-01.png",
+                AssetsUtils.oceanFruitsLogo,
                 fit: BoxFit.contain,
               ),
             ),
@@ -57,13 +62,13 @@ class AppDrawer extends StatelessWidget {
             SizedBox(
               height: screenUtil.setHeight(5),
             ),
-            Divider(
+            const Divider(
               height: 6,
               thickness: 1,
               color: Colors.grey,
             ),
             BuildDrawerList(
-              leading: Icon(
+              leading: const Icon(
                 Icons.person,
                 color: Colors.white,
               ),
@@ -76,13 +81,13 @@ class AppDrawer extends StatelessWidget {
             SizedBox(
               height: screenUtil.setHeight(5),
             ),
-            Divider(
+            const Divider(
               height: 6,
               thickness: 1,
               color: Colors.grey,
             ),
             BuildDrawerList(
-              leading: Icon(
+              leading: const Icon(
                 Icons.shop,
                 color: Colors.white,
               ),
@@ -95,13 +100,13 @@ class AppDrawer extends StatelessWidget {
             SizedBox(
               height: screenUtil.setHeight(5),
             ),
-            Divider(
+            const Divider(
               height: 6,
               thickness: 1,
               color: Colors.grey,
             ),
             BuildDrawerList(
-              leading: Icon(
+              leading: const Icon(
                 Icons.language,
                 color: Colors.white,
               ),
@@ -114,13 +119,13 @@ class AppDrawer extends StatelessWidget {
             SizedBox(
               height: screenUtil.setHeight(5),
             ),
-            Divider(
+            const Divider(
               height: 6,
               thickness: 1,
               color: Colors.grey,
             ),
             BuildDrawerList(
-              leading: Icon(
+              leading: const Icon(
                 Icons.phone,
                 color: Colors.white,
               ),
@@ -131,20 +136,20 @@ class AppDrawer extends StatelessWidget {
             SizedBox(
               height: screenUtil.setHeight(5),
             ),
-            Divider(
+            const Divider(
               height: 6,
               thickness: 1,
               color: Colors.grey,
             ),
             BuildDrawerList(
-              leading: Icon(
+              leading: const Icon(
                 Icons.info,
                 color: Colors.white,
               ),
               title: translate("aboutUs", context),
               onTap: () => showAboutDailog(isLandScape, screenUtil, context),
             ),
-            Divider(
+            const Divider(
               height: 6,
               thickness: 1,
               color: Colors.grey,
@@ -154,7 +159,7 @@ class AppDrawer extends StatelessWidget {
             ),
             if (authData.isAuth)
               BuildDrawerList(
-                leading: Icon(
+                leading: const Icon(
                   Icons.exit_to_app,
                   color: Colors.white,
                 ),
@@ -169,7 +174,7 @@ class AppDrawer extends StatelessWidget {
                         FlatButton(
                           child: Text(
                             translate("yes", context),
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: AppColors.redColor,
                             ),
                           ),
@@ -180,7 +185,7 @@ class AppDrawer extends StatelessWidget {
                         FlatButton(
                           child: Text(
                             translate("no", context),
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: AppColors.greenColor,
                             ),
                           ),
@@ -202,7 +207,7 @@ class AppDrawer extends StatelessWidget {
               ),
             if (!authData.isAuth)
               BuildDrawerList(
-                leading: Icon(
+                leading: const Icon(
                   Icons.exit_to_app,
                   color: Colors.white,
                 ),
@@ -265,7 +270,7 @@ Future<void> showAboutDailog(
                 : screenUtil.setWidth(300),
           ),
           Transform.translate(
-            offset: Offset(0, -20),
+            offset: const Offset(0, -20),
             child: Text(
               "Ocean Fruits & Vegetable ",
               style: TextStyle(
@@ -279,13 +284,13 @@ Future<void> showAboutDailog(
           ),
         ],
       ),
-      content: Container(
+      content: SizedBox(
         height:
             isLandScape ? screenUtil.setHeight(800) : screenUtil.setHeight(600),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Container(
+            SizedBox(
               width: 220,
               child: Text(
                 translate("oceanAboutUs", context),
@@ -309,7 +314,7 @@ Future<void> showAboutDailog(
                     color: AppColors.greenColor,
                   ),
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
                 InkWell(
                   onTap: () => _launchUrls('https://ease-group.com/'),
                   child: Text(
@@ -344,7 +349,7 @@ Future<void> showContactUsDailog(
       title: Column(
         children: [
           Image.asset(
-            'assets/images/Ocean Agriculture fruit & Vegetables-01.png',
+            AssetsUtils.oceanFruitsLogo,
             height: isLandScape
                 ? screenUtil.setHeight(200)
                 : screenUtil.setHeight(300),
@@ -353,7 +358,7 @@ Future<void> showContactUsDailog(
                 : screenUtil.setWidth(300),
           ),
           Transform.translate(
-            offset: Offset(0, -20),
+            offset: const Offset(0, -20),
             child: Text(
               "Ocean Fruits & Vegetable ",
               style: TextStyle(
@@ -367,7 +372,7 @@ Future<void> showContactUsDailog(
           ),
         ],
       ),
-      content: Container(
+      content: SizedBox(
         height:
             isLandScape ? screenUtil.setHeight(800) : screenUtil.setHeight(600),
         child: Column(
@@ -380,11 +385,11 @@ Future<void> showContactUsDailog(
                 InkWell(
                   onTap: () => _launchUrls(
                       "https://www.linkedin.com/in/ayman-abdulrahman-4aa89b195/"),
-                  child: Container(
+                  child: SizedBox(
                     height: screenUtil.setHeight(200),
                     width: screenUtil.setWidth(200),
                     child: Image.asset(
-                      "assets/icons/facebook.png",
+                      AssetsUtils.facebookIcon,
                       fit: BoxFit.contain,
                       color: Colors.blue,
                     ),
@@ -392,11 +397,11 @@ Future<void> showContactUsDailog(
                 ),
                 InkWell(
                   onTap: () => _launchPhone("+249911098045"),
-                  child: Container(
+                  child: SizedBox(
                     height: screenUtil.setHeight(200),
                     width: screenUtil.setWidth(200),
                     child: Image.asset(
-                      "assets/icons/phone-call.png",
+                      AssetsUtils.phoneCallIcon,
                       fit: BoxFit.contain,
                       color: AppColors.greenColor,
                     ),
@@ -404,17 +409,17 @@ Future<void> showContactUsDailog(
                 ),
               ],
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 InkWell(
                   onTap: () => _launchMail("aymansainshy@gmail.com"),
-                  child: Container(
+                  child: SizedBox(
                     height: screenUtil.setHeight(200),
                     width: screenUtil.setWidth(200),
                     child: Image.asset(
-                      "assets/icons/email.png",
+                      AssetsUtils.emailIcon,
                       fit: BoxFit.contain,
                       color: Colors.redAccent,
                     ),
@@ -422,11 +427,11 @@ Future<void> showContactUsDailog(
                 ),
                 InkWell(
                   onTap: () => _launchUrls("https://twitter.com/aymansainshy1"),
-                  child: Container(
+                  child: SizedBox(
                     height: screenUtil.setHeight(200),
                     width: screenUtil.setWidth(200),
                     child: Image.asset(
-                      "assets/icons/twitter.png",
+                      AssetsUtils.twitterIcon,
                       fit: BoxFit.contain,
                       color: Colors.blue,
                     ),

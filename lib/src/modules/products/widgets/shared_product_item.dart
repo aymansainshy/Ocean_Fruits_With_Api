@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ocean_fruits/src/core/utils/assets_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/widgets/custom_alert_not_autherazed.dart';
@@ -23,10 +24,14 @@ class _SharedProductItemState extends State<SharedProductItem> {
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
     ScreenUtil screenUtil = ScreenUtil();
+
     var _isLandScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
+
     Product product = Provider.of<Product>(context, listen: false);
+
     final userData = Provider.of<AuthProvider>(context, listen: false);
+
     Carts cart = Provider.of<Carts>(context);
 
     final langugeProvider =
@@ -34,7 +39,9 @@ class _SharedProductItemState extends State<SharedProductItem> {
     final language = langugeProvider.appLocal.languageCode;
 
     final productUnit = langugeProvider.unitTile(product.unit);
+
     final productTitle = language == "ar" ? product.arTitle : product.enTitle;
+
     return Stack(
       overflow: Overflow.visible,
       alignment: Alignment.center,
@@ -43,7 +50,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
           height: 200,
           width: 200,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(15),
             ),
             border: Border.all(
@@ -51,12 +58,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
               width: 1.0,
             ),
             boxShadow: [
-              BoxShadow(
-                color: Colors.grey,
-                blurRadius: 5.0,
-                spreadRadius: 0.1,
-                offset: Offset(0.5, 3),
-              ),
+              boxShadow(),
             ],
             color: Colors.white,
           ),
@@ -93,7 +95,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                     setState(() {});
                   },
                   child: Image.asset(
-                    "assets/icons/hart empty.png",
+                    AssetsUtils.heartIcon,
                     fit: BoxFit.contain,
                     color: product.isFavorits
                         ? AppColors.redColor
@@ -104,10 +106,10 @@ class _SharedProductItemState extends State<SharedProductItem> {
               SizedBox(height: _isLandScape ? 5 : 3),
               Padding(
                 padding: language == "ar"
-                    ? EdgeInsets.only(right: 8)
-                    : EdgeInsets.only(left: 8),
+                    ? const EdgeInsets.only(right: 8)
+                    : const EdgeInsets.only(left: 8),
                 child: Text(
-                  "$productTitle",
+                  productTitle,
                   maxLines: 1,
                   style: TextStyle(
                     fontSize: _isLandScape
@@ -119,16 +121,16 @@ class _SharedProductItemState extends State<SharedProductItem> {
                   ),
                 ),
               ),
-              SizedBox(height: 1),
+              const SizedBox(height: 1),
               Padding(
                 padding: language == "ar"
-                    ? EdgeInsets.only(right: 8)
-                    : EdgeInsets.only(left: 8),
+                    ? const EdgeInsets.only(right: 8)
+                    : const EdgeInsets.only(left: 8),
                 child: RichText(
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: "${product.price.toStringAsFixed(2)}",
+                        text: product.price.toStringAsFixed(2),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: _isLandScape
@@ -155,8 +157,8 @@ class _SharedProductItemState extends State<SharedProductItem> {
               ),
               Padding(
                 padding: language == "ar"
-                    ? EdgeInsets.only(right: 8)
-                    : EdgeInsets.only(left: 8),
+                    ? const EdgeInsets.only(right: 8)
+                    : const EdgeInsets.only(left: 8),
                 child: Text(
                   "1 $productUnit",
                   style: TextStyle(
@@ -167,7 +169,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                   ),
                 ),
               ),
-              SizedBox(height: 2),
+              const SizedBox(height: 2),
               Container(
                 height: 1,
                 width: double.infinity,
@@ -176,7 +178,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
               if (cart.items.containsKey(product.id))
                 Expanded(
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppColors.scondryColor,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(14),
@@ -195,7 +197,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                             }
                             cart.decreaseQuantitiy(product.id);
                           },
-                          child: Container(
+                          child: SizedBox(
                             // color: Colors.red,
                             height: _isLandScape
                                 ? screenUtil.setHeight(180)
@@ -229,7 +231,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                           onTap: () {
                             cart.increaseQuantitiy(product.id);
                           },
-                          child: Container(
+                          child: SizedBox(
                             height: _isLandScape
                                 ? screenUtil.setHeight(200)
                                 : screenUtil.setHeight(120),
@@ -264,7 +266,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                       },
                       child: Container(
                         // color: Colors.green,
-                        padding: EdgeInsets.all(1),
+                        padding: const EdgeInsets.all(1),
                         height: _isLandScape
                             ? screenUtil.setHeight(250)
                             : screenUtil.setHeight(120),
@@ -272,7 +274,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                             ? screenUtil.setWidth(90)
                             : screenUtil.setWidth(120),
                         child: Image.asset(
-                          "assets/icons/plus with circle.png",
+                          AssetsUtils.plusWithCircleIcon,
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -304,7 +306,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                 width: _isLandScape
                     ? screenUtil.setWidth(230)
                     : screenUtil.setWidth(100),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   // color: Colors.green,
                   shape: BoxShape.circle,
                   boxShadow: [
@@ -317,7 +319,7 @@ class _SharedProductItemState extends State<SharedProductItem> {
                   ],
                 ),
               ),
-              Container(
+              SizedBox(
                 // color: Colors.green,
                 height: _isLandScape
                     ? screenUtil.setHeight(460)
@@ -334,6 +336,15 @@ class _SharedProductItemState extends State<SharedProductItem> {
           ),
         ),
       ],
+    );
+  }
+
+  BoxShadow boxShadow() {
+    return const BoxShadow(
+      color: Colors.grey,
+      blurRadius: 5.0,
+      spreadRadius: 0.1,
+      offset: Offset(0.5, 3),
     );
   }
 }

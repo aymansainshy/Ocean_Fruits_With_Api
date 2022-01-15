@@ -13,6 +13,8 @@ import '../../../core/widgets/drawer.dart';
 class OrderScreen extends StatelessWidget {
   static const routeName = 'order_screen';
 
+  const OrderScreen({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
@@ -22,6 +24,7 @@ class OrderScreen extends StatelessWidget {
 
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
+
     final language = langugeProvider.appLocal.languageCode;
     final userData = Provider.of<AuthProvider>(context, listen: false);
 
@@ -30,11 +33,11 @@ class OrderScreen extends StatelessWidget {
         appBar: AppBar(
           leading: Builder(
             builder: (context) => Transform.translate(
-              offset: Offset(6, 0),
+              offset: const Offset(6, 0),
               child: IconButton(
                 padding: const EdgeInsets.all(0.0),
                 onPressed: () => Navigator.of(context).pop(),
-                icon: Container(
+                icon: SizedBox(
                   // color: Colors.teal,
                   height: 30,
                   width: 50,
@@ -83,11 +86,11 @@ class OrderScreen extends StatelessWidget {
           elevation: 0.0,
           leading: Builder(
             builder: (context) => Transform.translate(
-              offset: Offset(6, 0),
+              offset: const Offset(6, 0),
               child: IconButton(
                 padding: const EdgeInsets.all(0.0),
                 onPressed: () => Navigator.of(context).pop(),
-                icon: Container(
+                icon: SizedBox(
                   // color: Colors.teal,
                   height: 30,
                   width: 50,
@@ -108,7 +111,7 @@ class OrderScreen extends StatelessWidget {
           ),
           title: Text(
             translate("order", context),
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
             ),

@@ -41,7 +41,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text("Ok"),
+            child: const Text("Ok"),
           ),
         ],
       ),
@@ -102,6 +102,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
 
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
+
     final language = langugeProvider.appLocal.languageCode;
     // final cart = Provider.of<Carts>(context, listen: false);
 
@@ -118,8 +119,8 @@ class _FavoritesScreenState extends State<FavoritesScreen>
         actions: [
           Padding(
             padding: language == "ar"
-                ? EdgeInsets.only(left: 10)
-                : EdgeInsets.only(right: 10),
+                ? const EdgeInsets.only(left: 10)
+                : const EdgeInsets.only(right: 10),
             child: IconButton(
               icon: Consumer<Carts>(
                   builder: (context, cart, child) =>
@@ -134,13 +135,13 @@ class _FavoritesScreenState extends State<FavoritesScreen>
         ],
         leading: Builder(
           builder: (context) => Transform.translate(
-            offset: Offset(6, 0),
+            offset: const Offset(6, 0),
             child: IconButton(
               padding: language == "ar"
-                  ? EdgeInsets.only(right: 15)
-                  : EdgeInsets.all(0.0),
+                  ? const EdgeInsets.only(right: 15)
+                  : const EdgeInsets.all(0.0),
               onPressed: () => widget.tapScaffoldKey.currentState.openDrawer(),
-              icon: Container(
+              icon: SizedBox(
                 // color: Colors.teal,
                 height: 30,
                 width: 50,
@@ -159,7 +160,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
         ),
         title: Text(
           translate("favorits", context),
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
           ),
@@ -170,7 +171,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     height: screenUtil.setHeight(700),
                     width: screenUtil.setWidth(700),
                     // color: Colors.red,
@@ -183,9 +184,9 @@ class _FavoritesScreenState extends State<FavoritesScreen>
                     height: screenUtil.setSp(40),
                   ),
                   Container(
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
+                      borderRadius: const BorderRadius.all(
                         Radius.circular(5),
                       ),
                       border: Border.all(
@@ -224,20 +225,17 @@ class _FavoritesScreenState extends State<FavoritesScreen>
                         child: Container(
                           height: screenUtil.setHeight(500),
                           width: screenUtil.setWidth(700),
-                          margin: EdgeInsets.all(10),
+                          margin: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              border: Border.all(width: 1),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(20),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 10,
-                                  offset: Offset(10, 10),
-                                  color: Colors.grey,
-                                ),
-                              ]),
+                            color: Colors.grey.shade100,
+                            border: Border.all(width: 1),
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20),
+                            ),
+                            boxShadow: [
+                              bowShadow(),
+                            ],
+                          ),
                           child: Center(
                             child: Text(
                               translate("anErrorOccurred", context),
@@ -261,7 +259,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       height: screenUtil.setHeight(700),
                                       width: screenUtil.setWidth(700),
                                       // color: Colors.red,
@@ -274,9 +272,9 @@ class _FavoritesScreenState extends State<FavoritesScreen>
                                       height: screenUtil.setSp(40),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(5),
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
+                                        borderRadius: const BorderRadius.all(
                                           Radius.circular(5),
                                         ),
                                         border: Border.all(
@@ -314,12 +312,12 @@ class _FavoritesScreenState extends State<FavoritesScreen>
                                       ChangeNotifierProvider.value(
                                     value: product.favProduct[index],
                                     child: Container(
-                                      padding: EdgeInsets.only(
+                                      padding: const EdgeInsets.only(
                                         top: 10,
                                         left: 5,
                                         right: 5,
                                       ),
-                                      child: SharedProductItem(),
+                                      child: const SharedProductItem(),
                                     ),
                                   ),
                                 ),
@@ -330,6 +328,14 @@ class _FavoritesScreenState extends State<FavoritesScreen>
                 }
               },
             ),
+    );
+  }
+
+  BoxShadow bowShadow() {
+    return const BoxShadow(
+      blurRadius: 10,
+      offset: Offset(10, 10),
+      color: Colors.grey,
     );
   }
 }

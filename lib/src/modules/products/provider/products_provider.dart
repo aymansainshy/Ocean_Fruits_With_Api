@@ -185,7 +185,8 @@ class Products with ChangeNotifier {
       }
 
       List<Product> _productsListData = [];
-      productResponse.forEach((product) {
+      
+      for (var product in productResponse) {
         bool isFavorits = isFavContainProductId(product["id"].toString());
 
         _productsListData.add(
@@ -201,7 +202,7 @@ class Products with ChangeNotifier {
             isFavorits: isFavorits,
           ),
         );
-      });
+      }
 
       _recommendedProducts = _productsListData;
 

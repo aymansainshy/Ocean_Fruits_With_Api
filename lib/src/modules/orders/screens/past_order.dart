@@ -11,6 +11,8 @@ import '../../../core/utils/app_constant.dart';
 import '../widgets/order_item.dart';
 
 class PastOrder extends StatefulWidget {
+  const PastOrder({Key key}) : super(key: key);
+
   @override
   _PastOrderState createState() => _PastOrderState();
 }
@@ -32,7 +34,7 @@ class _PastOrderState extends State<PastOrder>
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text("Ok"),
+            child: const Text("Ok"),
           ),
         ],
       ),
@@ -69,7 +71,7 @@ class _PastOrderState extends State<PastOrder>
     updateKeepAlive();
     // Keeping alive...
 
-    await Future.delayed(Duration(minutes: 10));
+    await Future.delayed(const Duration(minutes: 10));
 
     _keepAlive = false;
     updateKeepAlive();
@@ -110,46 +112,42 @@ class _PastOrderState extends State<PastOrder>
         } else {
           if (snapShote.error != null) {
             if (snapShote.error.toString() == "8") {
-              return Container(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed(TapScreen.routeName);
-                        },
-                        child: Container(
-                          child: Image.asset(
-                            "assets/icons/cart_empty.png",
-                            height: isLandScape
-                                ? screenUtil.setHeight(600)
-                                : screenUtil.setHeight(600),
-                            width: isLandScape
-                                ? screenUtil.setWidth(300)
-                                : screenUtil.setWidth(400),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushReplacementNamed(TapScreen.routeName);
+                      },
+                      child: Image.asset(
+                        "assets/icons/cart_empty.png",
+                        height: isLandScape
+                            ? screenUtil.setHeight(600)
+                            : screenUtil.setHeight(600),
+                        width: isLandScape
+                            ? screenUtil.setWidth(300)
+                            : screenUtil.setWidth(400),
+                        fit: BoxFit.fill,
                       ),
-                      SizedBox(
-                        height: screenUtil.setHeight(100),
+                    ),
+                    SizedBox(
+                      height: screenUtil.setHeight(100),
+                    ),
+                    Text(
+                      translate("youDontHavOrder2", context),
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: isLandScape
+                            ? screenUtil.setSp(35)
+                            : screenUtil.setSp(45),
+                        fontWeight: FontWeight.bold,
+                        wordSpacing: 2,
                       ),
-                      Text(
-                        translate("youDontHavOrder2", context),
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: isLandScape
-                              ? screenUtil.setSp(35)
-                              : screenUtil.setSp(45),
-                          fontWeight: FontWeight.bold,
-                          wordSpacing: 2,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               );
             }
@@ -159,20 +157,17 @@ class _PastOrderState extends State<PastOrder>
                 child: Container(
                   height: screenUtil.setHeight(500),
                   width: screenUtil.setWidth(700),
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      border: Border.all(width: 1),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 10,
-                          offset: Offset(10, 10),
-                          color: Colors.grey,
-                        ),
-                      ]),
+                    color: Colors.grey.shade100,
+                    border: Border.all(width: 1),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    boxShadow: [
+                      boxShadow(),
+                    ],
+                  ),
                   child: Center(
                     child: Text(
                       translate("anErrorOccurred", context),
@@ -193,45 +188,43 @@ class _PastOrderState extends State<PastOrder>
               builder: (context, order, _) {
                 final orders = order.pastOrder().reversed.toList();
                 return orders.isEmpty
-                    ? Container(
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.of(context).pushReplacementNamed(
-                                      TapScreen.routeName);
-                                },
-                                child: Container(
-                                  height: screenUtil.setHeight(700),
-                                  width: screenUtil.setWidth(700),
-                                  // color: Colors.red,
-                                  child: Image.asset(
-                                    "assets/icons/cart_empty.png",
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
+                    ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).pushReplacementNamed(
+                                  TapScreen.routeName);
+                            },
+                            child: SizedBox(
+                              height: screenUtil.setHeight(700),
+                              width: screenUtil.setWidth(700),
+                              // color: Colors.red,
+                              child: Image.asset(
+                                "assets/icons/cart_empty.png",
+                                fit: BoxFit.contain,
                               ),
-                              SizedBox(
-                                height: screenUtil.setHeight(100),
-                              ),
-                              Text(
-                                translate("youDontHavOrder2", context),
-                                style: TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: isLandScape
-                                      ? screenUtil.setSp(35)
-                                      : screenUtil.setSp(45),
-                                  fontWeight: FontWeight.bold,
-                                  wordSpacing: 2,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                      )
+                          SizedBox(
+                            height: screenUtil.setHeight(100),
+                          ),
+                          Text(
+                            translate("youDontHavOrder2", context),
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: isLandScape
+                                  ? screenUtil.setSp(35)
+                                  : screenUtil.setSp(45),
+                              fontWeight: FontWeight.bold,
+                              wordSpacing: 2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                     : ListView.builder(
                         itemCount: orders.length,
                         itemBuilder: (context, i) => OrderItem(
@@ -246,6 +239,14 @@ class _PastOrderState extends State<PastOrder>
           }
         }
       },
+    );
+  }
+
+  BoxShadow boxShadow() {
+    return const BoxShadow(
+      blurRadius: 10,
+      offset: Offset(10, 10),
+      color: Colors.grey,
     );
   }
 }

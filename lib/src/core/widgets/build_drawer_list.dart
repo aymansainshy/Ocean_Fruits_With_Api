@@ -18,13 +18,13 @@ class BuildDrawerList extends StatelessWidget {
       padding: const EdgeInsets.only(left: 10),
       child: ListTile(
         leading: leading,
-        trailing: Icon(
+        trailing: const Icon(
           Icons.navigate_next,
           color: Colors.white,
         ),
         title: Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 17,
             color: Colors.white,
           ),

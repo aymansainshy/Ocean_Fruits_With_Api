@@ -57,7 +57,7 @@ class _OrderItemState extends State<OrderItem> {
     final language = langugeProvider.appLocal.languageCode;
     final order = Provider.of<Orders>(context, listen: false);
     return Card(
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       child: Column(
         children: <Widget>[
           Padding(
@@ -73,7 +73,7 @@ class _OrderItemState extends State<OrderItem> {
                     color: Colors.black,
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Text(
                   DateFormat.yMMMMd().format(widget.order.dateTime),
                 ),
@@ -92,15 +92,15 @@ class _OrderItemState extends State<OrderItem> {
           ),
           // if (widget.expanded)
           AnimatedContainer(
-            duration: Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 300),
             height: widget.expanded
                 ? widget.isLandScape
                     ? widget.order.products.length * 40.0
                     : widget.order.products.length * 35.0
                 : 0.0,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              child: SizedBox(
                 height: widget.isLandScape
                     ? widget.order.products.length * 40.0
                     : widget.order.products.length * 30.0,
@@ -117,7 +117,7 @@ class _OrderItemState extends State<OrderItem> {
                             language == "ar"
                                 ? product.productTitle
                                 : product.productTitleEn,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -140,8 +140,7 @@ class _OrderItemState extends State<OrderItem> {
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text:
-                                      '${product.productPrice.toStringAsFixed(1)}',
+                                  text: product.productPrice.toStringAsFixed(1),
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: widget.isLandScape
@@ -188,7 +187,7 @@ class _OrderItemState extends State<OrderItem> {
                       color: Colors.black,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   RichText(
                     text: TextSpan(
                       children: [
@@ -226,7 +225,7 @@ class _OrderItemState extends State<OrderItem> {
                       textColor: Colors.white,
                       color: AppColors.primaryColor,
                       child: isLoading
-                          ? Center(
+                          ? const Center(
                               child: CircularProgressIndicator(
                                 backgroundColor: AppColors.greenColor,
                                 strokeWidth: 2.5,
@@ -234,7 +233,7 @@ class _OrderItemState extends State<OrderItem> {
                             )
                           : Text(
                               translate("cancel", context),
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                             ),
                       onPressed: () async {
                         try {
@@ -258,7 +257,7 @@ class _OrderItemState extends State<OrderItem> {
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "Ok",
                                     style: TextStyle(
                                       color: AppColors.scondryColor,

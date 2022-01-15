@@ -15,7 +15,7 @@ class BuildCartStack extends StatelessWidget {
         overflow: Overflow.visible,
         alignment: Alignment.topRight,
         children: [
-          Container(
+          SizedBox(
             height: 30,
             child: Image.asset(
               "assets/icons/cart stroke.png",
@@ -23,7 +23,7 @@ class BuildCartStack extends StatelessWidget {
               fit: BoxFit.contain,
             ),
           ),
-          SizedBox(),
+          const SizedBox(),
         ],
       );
     } else {
@@ -31,7 +31,7 @@ class BuildCartStack extends StatelessWidget {
         overflow: Overflow.visible,
         alignment: Alignment.topRight,
         children: [
-          Container(
+          SizedBox(
             height: 30,
             child: Image.asset(
               "assets/icons/cart stroke.png",
@@ -49,7 +49,7 @@ class BuildCartStack extends StatelessWidget {
                   padding: const EdgeInsets.all(2),
                   child: Text(
                     "${carts.itemCount}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),

@@ -8,6 +8,8 @@ import '../models/language_model.dart';
 
 class LanguageScreen extends StatefulWidget {
   static const routeName = '/language_screen';
+
+  const LanguageScreen({Key key}) : super(key: key);
   @override
   _LanguageScreenState createState() => _LanguageScreenState();
 }
@@ -18,9 +20,11 @@ class _LanguageScreenState extends State<LanguageScreen> {
     var languageProvider = Provider.of<LanguageProvider>(context);
 
     ScreenUtil.init(context);
+
     var isLandScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
     ScreenUtil screenUtil = ScreenUtil();
+
     final langugeProvider =
         Provider.of<LanguageProvider>(context, listen: false);
     final language = langugeProvider.appLocal.languageCode;
@@ -37,11 +41,11 @@ class _LanguageScreenState extends State<LanguageScreen> {
         elevation: 0.0,
         leading: Builder(
           builder: (context) => Transform.translate(
-            offset: Offset(6, 0),
+            offset: const Offset(6, 0),
             child: IconButton(
               padding: const EdgeInsets.all(0.0),
               onPressed: () => Navigator.of(context).pop(),
-              icon: Container(
+              icon: SizedBox(
                 // color: Colors.teal,
                 height: 30,
                 width: 50,
@@ -69,7 +73,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -78,7 +82,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ListTile(
-                contentPadding: EdgeInsets.symmetric(vertical: 0),
+                contentPadding: const EdgeInsets.symmetric(vertical: 0),
                 leading: Icon(
                   Icons.translate,
                   color: Theme.of(context).hintColor,
@@ -100,14 +104,14 @@ class _LanguageScreenState extends State<LanguageScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ListView.separated(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               primary: false,
               itemCount: languageProvider.languages.length,
               separatorBuilder: (context, index) {
-                return SizedBox(height: 10);
+                return const SizedBox(height: 10);
               },
               itemBuilder: (context, index) {
                 Language _language =
@@ -117,13 +121,14 @@ class _LanguageScreenState extends State<LanguageScreen> {
                     languageProvider.changeLanguage(Locale(_language.code));
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       border: language == _language.code
                           ? Border.all(
-                              color: Color.fromRGBO(14, 59, 101, 1),
+                              color: const Color.fromRGBO(14, 59, 101, 1),
                               style: BorderStyle.solid,
                               width: 1,
                             )
@@ -135,7 +140,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                         BoxShadow(
                           color: Theme.of(context).focusColor.withOpacity(0.1),
                           blurRadius: 5,
-                          offset: Offset(0, 2),
+                          offset: const Offset(0, 2),
                         ),
                       ],
                     ),
@@ -150,7 +155,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                               width: 50,
                               decoration: BoxDecoration(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(50)),
+                                    const BorderRadius.all(Radius.circular(50)),
                                 image: DecorationImage(
                                   image: AssetImage(_language.flag),
                                   fit: BoxFit.cover,
@@ -161,7 +166,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                               height: language == _language.code ? 50 : 0,
                               width: language == _language.code ? 50 : 0,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
+                                borderRadius: const BorderRadius.all(
                                   Radius.circular(40),
                                 ),
                                 color: Theme.of(context)
@@ -178,7 +183,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(width: 15),
+                        const SizedBox(width: 15),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ocean_fruits/src/core/animations/custom_page_transition.dart';
 import '/src/modules/lang/app_locelazation.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-
-import '../utils/custom_page_transition.dart';
 
 class AppColors {
   static const Color circleColor = Color.fromRGBO(195, 246, 164, 1);

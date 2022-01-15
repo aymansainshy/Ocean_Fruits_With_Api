@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:ocean_fruits/app_blocs.dart';
 import 'package:ocean_fruits/src/modules/categories/provider/categories_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -49,44 +51,47 @@ class MyApp extends StatelessWidget {
           value: Orders(),
         ),
       ],
-      child: Consumer<LanguageProvider>(
-        builder: (context, languageProvider, _) => FutureBuilder(
-          future: languageProvider.fetchLocale(),
-          builder: (context, snapShot) => Consumer<AuthProvider>(
-            builder: (context, auth, _) => MaterialApp(
-              title: "Osean Fruits",
-              locale: languageProvider.appLocal,
-              supportedLocales: const [
-                Locale('en', 'US'),
-                Locale('ar', 'SA'),
-              ],
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-              ],
-              debugShowCheckedModeBanner: false,
-              theme: appTheme,
-              routes: routs,
-              home: AnimatedSplashScreen(
-                home: auth.isAuth
-                    ? TapScreen()
-                    : FutureBuilder(
-                        future: auth.tryAutoLogin(),
-                        builder: (context, authResult) =>
-                            authResult.connectionState ==
-                                    ConnectionState.waiting
-                                ? const Scaffold(
-                                    body: Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  )
-                                : const LoginScreen(),
-                      ),
-                duration: 2500,
-                type: AnimatedSplashType.BackgroundProcess,
-                imagePath:
-                    "assets/images/Ocean Agriculture fruit & Vegetables-01.png",
+      child: MultiBlocProvider(
+        providers: AppBlocs.providers,
+        child: Consumer<LanguageProvider>(
+          builder: (context, languageProvider, _) => FutureBuilder(
+            future: languageProvider.fetchLocale(),
+            builder: (context, snapShot) => Consumer<AuthProvider>(
+              builder: (context, auth, _) => MaterialApp(
+                title: "Osean Fruits",
+                locale: languageProvider.appLocal,
+                supportedLocales: const [
+                  Locale('en', 'US'),
+                  Locale('ar', 'SA'),
+                ],
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                debugShowCheckedModeBanner: false,
+                theme: appTheme,
+                routes: routs,
+                home: AnimatedSplashScreen(
+                  home: auth.isAuth
+                      ? TapScreen()
+                      : FutureBuilder(
+                          future: auth.tryAutoLogin(),
+                          builder: (context, authResult) =>
+                              authResult.connectionState ==
+                                      ConnectionState.waiting
+                                  ? const Scaffold(
+                                      body: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    )
+                                  : const LoginScreen(),
+                        ),
+                  duration: 2500,
+                  type: AnimatedSplashType.BackgroundProcess,
+                  imagePath:
+                      "assets/images/Ocean Agriculture fruit & Vegetables-01.png",
+                ),
               ),
             ),
           ),
