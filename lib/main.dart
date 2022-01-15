@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
                                     )
                                   : const LoginScreen(),
                         ),
-                  duration: 2500,
+                  duration: 2500, //
                   type: AnimatedSplashType.BackgroundProcess,
                   imagePath:
                       "assets/images/Ocean Agriculture fruit & Vegetables-01.png",
