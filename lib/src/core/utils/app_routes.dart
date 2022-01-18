@@ -12,16 +12,16 @@ import '../../modules/cart/screens/cart_screen.dart';
 import '../../modules/main-view/screens/tap_screen.dart';
 
 var routs = {
-  TapScreen.routeName: (context) => TapScreen(),
+  TapScreen.routeName: (context) => const TapScreen(),
   HomeScreen.routeName: (context) => const HomeScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   LoginScreen.routeName: (context) => const LoginScreen(),
-  OrderScreen.routeName: (context) => OrderScreen(),
+  OrderScreen.routeName: (context) => const OrderScreen(),
   SignUpScreen.routeName: (context) => const SignUpScreen(),
-  ProfileScreen.routeName: (context) => ProfileScreen(),
-  LanguageScreen.routeName: (context) => LanguageScreen(),
+  ProfileScreen.routeName: (context) => const ProfileScreen(),
+  LanguageScreen.routeName: (context) => const LanguageScreen(),
   ProductsScreen.routeName: (context) => const ProductsScreen(),
-  CheckOutScreen.routeName: (context) => CheckOutScreen(),
+  CheckOutScreen.routeName: (context) => const CheckOutScreen(),
   FavoritesScreen.routeName: (context) => const FavoritesScreen(),
-  EditProfileScreen.routeName: (context) => EditProfileScreen(),
+  EditProfileScreen.routeName: (context) => const EditProfileScreen(),
 };

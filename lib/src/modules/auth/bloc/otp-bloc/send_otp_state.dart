@@ -9,6 +9,7 @@ abstract class OtpState extends Equatable {
 
 class OtpInitial extends OtpState {}
 
+// Sending Otp ......
 class OtpInProgress extends OtpState {}
 
 class OtpSuccess extends OtpState {}
@@ -19,12 +20,4 @@ class OtpFaliure extends OtpState {
   const OtpFaliure(this.error);
 }
 
-class ReSendingOtpInProgress extends OtpState {}
 
-class ReSendingOtpSuccess extends OtpState {}
-
-class ReSendingOtpFaliure extends OtpState {
-  final String error;
-
-  const ReSendingOtpFaliure(this.error);
-}

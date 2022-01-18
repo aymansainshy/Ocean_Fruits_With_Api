@@ -12,6 +12,8 @@ import '../../../core/widgets/drawer.dart';
 class TapScreen extends StatefulWidget {
   static const routeName = '/tap_screen';
 
+  const TapScreen({Key key}) : super(key: key);
+
   @override
   _TapScreenState createState() => _TapScreenState();
 }
@@ -83,7 +85,7 @@ class _TapScreenState extends State<TapScreen> {
 
     return Scaffold(
       key: _tapScaffoldKey,
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: PageView(
         controller: _pageController,
         children: _pages,

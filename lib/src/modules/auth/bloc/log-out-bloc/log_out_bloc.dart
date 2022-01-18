@@ -29,7 +29,7 @@ class LogOutBloc extends Bloc<LogOutEvent, LogOutState> {
         }
         
       } catch (e) {
-        yield LogOutFailure();
+        yield const LogOutFailure();
       }
     }
   }

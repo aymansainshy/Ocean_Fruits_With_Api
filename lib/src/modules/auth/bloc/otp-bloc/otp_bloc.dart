@@ -7,10 +7,12 @@ import 'package:equatable/equatable.dart';
 import 'package:ocean_fruits/src/core/config/app_config.dart';
 import 'package:ocean_fruits/src/core/config/shared_prefrences_config.dart';
 import 'package:ocean_fruits/src/core/utils/prefrences_utils.dart';
-import 'package:ocean_fruits/src/modules/auth/models/user.dart';
+import 'package:ocean_fruits/src/modules/user-profile/models/user.dart';
 
 part 'otp_event.dart';
-part 'otp_state.dart';
+part 'send_otp_state.dart';
+part 'resend_otp_state.dart';
+part 'varify_otp_state.dart';
 
 class OtpBloc extends Bloc<OtpEvent, OtpState> {
   OtpBloc(

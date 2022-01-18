@@ -1,5 +1,5 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ocean_fruits/src/modules/auth/models/user.dart';
+import 'package:ocean_fruits/src/modules/user-profile/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Application {

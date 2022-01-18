@@ -11,12 +11,17 @@ class SendOtp extends OtpEvent {
   final String otp;
   final String userId;
 
-  SendOtp(this.otp, this.userId);
+  const SendOtp(this.otp, this.userId);
 }
 
 class ReSendOtp extends OtpEvent {
   final String userId;
 
-  ReSendOtp(this.userId);
+  const ReSendOtp(this.userId);
 }
 
+class VarifyOtp extends OtpEvent {
+  final String otp;
+
+  const VarifyOtp(this.otp);
+}

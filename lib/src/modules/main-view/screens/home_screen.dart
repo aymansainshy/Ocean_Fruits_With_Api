@@ -1,4 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:ocean_fruits/src/core/utils/assets_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -123,8 +126,8 @@ class _HomeScreenState extends State<HomeScreen>
         actions: [
           Padding(
             padding: language == "ar"
-                ? EdgeInsets.only(left: 10)
-                : EdgeInsets.only(right: 10),
+                ? const EdgeInsets.only(left: 10)
+                : const EdgeInsets.only(right: 10),
             child: IconButton(
               icon: BuildCartStack(carts: cart),
               onPressed: () {
@@ -137,13 +140,13 @@ class _HomeScreenState extends State<HomeScreen>
         ],
         leading: Builder(
           builder: (context) => Transform.translate(
-            offset: Offset(6, 0),
+            offset: const Offset(6, 0),
             child: IconButton(
               padding: language == "ar"
-                  ? EdgeInsets.only(right: 15)
-                  : EdgeInsets.all(0.0),
+                  ? const EdgeInsets.only(right: 15)
+                  : const EdgeInsets.all(0.0),
               onPressed: () => widget.tapScaffoldKey.currentState.openDrawer(),
-              icon: Container(
+              icon: SizedBox(
                 // color: Colors.teal,
                 height: 30,
                 width: 50,
@@ -160,10 +163,10 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ),
         ),
-        title: Container(
+        title: SizedBox(
           width: mediaQuery.width / 3,
           child: Image.asset(
-            "assets/images/Ocean Agriculture fruit & Vegetables-01.png",
+            AssetsUtils.oceanFruitsLogo,
             fit: BoxFit.contain,
           ),
         ),
@@ -201,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     height: isLandScape
                                         ? screenUtil.setHeight(700)
                                         : screenUtil.setHeight(480),
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       color: Colors.green,
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(10),
@@ -285,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Expanded(
+                                    const Expanded(
                                       child: Divider(thickness: 3),
                                     ),
                                     Expanded(
@@ -294,11 +297,11 @@ class _HomeScreenState extends State<HomeScreen>
                                         child: Text(
                                           translate(
                                               "featuredProducts", context),
-                                          style: TextStyle(fontSize: 18),
+                                          style: const TextStyle(fontSize: 18),
                                         ),
                                       ),
                                     ),
-                                    Expanded(
+                                    const Expanded(
                                       child: Divider(thickness: 3),
                                     ),
                                   ],
@@ -311,18 +314,18 @@ class _HomeScreenState extends State<HomeScreen>
                                     ChangeNotifierProvider.value(
                                   value: products.recommendeProducts[index],
                                   child: Container(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                       top: 10,
                                       left: 5,
                                       right: 5,
                                     ),
-                                    child: ProductItem(),
+                                    child: const ProductItem(),
                                   ),
                                 ),
                                 childCount: products.recommendeProducts.length,
                               ),
                               gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
                                 childAspectRatio: 0.97,
                                 crossAxisSpacing: 2,
@@ -354,9 +357,9 @@ class _HomeScreenState extends State<HomeScreen>
       width: mediaQuery.width / 3,
       height:
           isLandScape ? screenUtil.setHeight(200) : screenUtil.setHeight(130),
-      padding: EdgeInsets.all(3),
+      padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(6),
         ),
         border: Border.all(
