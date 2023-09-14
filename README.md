@@ -16,3 +16,6 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 # ocean_fruits
 # Ocean_Fruits_With_Api
+
+
+<img src="https://github.com/aymansainshy/OpenSourceResturantApp/blob/master/ScreenShot/sc1.png" width="350"> <img src="https://github.com/aymansainshy/OpenSourceResturantApp/blob/master/ScreenShot/sc2.png" width="350"> 
