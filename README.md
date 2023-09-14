@@ -18,4 +18,6 @@ samples, guidance on mobile development, and a full API reference.
 # Ocean_Fruits_With_Api
 
 
-<img src="https://github.com/aymansainshy/OpenSourceResturantApp/blob/master/ScreenShot/sc1.png" width="350"> <img src="https://github.com/aymansainshy/OpenSourceResturantApp/blob/master/ScreenShot/sc2.png" width="350"> 
+<img src="https://github.com/aymansainshy/Ocean_Fruits_With_Api/blob/main/assets/WhatsApp%20Image%202023-09-14%20at%2011.53.56%20AM.jpeg" width="350"> <img src="https://github.com/aymansainshy/Ocean_Fruits_With_Api/blob/main/assets/WhatsApp%20Image%202023-09-14%20at%2011.53.55%20AM%20(1).jpeg" width="350"> 
+
+<img src="https://github.com/aymansainshy/Ocean_Fruits_With_Api/blob/main/assets/WhatsApp%20Image%202023-09-14%20at%2011.53.55%20AM.jpeg" width="350"> <img src="https://github.com/aymansainshy/Ocean_Fruits_With_Api/blob/main/assets/WhatsApp%20Image%202023-09-14%20at%2011.53.54%20AM%20(1).jpeg" width="350"> 
